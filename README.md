@@ -46,19 +46,21 @@ Note: The Resource API is provided by @plone/resourceapi-angular which is a depe
 
 Methods:
 
-copy(sourcePath: string, targetPath: string): copy the content to another location. Returns an observable.
+`copy(sourcePath: string, targetPath: string)`: copy the resource to another location. Returns an observable.
 
-create(path: string, contentModel: any): create a new content in the container indicated by the path. Returns an observable.
+`create(path: string, model: any)`: create a new resource in the container indicated by the path. Returns an observable.
 
-delete(path: string): remove the requested resource as an observable. Returns an observable.
+`delete(path: string)`: remove the requested resource as an observable. Returns an observable.
 
-find(query: any): returns the search results as an observable.
+`find(query: any)`: returns the search results as an observable.
 
-get(path: string): returns the requested resource as an observable.
+`get(path: string)`: returns the requested resource as an observable.
 
-move(sourcePath: string, targetPath: string): move the content to another location. Returns an observable.
+`move(sourcePath: string, targetPath: string)`: move the resource to another location. Returns an observable.
 
-transition(path: string, transition: string): perform the transition on the content. Returns an observable.
+`transition(path: string, transition: string)`: perform the transition on the resource. Returns an observable.
+
+`update(path: string, model: any)`: update the resource. Returns an observable.
 
 ### Traversal
 
