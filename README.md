@@ -2,20 +2,6 @@
 
 This package aims to provide the services and components needed to build an Angular application based on the [Plone REST API](http://plonerestapi.readthedocs.io/en/latest/).
 
-## Installation
-
-Create an Angular application with [Angular CLI](https://github.com/angular/angular-cli):
-
-```bash
-ng new mywebsite
-```
-
-Then add the package:
-
-```bash
-npm install --save @plone/restapi-angular
-```
-
 ## Services
 
 ### Configuration
@@ -178,3 +164,35 @@ Based on [Angular2 Schema Form](https://github.com/makinacorpus/angular2-schema-
 ```html
 <plone-toolbar></plone-toolbar>
 ```
+
+## Installation
+
+Create an Angular application with [Angular CLI](https://github.com/angular/angular-cli):
+
+```bash
+ng new mywebsite
+```
+
+Then add the package:
+
+```bash
+npm install --save @plone/restapi-angular
+```
+
+## Contribute
+
+- Issue Tracker: https://github.com/plone/plone.restapi-angular/issues
+- Source Code: https://github.com/plone/plone.restapi-angular
+- Documentation: https://github.com/plone/plone.restapi-angular/README.md
+
+Support
+-------
+
+If you are having issues, please let us know.
+
+Use thissue tracker https://github.com/plone/plone.restapi-angular/issues
+
+License
+-------
+
+The project is licensed under the MIT license.
