@@ -20,13 +20,17 @@ var Navigation = (function () {
         var _this = this;
         var base = this.config.get('BACKEND_URL');
         this.traverser.target.subscribe(function (target) {
-            if (target.context.items) {
-                _this.links = target.context.items.map(function (item) {
+            var context = target.context;
+            if (context.items) {
+                _this.links = context.items.map(function (item) {
                     return {
-                        path: item['@id'].split(base)[1],
+                        path: item['@id'].split(base)[1] || '/',
                         title: item.title,
                     };
                 });
+            }
+            if (context.parent) {
+                _this.parent = context.parent['@id'].split(base)[1] || '/';
             }
         });
     };
@@ -35,7 +39,7 @@ var Navigation = (function () {
 Navigation = __decorate([
     Component({
         selector: 'plone-navigation',
-        templateUrl: './navigation.html',
+        template: "<a *ngIf=\"parent\" [traverseTo]=\"parent\">Go back to parent</a>\n<ul>\n  <li *ngFor=\"let link of links\">\n    <a [traverseTo]=\"link.path\">{{ link.title }}</a>\n  </li>\n</ul>"
     }),
     __metadata("design:paramtypes", [ConfigurationService,
         Traverser])

@@ -6,6 +6,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
+import { CommonModule } from '@angular/common';
 import { TraversalModule, Resolver, Marker, TraverserOutlet, TraverserLink } from 'angular-traversal';
 import { AuthenticationService } from './authentication.service';
 import { ConfigurationService } from './configuration.service';
@@ -29,6 +30,7 @@ RESTAPIModule = __decorate([
         ],
         imports: [
             HttpModule,
+            CommonModule,
             TraversalModule,
         ],
         providers: [

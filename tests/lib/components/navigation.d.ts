@@ -5,6 +5,7 @@ export declare class Navigation implements OnInit {
     private config;
     private traverser;
     private links;
+    private parent;
     constructor(config: ConfigurationService, traverser: Traverser);
     ngOnInit(): void;
 }

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
+import { CommonModule } from '@angular/common';
 import {
   TraversalModule,
   Resolver,
@@ -31,6 +32,7 @@ import { Navigation } from './components/navigation';
   ],
   imports: [
     HttpModule,
+    CommonModule,
     TraversalModule,
   ],
   providers: [
