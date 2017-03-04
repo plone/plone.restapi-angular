@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
-import { PloneTraverser } from '../../lib';
+import { Traverser } from 'angular-traversal';
+import { PloneViews } from '../../lib';
+
+import { CustomViewView } from './custom/view';
 
 @Component({
   selector: 'app-root',
@@ -7,9 +10,12 @@ import { PloneTraverser } from '../../lib';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app works!';
 
-  constructor(private traverser:PloneTraverser) {
-    this.traverser.initialize();
+  constructor(
+    private views:PloneViews,
+    private traverser: Traverser,
+  ) {
+    this.views.initialize();
+    this.traverser.addView('view', '*', CustomViewView);
   }
 }

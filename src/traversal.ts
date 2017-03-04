@@ -25,7 +25,7 @@ export class RESTAPIResolver extends Resolver {
 }
 
 @Injectable()
-export class PloneTraverser {
+export class PloneViews {
 
     constructor(private traverser: Traverser) {}
 

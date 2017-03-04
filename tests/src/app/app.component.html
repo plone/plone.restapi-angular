@@ -1,5 +1,14 @@
-<h1>
-  {{title}}
-</h1>
-<plone-navigation></plone-navigation>
-<traverser-outlet></traverser-outlet>
+<md-toolbar color="primary">
+  <button md-button (click)="sidenav.open()">
+    Open navigation
+  </button>
+</md-toolbar>
+<md-sidenav-container class="example-container">
+  <md-sidenav #sidenav class="example-sidenav">
+    <custom-navigation></custom-navigation>
+  </md-sidenav>
+
+  <div class="example-sidenav-content">
+    <traverser-outlet></traverser-outlet>
+  </div>
+</md-sidenav-container>

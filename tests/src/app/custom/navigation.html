@@ -1,0 +1,6 @@
+<button md-raised-button *ngIf="parent" [traverseTo]="parent">Go back to parent</button>
+<md-list>
+  <md-list-item *ngFor="let link of links">
+    <a [traverseTo]="link.path">{{ link.title }}</a>
+  </md-list-item>
+</md-list>

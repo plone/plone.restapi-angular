@@ -35,7 +35,7 @@ export class Navigation implements OnInit {
         });
       }
       if(context.parent) {
-        this.parent = context.parent['@id'].split(base)[1] || '/';
+        this.parent = (context.parent['@id'] && context.parent['@id'].split(base)[1]) || '/';
       }
     });
   }

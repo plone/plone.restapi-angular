@@ -14,7 +14,7 @@ import { ConfigurationService } from './configuration.service';
 import { ResourceService } from './resource.service';
 import {
   InterfaceMarker,
-  PloneTraverser,
+  PloneViews,
   RESTAPIResolver,
 } from './traversal';
 
@@ -39,7 +39,7 @@ import { Navigation } from './components/navigation';
     AuthenticationService,
     ConfigurationService,
     ResourceService,
-    PloneTraverser,
+    PloneViews,
     { provide: Resolver, useClass: RESTAPIResolver },
     { provide: Marker, useClass: InterfaceMarker },
   ],
