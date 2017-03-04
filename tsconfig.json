@@ -1,0 +1,45 @@
+{
+    "compilerOptions": {
+        "baseUrl": "",
+        "target": "es5",
+        "module": "es2015",
+        "moduleResolution": "node",
+        "declaration": true,
+        "noImplicitAny": false,
+        "strictNullChecks": true,
+        "sourceMap": false,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "outDir": "./dist",
+        "rootDir": "./src",
+        "skipLibCheck": true,
+        "stripInternal": true,
+        "typeRoots": ["./node_modules/@types"],
+        "types": [
+            "node"
+        ],
+        "lib": [
+            "dom",
+            "es2015"
+        ],
+        "paths": {
+            "@angular/http": ["node_modules/@angular/http"],
+            "rxjs/*": ["node_modules/rxjs/*"]
+        }
+    },
+    "compileOnSave": false,
+    "buildOnSave": false,
+    "exclude": [
+        "node_modules",
+        "dist",
+        "tests",
+        "**/*.ngfactory.ts",
+        "**/*.shim.ts"
+    ],
+    "angularCompilerOptions": {
+        "genDir": "dist",
+        "entryModule": "src/module#RESTAPIModule",
+        "skipTemplateCodegen": true,
+        "strictMetadataEmit": true
+    }
+}

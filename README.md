@@ -16,11 +16,13 @@ Methods:
 
 ### Authentication
 
+Properties:
+
+`isAuthenticated`: observable boolean indicating the current authentication status. 
+
 Methods:
 
 `getUserInfo()`: returns an object containing the current user information.
-
-`isAuthenticated()`: returns an observable boolean indicating the current authentication status. 
 
 `login(login: string, password: string)`: authenticate to the backend using the provided credentials, the resulting authentication token and user information will be stored in localstorage.
 

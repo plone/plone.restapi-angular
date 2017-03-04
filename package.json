@@ -1,10 +1,16 @@
 {
-  "name": "plone.restapi-angular",
+  "name": "@plone/restapi-angular",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "clean": "rimraf dist/",
+    "build:aot": "ngc -p tsconfig.json",
+    "build:jit": "tsc -p tsconfig.json",
+    "build": "npm run clean && npm run build:aot",
+    "deploy-to-test": "npm run build && rimraf ./tests/lib && cp -r ./dist ./tests/lib",
+    "test": "npm run deploy-to-test && cd tests && ng test --single-run"
   },
   "repository": {
     "type": "git",
@@ -15,5 +21,27 @@
   "bugs": {
     "url": "https://github.com/plone/plone.restapi-angular/issues"
   },
-  "homepage": "https://github.com/plone/plone.restapi-angular#readme"
+  "homepage": "https://github.com/plone/plone.restapi-angular#readme",
+  "peerDependencies": {
+  },
+  "devDependencies": {
+    "@angular/compiler-cli": "2.4.8",
+    "@angular/platform-server": "2.4.8",
+    "@types/jasmine": "2.5.38",
+    "@types/node": "^6.0.42",
+    "rimraf": "^2.5.4",
+    "typescript": "^2.1.6"
+  },
+  "dependencies": {
+    "@angular/common": "2.4.8",
+    "@angular/compiler": "2.4.8",
+    "@angular/core": "2.4.8",
+    "@angular/forms": "2.4.8",
+    "@angular/http": "2.4.8",
+    "@angular/platform-browser": "2.4.8",
+    "core-js": "^2.4.1",
+    "rxjs": "^5.0.1",
+    "zone.js": "^0.7.2",
+    "angular-traversal": "^1.0.0-alpha.4"
+  }
 }
