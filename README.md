@@ -183,6 +183,8 @@ Install the RESTAPI package:
 npm install --save @plone/restapi-angular
 ```
 
+Note: the package is not released yet, you need to install a GitHub checkout.
+
 In `src/app.module.ts`, load the module and set the backend URL:
 
 ```javascript
