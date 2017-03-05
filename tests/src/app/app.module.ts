@@ -25,8 +25,8 @@ import { CustomNavigation } from './custom/navigation';
     BrowserModule,
     FormsModule,
     RESTAPIModule,
-    MaterialModule,
-    FlexLayoutModule,
+    MaterialModule.forRoot(),
+    FlexLayoutModule.forRoot(),
     HttpModule
   ],
   providers: [
