@@ -2,11 +2,11 @@ import { TestBed, async } from '@angular/core/testing';
 import { APP_BASE_HREF } from '@angular/common';
 import { MaterialModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { RESTAPIModule, CONFIGURATION } from '../../lib';
+import { RESTAPIModule, CONFIGURATION } from '.';
 
-import { AppComponent } from './app.component';
-import { CustomViewView } from './custom';
-import { CustomNavigation } from './custom';
+import { AppComponent } from '../tests/src/app/app.component';
+import { CustomViewView } from '../tests/src/app/custom';
+import { CustomNavigation } from '../tests/src/app/custom';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
