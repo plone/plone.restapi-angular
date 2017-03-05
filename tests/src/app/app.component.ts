@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Traverser } from 'angular-traversal';
 import { PloneViews } from '../../lib';
 
-import { CustomViewView } from './custom/view';
+import { CustomViewView } from './custom';
 
 @Component({
   selector: 'app-root',

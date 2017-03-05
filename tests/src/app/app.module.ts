@@ -9,8 +9,8 @@ import 'hammerjs';
 import { RESTAPIModule, CONFIGURATION } from '../../lib';
 
 import { AppComponent } from './app.component';
-import { CustomViewView } from './custom/view';
-import { CustomNavigation } from './custom/navigation';
+import { CustomViewView } from './custom';
+import { CustomNavigation } from './custom';
 
 @NgModule({
   declarations: [
