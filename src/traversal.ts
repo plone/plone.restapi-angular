@@ -7,7 +7,7 @@ import { ViewView } from './views/view';
 
 @Injectable()
 export class InterfaceMarker extends Marker {
-  mark(context: any): string {
+  mark(context: any): string[] {
     return context.interfaces;
   }
 }

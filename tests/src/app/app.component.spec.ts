@@ -83,12 +83,6 @@ describe('AppComponent', () => {
       "@type": "Folder", 
       "description": "Site Users", 
       "title": "Users"
-    }, 
-    {
-      "@id": "http://fake/Plone/a-folder", 
-      "@type": "Folder", 
-      "description": "", 
-      "title": "A folder"
     }
   ], 
   "items_total": 5, 
@@ -104,9 +98,4 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   }));
 
-  // it('should create the app', async(() => {
-  //   const fixture = TestBed.createComponent(AppComponent);
-  //   const app = fixture.debugElement.componentInstance;
-  //   expect(app).toBeTruthy();
-  // }));
 });
