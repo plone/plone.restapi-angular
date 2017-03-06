@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Traverser } from 'angular-traversal';
-import { PloneViews } from '../../lib';
+import { PloneViews, ConfigurationService } from './lib';
 
 import { CustomViewView } from './custom';
 
@@ -14,6 +14,7 @@ export class AppComponent {
   constructor(
     private views:PloneViews,
     private traverser: Traverser,
+    private config: ConfigurationService,
   ) {
     this.views.initialize();
     this.traverser.addView('view', '*', CustomViewView);

@@ -9,8 +9,7 @@
     "build:aot": "ngc -p tsconfig.json",
     "build:jit": "tsc -p tsconfig.json",
     "build": "npm run clean && npm run build:aot",
-    "deploy-to-test": "npm run build && rimraf ./tests/lib && cp -r ./dist ./tests/lib",
-    "test": "npm run deploy-to-test && cd tests && ng test --single-run"
+    "test": "cd tests/src/app && ln -s ../../../src/ ./lib && cd ../.. && ng test --single-run"
   },
   "repository": {
     "type": "git",

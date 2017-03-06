@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
-import { Navigation } from '../../../lib';
-import { ViewView } from '../../../lib';
+import { Navigation } from '../lib';
+import { ViewView } from '../lib';
 
 @Component({
   selector: 'custom-navigation',
