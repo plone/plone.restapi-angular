@@ -1,6 +1,7 @@
 # plone.restapi-angular
 
 [![Build Status](https://travis-ci.org/plone/plone.restapi-angular.svg?branch=master)](https://travis-ci.org/plone/plone.restapi-angular)
+[![Coverage Status](https://coveralls.io/repos/github/plone/plone.restapi-angular/badge.svg?branch=master)](https://coveralls.io/github/plone/plone.restapi-angular?branch=master)
 
 This package aims to provide the services and components needed to build an Angular application based on the [Plone REST API](http://plonerestapi.readthedocs.io/en/latest/).
 

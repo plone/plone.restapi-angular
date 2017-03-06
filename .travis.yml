@@ -20,7 +20,9 @@ before_install:
 install:
   - npm install
   - npm info . peerDependencies | sed -n 's/^{\{0,1\}[[:space:]]*'\''\{0,1\}\([^:'\'']*\)'\''\{0,1\}:[[:space:]]'\''\([^'\'']*\).*$/\1@\2/p' | xargs npm i
-  - cd ./tests && npm install && cd ..
+  - cd ./tests && npm install && npm install coveralls mocha-lcov-reporter && cd ..
+after_success:
+  - cd ./tests && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
 notifications:
   email:
   - tisto@plone.org, ebrehault@gmail.com, ramon.nb@gmail.com, sneridagh@gmail.com
