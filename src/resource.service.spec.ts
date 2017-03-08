@@ -85,4 +85,26 @@ describe('ResourceService', () => {
     });
   }));
 
+  it('should search contents', inject([ResourceService, MockBackend], (service, backend) => {
+    backend.connections.subscribe(c => {
+      expect(c.request.url).toBe('http://fake/Plone/@search?SearchableText=John&path.query=%2Ffolder1&path.depth=2');
+      let response = {
+        "@id": "http://fake/Plone/@search", 
+        "items": [
+          {
+            "@id": "http://fake/Plone/folder1/page1", 
+            "@type": "Document", 
+            "description": "Congratulations! You have successfully installed Plone.", 
+            "review_state": "private", 
+            "title": "Welcome to Plone"
+          }
+        ],
+        "items_total": 1
+      };
+      c.mockRespond(new Response(new ResponseOptions({body: response})));
+    });
+    service.find({SearchableText: 'John', path: {query: '/folder1', depth: 2}}).map(res => res.json()).subscribe(content => {
+      expect(content.items[0]['@id']).toBe('http://fake/Plone/folder1/page1');
+    });
+  }));
 });

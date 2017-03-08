@@ -43,7 +43,7 @@ Methods:
 
 `delete(path: string)`: remove the requested resource as an observable. Returns an observable.
 
-`find(query: any)`: returns the search results as an observable.
+`find(query: any,  path: string='/', sort_on?: string, metadata_fields?: string[])`: returns the search results as an observable. See [http://plonerestapi.readthedocs.io/en/latest/searching.html#search](http://plonerestapi.readthedocs.io/en/latest/searching.html#search).
 
 `get(path: string)`: returns the requested resource as an observable.
 
