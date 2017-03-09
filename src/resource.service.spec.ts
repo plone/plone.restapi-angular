@@ -107,4 +107,23 @@ describe('ResourceService', () => {
       expect(content.items[0]['@id']).toBe('http://fake/Plone/folder1/page1');
     });
   }));
+
+  it('should create new content', inject([ResourceService, MockBackend], (service, backend) => {
+    backend.connections.subscribe(c => {
+      expect(c.request.url).toBe('http://fake/Plone/folder1');
+      let response = {
+        '@type': 'Document',
+        'id': 'my-document',
+        'title': 'My Document',
+      };
+      c.mockRespond(new Response(new ResponseOptions({body: response})));
+    });
+    service.create('/folder1', {
+        '@type': 'Document',
+        'id': 'my-document',
+        'title': 'My Document',
+      }).map(res => res.json()).subscribe(content => {
+      expect(content.id).toBe('my-document');
+    });
+  }));
 });

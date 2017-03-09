@@ -16,7 +16,11 @@ export class ResourceService {
 
   copy(sourcePath: string, targetPath: string) {}
 
-  create(path: string, model: any) {}
+  create(path: string, model: any) {
+    let url = this.config.get('BACKEND_URL') + path;
+    let headers = this.authentication.getHeaders();
+    return this.http.post(url, model, {headers: headers});
+  }
 
   delete(path: string) {}
 
@@ -24,7 +28,7 @@ export class ResourceService {
     if(!path.endsWith('/')) path += '/';
     let url = this.config.get('BACKEND_URL') + path + '@search';
     let headers = this.authentication.getHeaders();
-    let params = [];
+    let params: string[] = [];
     Object.keys(query).map(index => {
       let criteria = query[index];
       if(typeof criteria === 'string') {
