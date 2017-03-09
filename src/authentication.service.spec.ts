@@ -97,6 +97,7 @@ describe('AuthenticationService', () => {
     service.logout();
     service.isAuthenticated.subscribe(authenticated => {
       expect(authenticated).toBe(false);
+      expect(service.getUserInfo()).toEqual(null);
     });
   }));
 });
