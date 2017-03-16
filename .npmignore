@@ -1,0 +1,34 @@
+*.ngFactory.ts
+/node_modules
+/src
+/tests
+/tmp
+/demo
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+*.launch
+.settings/
+.editorconfig
+.vscode
+
+# misc
+/.sass-cache
+/connect.lock
+/coverage/*
+/libpeerconnection.log
+npm-debug.log
+testem.log
+/typings
+.travis.yml
+.npmignore
+
+# e2e
+/e2e/*.js
+/e2e/*.map
+
+#System Files
+.DS_Store
+Thumbs.db
