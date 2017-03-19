@@ -3,7 +3,7 @@
   "version": "1.0.0-alpha.2",
   "description": "",
   "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "typings": "dist/index.d.ts",
   "scripts": {
     "clean": "rimraf dist/",
     "build:aot": "ngc -p tsconfig.json",

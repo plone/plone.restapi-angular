@@ -34,6 +34,7 @@
         "dist",
         "tests",
         "**/*.ngfactory.ts",
+        "**/*.spec.ts",
         "**/*.shim.ts"
     ],
     "angularCompilerOptions": {
