@@ -1,3 +1,11 @@
+# 1.0.0-alpha.3 (2017-03-19)
+
+## Bug Fixes
+
+- Fix TypeScript compilation
+
+## BREAKING CHANGES
+
 # 1.0.0-alpha.2 (2017-03-16)
 
 ## Bug Fixes
