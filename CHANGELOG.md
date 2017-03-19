@@ -1,3 +1,11 @@
+# 1.0.0-alpha.4 (2017-03-19)
+
+## Bug Fixes
+
+- Move dependencies to peer dependencies
+
+## BREAKING CHANGES
+
 # 1.0.0-alpha.3 (2017-03-19)
 
 ## Bug Fixes
