@@ -17,6 +17,8 @@ Methods:
 
 `get(key: string)`: returns the configuration value for the given key.
 
+`urlToPath(url: string): string`: converts a full backend URL into a locally traversable path.
+
 ### Authentication
 
 Properties:
@@ -52,6 +54,10 @@ Methods:
 `transition(path: string, transition: string)`: perform the transition on the resource. Returns an observable.
 
 `update(path: string, model: any)`: update the resource. Returns an observable.
+
+### Component API
+
+`navigation()`: get the global navigation links. Returns an observable.
 
 ### Traversal
 

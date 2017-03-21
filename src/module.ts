@@ -10,6 +10,7 @@ import {
 } from 'angular-traversal';
 
 import { AuthenticationService } from './authentication.service';
+import { ComponentService } from './component.sevice';
 import { ConfigurationService } from './configuration.service';
 import { ResourceService } from './resource.service';
 import {
@@ -20,11 +21,13 @@ import {
 
 import { ViewView } from './views/view';
 
+import { GlobalNavigation } from './components/global.navigation';
 import { Navigation } from './components/navigation';
 
 @NgModule({
   declarations: [
     ViewView,
+    GlobalNavigation,
     Navigation,
   ],
   entryComponents: [
@@ -37,6 +40,7 @@ import { Navigation } from './components/navigation';
   ],
   providers: [
     AuthenticationService,
+    ComponentService,
     ConfigurationService,
     ResourceService,
     PloneViews,
@@ -45,6 +49,7 @@ import { Navigation } from './components/navigation';
   ],
   exports: [
     ViewView,
+    GlobalNavigation,
     Navigation,
     TraverserOutlet,
     TraverserLink,

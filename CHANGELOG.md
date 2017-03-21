@@ -1,10 +1,14 @@
+# 1.0.0-alpha.5 (2017-03-22)
+
+## New features
+
+- Add global navigation component
+
 # 1.0.0-alpha.4 (2017-03-19)
 
 ## Bug Fixes
 
 - Move dependencies to peer dependencies
-
-## BREAKING CHANGES
 
 # 1.0.0-alpha.3 (2017-03-19)
 
@@ -12,20 +16,12 @@
 
 - Fix TypeScript compilation
 
-## BREAKING CHANGES
-
 # 1.0.0-alpha.2 (2017-03-16)
 
 ## Bug Fixes
 
 - Clean up package content
 
-## BREAKING CHANGES
-
 # 1.0.0-alpha.1 (2017-03-16)
 
 Initial release
-
-## Bug Fixes
-
-## BREAKING CHANGES
