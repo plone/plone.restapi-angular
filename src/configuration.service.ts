@@ -12,4 +12,9 @@ export class ConfigurationService {
   get(key: string) {
     return this.config[key];
   }
+
+  urlToPath(url: string): string {
+    let base: string = this.get('BACKEND_URL');
+    return url.split(base)[1] || '/'
+  }
 }

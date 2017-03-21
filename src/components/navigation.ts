@@ -23,19 +23,18 @@ export class Navigation implements OnInit {
   ) { }
 
   ngOnInit() {
-    let base = this.config.get('BACKEND_URL');
     this.traverser.target.subscribe(target => {
       let context = target.context;
       if(context.items) {
         this.links = context.items.map(item => {
           return {
-            path: item['@id'].split(base)[1] || '/',
+            path: this.config.urlToPath(item['@id']),
             title: item.title,
           }
         });
       }
       if(context.parent) {
-        this.parent = (context.parent['@id'] && context.parent['@id'].split(base)[1]) || '/';
+        this.parent = (context.parent['@id'] && this.config.urlToPath(context.parent['@id']));
       }
     });
   }
