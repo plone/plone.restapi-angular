@@ -37,8 +37,13 @@ export class GlobalNavigation implements OnInit {
     });
 
     this.traverser.target.subscribe(target => {
-      this.links.filter(link => link.path.startsWith(target.path))
-        .map(link => link.active = true);
+      this.links.map(link => {
+        if (link.path.startsWith(target.path)) {
+          link.active = true;
+        } else {
+          link.active = false;
+        }
+      });
     });
   }
 
