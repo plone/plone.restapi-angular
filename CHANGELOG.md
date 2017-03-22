@@ -1,3 +1,9 @@
+# 1.0.0-alpha.7 (2017-03-22)
+
+## New feature
+
+- Set active link in global navigation
+
 # 1.0.0-alpha.6 (2017-03-22)
 
 ## Bug fixes
