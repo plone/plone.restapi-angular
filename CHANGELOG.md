@@ -1,3 +1,9 @@
+# 1.0.0-alpha.6 (2017-03-22)
+
+## Bug fixes
+
+- Fix package exported classes
+
 # 1.0.0-alpha.5 (2017-03-22)
 
 ## New features
