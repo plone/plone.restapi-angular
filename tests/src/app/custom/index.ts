@@ -10,12 +10,16 @@ import { ViewView } from '../lib';
   templateUrl: './navigation.html'
 })
 export class CustomNavigation extends Navigation {
-    constructor(
-      private config2: ConfigurationService,
-      private traverser2: Traverser,
-    ) {
-        super(config2, traverser2);
-    }
+  // WILL BE REMOVED IN ANGULAR 4
+  // this constructor is not needed, but for now there is a bug in Angular 2
+  // testing module which requires we call super() manually in that very case
+  // see https://github.com/angular/angular/issues/14944
+  constructor(
+    private config2: ConfigurationService,
+    private traverser2: Traverser,
+  ) {
+    super(config2, traverser2);
+  }
 }
 
 @Component({
@@ -23,7 +27,11 @@ export class CustomNavigation extends Navigation {
   templateUrl: './view.html'
 })
 export class CustomViewView extends ViewView {
-     constructor(private traverser2: Traverser) {
-         super(traverser2);
-     }
+  // WILL BE REMOVED IN ANGULAR 4
+  // this constructor is not needed, but for now there is a bug in Angular 2
+  // testing module which requires we call super() manually in that very case
+  // see https://github.com/angular/angular/issues/14944
+  constructor(private traverser2: Traverser) {
+    super(traverser2);
+  }
 }
