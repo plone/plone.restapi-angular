@@ -1,3 +1,9 @@
+# 1.0.0-alpha.10 (2017-03-24)
+
+## New feature
+
+Upgrade to Angular 4.0
+
 # 1.0.0-alpha.6 to .9 (2017-03-22)
 
 ## New feature
