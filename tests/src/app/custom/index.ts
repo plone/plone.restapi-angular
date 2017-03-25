@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Traverser } from 'angular-traversal';
 
 import { ConfigurationService } from '../lib';
+import { ResourceService } from '../lib';
 import { Navigation } from '../lib';
 import { ViewView } from '../lib';
 
@@ -16,9 +17,10 @@ export class CustomNavigation extends Navigation {
   // see https://github.com/angular/angular/issues/14944
   constructor(
     private config2: ConfigurationService,
+    private resource2: ResourceService,
     private traverser2: Traverser,
   ) {
-    super(config2, traverser2);
+    super(config2, resource2, traverser2);
   }
 }
 
