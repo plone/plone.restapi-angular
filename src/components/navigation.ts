@@ -8,7 +8,7 @@ import { ResourceService } from '../resource.service';
   selector: 'plone-navigation',
   template: `<a *ngIf="parent" [traverseTo]="parent">Go back to parent</a>
 <ul>
-  <li *ngFor="let link of links">
+  <li *ngFor="let link of links" [ngClass]="{'active': link.active}">
     <a [traverseTo]="link.path">{{ link.title }}</a>
   </li>
 </ul>`
@@ -31,20 +31,28 @@ export class Navigation implements OnInit {
         this.parent = (context.parent['@id'] && this.config.urlToPath(context.parent['@id']));
       }
       if(context.items) {
-        this.links = this.getLinks(context);
+        this.links = this.getLinks(context, target.path);
       } else if (this.parent) {
         this.resource.get(this.parent).subscribe(res => {
-          this.links = this.getLinks(res.json());
+          this.links = this.getLinks(res.json(), target.path);
         });
       }
     });
   }
 
-  getLinks(context): any[] {
+  getLinks(context, path): any[] {
     return context.items.map(item => {
+      let linkPath = this.config.urlToPath(item['@id']);
+      let active;
+      if (!path || path === '/') {
+        active = (!linkPath || linkPath === '/');
+      } else {
+        active = linkPath.startsWith(path);
+      }
       return {
-        path: this.config.urlToPath(item['@id']),
+        path: linkPath,
         title: item.title,
+        active: active,
       }
     });
   }

@@ -15,7 +15,6 @@ import { ConfigurationService } from '../configuration.service';
 export class GlobalNavigation implements OnInit {
 
   private links: any[] = [];
-  private parent: string;
 
   constructor(
     private config: ConfigurationService,
