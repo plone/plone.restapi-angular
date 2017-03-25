@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Traverser } from 'angular-traversal';
 
-import { ComponentService } from '../component.sevice';
+import { ComponentService } from '../component.service';
 import { ConfigurationService } from '../configuration.service';
 
 @Component({

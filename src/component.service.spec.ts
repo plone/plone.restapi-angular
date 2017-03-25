@@ -15,7 +15,7 @@ import {
 
 import { ConfigurationService, CONFIGURATION } from './configuration.service';
 import { AuthenticationService } from './authentication.service';
-import { ComponentService } from './component.sevice';
+import { ComponentService } from './component.service';
 
 describe('ComponentService', () => {
   beforeEach(() => {
