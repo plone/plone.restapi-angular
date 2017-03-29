@@ -1,3 +1,15 @@
+# 1.0.0-alpha.11 (2017-03-29)
+
+## New feature
+
+- manage active link in local navigation
+- display parent navigation if context is not a folder
+
+## Bug fixes
+
+- rename component.service properly and export it
+- set target to es5 for tests (so we can clean up custom components)
+
 # 1.0.0-alpha.10 (2017-03-24)
 
 ## New feature
