@@ -47,7 +47,7 @@ export class Navigation implements OnInit {
       if (!path || path === '/') {
         active = (!linkPath || linkPath === '/');
       } else {
-        active = linkPath.startsWith(path);
+        active = path.startsWith(linkPath);
       }
       return {
         path: linkPath,
