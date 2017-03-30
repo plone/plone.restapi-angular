@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Traverser } from 'angular-traversal';
 
 import { ResourceService } from '../resource.service';
+import { ConfigurationService } from '../configuration.service';
 
 @Component({
   selector: 'plone-navigation',
@@ -18,6 +19,7 @@ export class Navigation implements OnInit {
   private parent: string;
 
   constructor(
+    private config: ConfigurationService,
     private resource: ResourceService,
     private traverser: Traverser,
   ) { }
@@ -26,7 +28,7 @@ export class Navigation implements OnInit {
     this.traverser.target.subscribe(target => {
       let context = target.context;
       if(context.parent) {
-        this.parent = (context.parent['@id'] && context.parent['@id']);
+        this.parent = (context.parent['@id'] && this.config.urlToPath(context.parent['@id']));
       }
       if(context.items) {
         this.links = this.getLinks(context, target.path);
@@ -40,7 +42,7 @@ export class Navigation implements OnInit {
 
   getLinks(context, path): any[] {
     return context.items.map(item => {
-      let linkPath = item['@id'];
+      let linkPath = this.config.urlToPath(item['@id']);
       let active;
       if (!path || path === '/') {
         active = (!linkPath || linkPath === '/');
