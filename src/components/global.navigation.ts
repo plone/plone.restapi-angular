@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Traverser } from 'angular-traversal';
 
 import { ComponentService } from '../component.service';
-import { ConfigurationService } from '../configuration.service';
 
 @Component({
   selector: 'plone-global-navigation',
@@ -17,7 +16,6 @@ export class GlobalNavigation implements OnInit {
   private links: any[] = [];
 
   constructor(
-    private config: ConfigurationService,
     private service: ComponentService,
     private traverser: Traverser,
   ) { }
@@ -29,7 +27,7 @@ export class GlobalNavigation implements OnInit {
         this.links = data[0].items.map(item => {
           return {
             title: item.title,
-            path: this.config.urlToPath(item.url),
+            path: item.url,
           };
         });
       }

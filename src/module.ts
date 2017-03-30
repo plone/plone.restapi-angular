@@ -6,7 +6,8 @@ import {
   Resolver,
   Marker,
   TraverserOutlet,
-  TraverserLink
+  TraverserLink,
+  Normalizer,
 } from 'angular-traversal';
 
 import { AuthenticationService } from './authentication.service';
@@ -17,6 +18,7 @@ import {
   InterfaceMarker,
   PloneViews,
   RESTAPIResolver,
+  FullPathNormalizer,
 } from './traversal';
 
 import { ViewView } from './views/view';
@@ -46,6 +48,7 @@ import { Navigation } from './components/navigation';
     PloneViews,
     { provide: Resolver, useClass: RESTAPIResolver },
     { provide: Marker, useClass: InterfaceMarker },
+    { provide: Normalizer, useClass: FullPathNormalizer },
   ],
   exports: [
     ViewView,

@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Marker, Resolver, Traverser } from 'angular-traversal';
+import { Marker, Resolver, Traverser, Normalizer } from 'angular-traversal';
 import { Observable } from 'rxjs/Observable';
 
 import { ResourceService } from './resource.service';
+import { ConfigurationService } from './configuration.service';
 import { ViewView } from './views/view';
 
 @Injectable()
@@ -32,4 +33,21 @@ export class PloneViews {
     initialize() {
         this.traverser.addView('view', '*', ViewView);
     }
+}
+
+@Injectable()
+export class FullPathNormalizer extends Normalizer {
+
+  constructor(private config: ConfigurationService) {
+    super();
+  }
+  
+  normalize(path): string {
+    const base = this.config.get('BACKEND_URL');
+    if (path.startsWith(base)) {
+      return path.split(base)[1];
+    } else {
+      return path;
+    }
+  }
 }

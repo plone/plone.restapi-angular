@@ -15,31 +15,30 @@ export class ResourceService {
   ) {}
 
   copy(sourcePath: string, targetPath: string) {
-    let backend = this.config.get('BACKEND_URL');
-    let url = backend + targetPath + '/@copy';
+    let url = this.getFullPath(targetPath) + '/@copy';
     let headers = this.authentication.getHeaders();
     return this.http.post(
       url,
-      { source: backend + sourcePath },
+      { source: this.getFullPath(sourcePath) },
       { headers: headers }
     );
   }
 
   create(path: string, model: any) {
-    let url = this.config.get('BACKEND_URL') + path;
+    let url = this.getFullPath(path);
     let headers = this.authentication.getHeaders();
     return this.http.post(url, model, {headers: headers});
   }
 
   delete(path: string) {
-    let url = this.config.get('BACKEND_URL') + path;
+    let url = this.getFullPath(path);
     let headers = this.authentication.getHeaders();
     return this.http.delete(url, { headers: headers });
   }
 
   find(query: any, path: string='/', sort_on?: string, metadata_fields?: string[]) {
     if(!path.endsWith('/')) path += '/';
-    let url = this.config.get('BACKEND_URL') + path + '@search';
+    let url = this.getFullPath(path) + '@search';
     let headers = this.authentication.getHeaders();
     let params: string[] = [];
     Object.keys(query).map(index => {
@@ -65,32 +64,39 @@ export class ResourceService {
   }
 
   get(path: string, frames?: string[]) {
-    let url = this.config.get('BACKEND_URL') + path;
+    let url = this.getFullPath(path);
     let headers = this.authentication.getHeaders();
     return this.http.get(url, {headers: headers});
   }
 
   move(sourcePath: string, targetPath: string) {
-    let backend = this.config.get('BACKEND_URL');
-    let url = backend + targetPath + '/@move';
+    let url = this.getFullPath(targetPath) + '/@move';
     let headers = this.authentication.getHeaders();
     return this.http.post(
       url,
-      { source: backend + sourcePath },
+      { source: this.getFullPath(sourcePath) },
       { headers: headers }
     );
   }
 
   transition(path: string, transition: string) {
-    let url = this.config.get('BACKEND_URL') + path + '/@workflow/' + transition;
+    let url = this.getFullPath(path) + '/@workflow/' + transition;
     let headers = this.authentication.getHeaders();
     return this.http.post(url, { headers: headers });
   }
 
   update(path: string, model: any) {
-    let url = this.config.get('BACKEND_URL') + path;
+    let url = this.getFullPath(path);
     let headers = this.authentication.getHeaders();
     return this.http.patch(url, model, { headers: headers });
   }
 
+  private getFullPath(path: string) {
+    const base = this.config.get('BACKEND_URL');
+    if (path.startsWith(base)) {
+      return path;
+    } else {
+      return base + path;
+    }
+  }
 }
