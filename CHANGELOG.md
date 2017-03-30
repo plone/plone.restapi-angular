@@ -1,3 +1,13 @@
+# 1.0.0-alpha.13 (2017-03-30)
+
+## New feature
+
+- convert images and files to full backend path in rich text content
+
+## Bug fixes
+
+- fix active link in navigation
+
 # 1.0.0-alpha.12 (2017-03-30)
 
 ## New feature
