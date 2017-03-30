@@ -15,8 +15,8 @@ import { APP_BASE_HREF } from '@angular/common';
 import { ConfigurationService, CONFIGURATION } from '../configuration.service';
 import { AuthenticationService } from '../authentication.service';
 import { ResourceService } from '../resource.service';
-import { Traverser, TraversalModule, Resolver, Marker } from 'angular-traversal';
-import { InterfaceMarker, RESTAPIResolver, PloneViews } from '../traversal';
+import { Traverser, TraversalModule, Resolver, Marker, Normalizer } from 'angular-traversal';
+import { InterfaceMarker, RESTAPIResolver, PloneViews, FullPathNormalizer } from '../traversal';
 import { ViewView } from './view';
 
 describe('ViewView', () => {
@@ -43,6 +43,7 @@ describe('ViewView', () => {
         { provide: Resolver, useClass: RESTAPIResolver },
         { provide: Marker, useClass: InterfaceMarker },
         { provide: APP_BASE_HREF, useValue: '/' },
+        { provide: Normalizer, useClass: FullPathNormalizer },
         BaseRequestOptions,
         MockBackend,
         {
