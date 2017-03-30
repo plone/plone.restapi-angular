@@ -36,7 +36,14 @@ export class ResourceService {
     return this.http.delete(url, { headers: headers });
   }
 
-  find(query: any, path: string='/', sort_on?: string, metadata_fields?: string[]) {
+  find(
+    query: any,
+    path: string = '/',
+    sort_on?: string,
+    metadata_fields?: string[],
+    start?: number,
+    size?: number,
+  ) {
     if(!path.endsWith('/')) path += '/';
     let url = this.getFullPath(path) + '@search';
     let headers = this.authentication.getHeaders();
@@ -56,6 +63,12 @@ export class ResourceService {
     }
     if(metadata_fields) {
       params.push('metadata_fields=' + metadata_fields.join(','));
+    }
+    if (start) {
+      params.push('b_start=' + start.toString());
+    }
+    if (size) {
+      params.push('b_size=' + size.toString());
     }
     return this.http.get(
       url + '?' + params.join('&'),
