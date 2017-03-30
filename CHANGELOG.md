@@ -1,3 +1,9 @@
+# 1.0.0-alpha.12 (2017-03-30)
+
+## New feature
+
+- upgrade angular-traversal to allow full path traversing
+
 # 1.0.0-alpha.11 (2017-03-29)
 
 ## New feature
