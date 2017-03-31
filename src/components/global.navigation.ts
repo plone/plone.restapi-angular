@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Traverser } from 'angular-traversal';
 
-import { ComponentService } from '../component.service';
+import { ResourceService } from '../resource.service';
 import { ConfigurationService } from '../configuration.service';
 
 @Component({
@@ -18,7 +18,7 @@ export class GlobalNavigation implements OnInit {
 
   constructor(
     private config: ConfigurationService,
-    private service: ComponentService,
+    private service: ResourceService,
     private traverser: Traverser,
   ) { }
 

@@ -264,4 +264,29 @@ describe('ResourceService', () => {
       expect(content).toBe(null);
     });
   }));
+
+  it('should get global nav', inject([ResourceService, MockBackend], (service, backend) => {
+    backend.connections.subscribe(c => {
+      expect(c.request.url).toBe('http://fake/Plone/@components/navigation');
+      let response = [
+        {
+          "@id": "http://fake/Plone/front-page/@components/navigation",
+          "items": [
+            {
+              "title": "Home",
+              "url": "http://fake/Plone"
+            },
+            {
+              "title": "Welcome to Plone",
+              "url": "http://fake/Plone/front-page"
+            }
+          ]
+        }
+      ];
+      c.mockRespond(new Response(new ResponseOptions({ body: response })));
+    });
+    service.navigation().map(res => res.json()).subscribe(content => {
+      expect(content[0].items[0].url).toBe('http://fake/Plone');
+    });
+  }));
 });

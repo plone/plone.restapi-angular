@@ -11,7 +11,6 @@ import {
 } from 'angular-traversal';
 
 import { AuthenticationService } from './authentication.service';
-import { ComponentService } from './component.service';
 import { ConfigurationService } from './configuration.service';
 import { ResourceService } from './resource.service';
 import {
@@ -42,7 +41,6 @@ import { Navigation } from './components/navigation';
   ],
   providers: [
     AuthenticationService,
-    ComponentService,
     ConfigurationService,
     ResourceService,
     PloneViews,

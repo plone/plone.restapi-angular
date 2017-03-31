@@ -55,8 +55,6 @@ Methods:
 
 `update(path: string, model: any)`: update the resource. Returns an observable.
 
-### Component API
-
 `navigation()`: get the global navigation links. Returns an observable.
 
 ### Traversal

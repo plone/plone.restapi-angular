@@ -104,6 +104,12 @@ export class ResourceService {
     return this.http.patch(url, model, { headers: headers });
   }
 
+  navigation() {
+    let url = this.getFullPath('/@components/navigation');
+    let headers = this.authentication.getHeaders();
+    return this.http.get(url, { headers: headers });
+  }
+
   private getFullPath(path: string) {
     const base = this.config.get('BACKEND_URL');
     if (path.startsWith(base)) {
