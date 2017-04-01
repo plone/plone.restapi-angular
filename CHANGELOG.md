@@ -1,3 +1,14 @@
+# 1.0.0-alpha.14 (2017-04-01)
+
+## New feature
+
+- add start and size options in search
+- fully functional navigation service and component
+
+## Bug fixes
+
+- encode metadata_fields and booleans properly in search
+
 # 1.0.0-alpha.13 (2017-03-30)
 
 ## New feature
