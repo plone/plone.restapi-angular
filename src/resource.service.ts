@@ -61,8 +61,10 @@ export class ResourceService {
     if(sort_on) {
       params.push('sort_on=' + sort_on);
     }
-    if(metadata_fields) {
-      params.push('metadata_fields=' + metadata_fields.join(','));
+    if (metadata_fields) {
+      metadata_fields.map(field => {
+        params.push('metadata_fields:list=' + field);
+      });
     }
     if (start) {
       params.push('b_start=' + start.toString());
