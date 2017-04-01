@@ -50,7 +50,10 @@ export class ResourceService {
     let params: string[] = [];
     Object.keys(query).map(index => {
       let criteria = query[index];
-      if(typeof criteria === 'string') {
+      if (typeof criteria === 'boolean') {
+        params.push(index + '=' + (criteria ? '1' : '0'));
+      }
+      else if(typeof criteria === 'string') {
         params.push(index + '=' + encodeURIComponent(criteria));
       } else {
         Object.keys(criteria).map(key => {
