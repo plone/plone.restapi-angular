@@ -3,11 +3,11 @@
   <button md-button (click)="sidenav.open()">
     Open navigation
   </button>
-  <plone-global-navigation></plone-global-navigation>
+  <custom-navigation></custom-navigation>
 </md-toolbar>
 <md-sidenav-container class="example-container">
   <md-sidenav #sidenav class="example-sidenav">
-    <custom-navigation></custom-navigation>
+    <plone-navigation [root]="-1" [depth]="2"></plone-navigation>
   </md-sidenav>
 
   <div class="example-sidenav-content">

@@ -12,6 +12,7 @@ import {
 
 import { AuthenticationService } from './authentication.service';
 import { ConfigurationService } from './configuration.service';
+import { NavigationService } from './navigation.service';
 import { ResourceService } from './resource.service';
 import {
   InterfaceMarker,
@@ -24,12 +25,14 @@ import { ViewView } from './views/view';
 
 import { GlobalNavigation } from './components/global.navigation';
 import { Navigation } from './components/navigation';
+import { NavigationLevel } from './components/navigation.level';
 
 @NgModule({
   declarations: [
     ViewView,
     GlobalNavigation,
     Navigation,
+    NavigationLevel,
   ],
   entryComponents: [
     ViewView,
@@ -42,6 +45,7 @@ import { Navigation } from './components/navigation';
   providers: [
     AuthenticationService,
     ConfigurationService,
+    NavigationService,
     ResourceService,
     PloneViews,
     { provide: Resolver, useClass: RESTAPIResolver },
@@ -52,6 +56,7 @@ import { Navigation } from './components/navigation';
     ViewView,
     GlobalNavigation,
     Navigation,
+    NavigationLevel,
     TraverserOutlet,
     TraverserLink,
   ]

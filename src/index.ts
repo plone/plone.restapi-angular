@@ -6,3 +6,4 @@ export { PloneViews } from './traversal';
 export { ViewView } from './views/view';
 export { GlobalNavigation } from './components/global.navigation';
 export { Navigation } from './components/navigation';
+export { NavigationLevel } from './components/navigation.level';

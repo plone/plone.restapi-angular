@@ -156,7 +156,7 @@ describe('ResourceService', () => {
 
   it('should add metadata to search results', inject([ResourceService, MockBackend], (service, backend) => {
     backend.connections.subscribe(c => {
-      expect(c.request.url).toBe('http://fake/Plone/@search?SearchableText=John&metadata_fields=Creator,CreationDate');
+      expect(c.request.url).toBe('http://fake/Plone/@search?SearchableText=John&metadata_fields:list=Creator&metadata_fields:list=CreationDate');
       let response = {
         "@id": "http://fake/Plone/@search",
         "items": [

@@ -10,7 +10,7 @@ import { RESTAPIModule, CONFIGURATION } from './lib';
 
 import { AppComponent } from './app.component';
 import { CustomViewView } from './custom';
-import { CustomNavigation } from './custom';
+import { CustomGlobalNavigation } from './custom';
 
 describe('AppComponent', () => {
   // beforeAll( ()=> {
@@ -21,7 +21,7 @@ describe('AppComponent', () => {
       declarations: [
         AppComponent,
         CustomViewView,
-        CustomNavigation,
+        CustomGlobalNavigation,
       ],
       imports: [
         RESTAPIModule,

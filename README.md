@@ -165,8 +165,15 @@ Based on [Angular2 Schema Form](https://github.com/makinacorpus/angular2-schema-
 ### Navigation
 
 ```html
-<plone-navigation root="/events" depth="1"></plone-navigation>
+<plone-navigation root="/events" [depth]="2"></plone-navigation>
 ```
+
+`root` can be either a string (to specify a static path like `/events`) or a negative number (to specify an ancestor of the current page).
+
+`depth` define the tree depth.
+
+Note: be careful, in Angular templates, inputs are considered as string unless they are interpolated, so `root="/events"` returns the string `"/events"` and it works. It is equivalent to `[root]="'/events'"`.
+But `root="-1"` is wrong, as it would return the string `"-1"` which is not a number, to get an actual number, interpolation is mandatory: `[root]="-1"`.
 
 ### Toolbar
 
