@@ -23,7 +23,7 @@ export class ViewView implements OnInit {
         // NEEDED UNTIL PLONE.RESTAPI RETURNS FULL PATHES
         this.text = target.context.text.data.replace(
           /(src|href)=".+(resolveuid\/.+?)"/g,
-          'src="' + this.config.get('BACKEND_URL') + '/$2"');
+          '$1="' + this.config.get('BACKEND_URL') + '/$2"');
       }
     });
   }
