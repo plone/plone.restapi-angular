@@ -2,7 +2,7 @@
 
 import { TestBed, inject } from '@angular/core/testing';
 
-import { ConfigurationService, CONFIGURATION } from './configuration.service';
+import { ConfigurationService } from './configuration.service';
 
 describe('ConfigurationService', () => {
   beforeEach(() => {
@@ -10,7 +10,7 @@ describe('ConfigurationService', () => {
       providers: [
         ConfigurationService,
         {
-          provide: CONFIGURATION, useValue: {
+          provide: 'CONFIGURATION', useValue: {
             BACKEND_URL: 'http://fake/Plone',
           }
         },

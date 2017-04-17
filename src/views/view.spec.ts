@@ -12,7 +12,7 @@ import {
 } from '@angular/http/testing';
 import { APP_BASE_HREF } from '@angular/common';
 
-import { ConfigurationService, CONFIGURATION } from '../configuration.service';
+import { ConfigurationService } from '../configuration.service';
 import { AuthenticationService } from '../authentication.service';
 import { ResourceService } from '../resource.service';
 import { Traverser, TraversalModule, Resolver, Marker, Normalizer } from 'angular-traversal';
@@ -31,7 +31,7 @@ describe('ViewView', () => {
         AuthenticationService,
         ConfigurationService,
         {
-          provide: CONFIGURATION, useValue: {
+          provide: 'CONFIGURATION', useValue: {
             BACKEND_URL: 'http://fake/Plone',
           }
         },

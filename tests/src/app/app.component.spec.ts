@@ -6,7 +6,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { BaseRequestOptions, Response, ResponseOptions } from '@angular/http';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { Http } from '@angular/http';
-import { RESTAPIModule, CONFIGURATION } from './lib';
+import { RESTAPIModule } from './lib';
 
 import { AppComponent } from './app.component';
 import { CustomViewView } from './custom';
@@ -31,7 +31,7 @@ describe('AppComponent', () => {
       providers: [
         { provide: APP_BASE_HREF, useValue: '/' },
         {
-          provide: CONFIGURATION, useValue: {
+          provide: 'CONFIGURATION', useValue: {
             BACKEND_URL: 'http://fake/Plone',
           }
         },

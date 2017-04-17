@@ -13,7 +13,7 @@ import {
   MockConnection
 } from '@angular/http/testing';
 
-import { ConfigurationService, CONFIGURATION } from './configuration.service';
+import { ConfigurationService } from './configuration.service';
 import { AuthenticationService } from './authentication.service';
 import { ResourceService } from './resource.service';
 
@@ -25,7 +25,7 @@ describe('ResourceService', () => {
         AuthenticationService,
         ConfigurationService,
         {
-          provide: CONFIGURATION, useValue: {
+          provide: 'CONFIGURATION', useValue: {
             BACKEND_URL: 'http://fake/Plone',
           }
         },

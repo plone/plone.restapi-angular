@@ -1,4 +1,4 @@
-export { CONFIGURATION, ConfigurationService } from './configuration.service';
+export { ConfigurationService } from './configuration.service';
 export { AuthenticationService } from './authentication.service';
 export { ResourceService } from './resource.service';
 export { RESTAPIModule } from './module';

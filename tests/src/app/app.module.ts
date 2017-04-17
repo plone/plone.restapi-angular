@@ -6,7 +6,7 @@ import { MaterialModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import 'hammerjs';
 
-import { RESTAPIModule, CONFIGURATION } from './lib';
+import { RESTAPIModule } from './lib';
 
 import { AppComponent } from './app.component';
 import { CustomViewView } from './custom';
@@ -31,7 +31,7 @@ import { CustomGlobalNavigation } from './custom';
   ],
   providers: [
     {
-      provide: CONFIGURATION, useValue: {
+      provide: 'CONFIGURATION', useValue: {
         BACKEND_URL: 'http://localhost:8080/Plone',
       }
     },
