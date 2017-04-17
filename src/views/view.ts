@@ -8,8 +8,8 @@ import { ConfigurationService } from '../configuration.service';
 })
 export class ViewView implements OnInit {
 
-  private context: any;
-  private text: string;
+  context: any;
+  text: string;
 
   constructor(
     private config: ConfigurationService,

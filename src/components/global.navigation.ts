@@ -14,7 +14,7 @@ import { ConfigurationService } from '../configuration.service';
 })
 export class GlobalNavigation implements OnInit {
 
-  private links: any[] = [];
+  links: any[] = [];
 
   constructor(
     private config: ConfigurationService,
