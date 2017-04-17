@@ -1,3 +1,10 @@
+# 1.0.0-alpha.15 (2017-04-17)
+
+## Bug fixes
+
+- fix AOT support
+- fix src/href replace in body text
+
 # 1.0.0-alpha.14 (2017-04-01)
 
 ## New feature
