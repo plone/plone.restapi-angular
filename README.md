@@ -160,9 +160,7 @@ And now, your custom view will repalce the original one.
 
 ## Example
 
-The `./tests` folder in this repository contains a full example of an Angular project based on `@plone/restapi-angular`. It uses Material design, and it customizes different Plone components and views.
-
-Note: it does not use the released version of `@plone/restapi-angular` but the local one, so all the imports are done from `../../lib` instead of `@plone/restapi-angular`, just make sure to correct that if you copy/paste some code in your own project.
+This is a very simple example: [https://github.com/collective/plone-angular-demo](https://github.com/collective/plone-angular-demo).
 
 ## Services
 
