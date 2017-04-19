@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { ResourceService } from './resource.service';
 import { ConfigurationService } from './configuration.service';
+import { LoginView } from './views/login';
 import { ViewView } from './views/view';
 
 @Injectable()
@@ -31,6 +32,7 @@ export class PloneViews {
     constructor(private traverser: Traverser) {}
 
     initialize() {
+        this.traverser.addView('login', '*', LoginView);
         this.traverser.addView('view', '*', ViewView);
     }
 }

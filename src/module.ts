@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { CommonModule } from '@angular/common';
 import {
@@ -21,6 +22,7 @@ import {
   FullPathNormalizer,
 } from './traversal';
 
+import { LoginView } from './views/login';
 import { ViewView } from './views/view';
 
 import { Breadcrumbs } from './components/breadcrumbs';
@@ -30,6 +32,7 @@ import { NavigationLevel } from './components/navigation.level';
 
 @NgModule({
   declarations: [
+    LoginView,
     ViewView,
     Breadcrumbs,
     GlobalNavigation,
@@ -37,9 +40,11 @@ import { NavigationLevel } from './components/navigation.level';
     NavigationLevel,
   ],
   entryComponents: [
+    LoginView,
     ViewView,
   ],
   imports: [
+    FormsModule,
     HttpModule,
     CommonModule,
     TraversalModule,
@@ -55,6 +60,7 @@ import { NavigationLevel } from './components/navigation.level';
     { provide: Normalizer, useClass: FullPathNormalizer },
   ],
   exports: [
+    LoginView,
     ViewView,
     Breadcrumbs,
     GlobalNavigation,
