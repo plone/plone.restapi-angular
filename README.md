@@ -7,7 +7,7 @@ This package aims to provide the services and components needed to build an Angu
 
 ## Installation and usage
 
-Create an Angular application with [Angular CLI](https://github.com/angular/angular-cli):
+Create an Angular application with [Angular CLI](https://github.com/angular/angular-cli) (you will need 1.0.0+):
 
 ```bash
 ng new mywebsite
@@ -162,9 +162,22 @@ And now, your custom view will repalce the original one.
 
 This repository contains a very simple example: [https://github.com/collective/plone-angular-demo](https://github.com/collective/plone-angular-demo).
 
+To initialize it, run:
+```
+npm install
+```
+
+Make sure you have a Plone server running on localhost:8080 with Plone RESTAPI installed.
+
+Then launch:
+```
+ng serve
+```
+and visit http://locahost:4200/.
+
 By checking out this [commit](https://github.com/collective/plone-angular-demo/commit/152068ef3db2362da52e36ae7fe753992dd3bf42), you will get a site displaying the current content plus a navigation bar, with no customization.
 
-If you checkout this (commit)[https://github.com/collective/plone-angular-demo/commit/3881c003d1d253208d2db4a14c2bbec6dbe1b484], you will have bootstrap (you will need to run `npm install` in order to update your node modules) and a custom navigation.
+If you checkout this (commit)[https://github.com/collective/plone-angular-demo/commit/3881c003d1d253208d2db4a14c2bbec6dbe1b484], you will have bootstrap style (you will need to run `npm install` in order to update your node modules) and a custom navigation.
 
 ## Services
 
