@@ -10,12 +10,14 @@ import { RESTAPIModule } from './lib';
 
 import { AppComponent } from './app.component';
 import { CustomViewView } from './custom';
+import { CustomBreadcrumbs } from './custom';
 import { CustomGlobalNavigation } from './custom';
 
 @NgModule({
   declarations: [
     AppComponent,
     CustomViewView,
+    CustomBreadcrumbs,
     CustomGlobalNavigation,
   ],
   entryComponents: [

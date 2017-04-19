@@ -115,6 +115,12 @@ export class ResourceService {
     return this.http.get(url, { headers: headers });
   }
 
+  breadcrumbs(path: string) {
+    let url = this.getFullPath(path + '/@components/breadcrumbs');
+    let headers = this.authentication.getHeaders();
+    return this.http.get(url, { headers: headers });
+  }
+
   private getFullPath(path: string) {
     const base = this.config.get('BACKEND_URL');
     if (path.startsWith(base)) {

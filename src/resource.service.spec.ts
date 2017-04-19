@@ -289,4 +289,29 @@ describe('ResourceService', () => {
       expect(content[0].items[0].url).toBe('http://fake/Plone');
     });
   }));
+
+  it('should get breadcrumbs', inject([ResourceService, MockBackend], (service, backend) => {
+    backend.connections.subscribe(c => {
+      expect(c.request.url).toBe('http://fake/Plone/a-folder/test/@components/breadcrumbs');
+      let response = [
+        {
+          "@id": "http://fake/Plone/a-folder/test/@components/breadcrumbs",
+          "items": [
+            {
+              "title": "A folder",
+              "url": "http://fake/Plone/a-folder"
+            },
+            {
+              "title": "test",
+              "url": "http://fake/Plone/a-folder/test"
+            }
+          ]
+        }
+      ];
+      c.mockRespond(new Response(new ResponseOptions({ body: response })));
+    });
+    service.breadcrumbs('/a-folder/test').map(res => res.json()).subscribe(content => {
+      expect(content[0].items[0].title).toBe('A folder');
+    });
+  }));  
 });

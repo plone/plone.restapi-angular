@@ -1,4 +1,5 @@
 import { TestBed, async, inject } from '@angular/core/testing';
+import { Component } from '@angular/core';
 import { BrowserDynamicTestingModule, platformBrowserDynamicTesting } from '@angular/platform-browser-dynamic/testing';
 import { APP_BASE_HREF } from '@angular/common';
 import { MaterialModule } from '@angular/material';
@@ -12,6 +13,12 @@ import { AppComponent } from './app.component';
 import { CustomViewView } from './custom';
 import { CustomGlobalNavigation } from './custom';
 
+@Component({
+  selector: 'custom-breadcrumbs',
+  template: ''
+})
+export class FakeCustomBreadcrumbs {}
+
 describe('AppComponent', () => {
   // beforeAll( ()=> {
   //   TestBed.initTestEnvironment(BrowserDynamicTestingModule, platformBrowserDynamicTesting());
@@ -21,6 +28,7 @@ describe('AppComponent', () => {
       declarations: [
         AppComponent,
         CustomViewView,
+        FakeCustomBreadcrumbs,
         CustomGlobalNavigation,
       ],
       imports: [

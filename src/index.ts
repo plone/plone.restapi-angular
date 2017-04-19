@@ -4,6 +4,7 @@ export { ResourceService } from './resource.service';
 export { RESTAPIModule } from './module';
 export { PloneViews } from './traversal';
 export { ViewView } from './views/view';
+export { Breadcrumbs } from './components/breadcrumbs';
 export { GlobalNavigation } from './components/global.navigation';
 export { Navigation } from './components/navigation';
 export { NavigationLevel } from './components/navigation.level';

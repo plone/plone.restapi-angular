@@ -1,0 +1,7 @@
+<ol class="breadcrumb">
+  <li><a traverseTo="/">Home</a></li>
+  <li *ngFor="let link of links; let last = last" [ngClass]="{active: last}">
+    <a *ngIf="!last" [traverseTo]="link.url">{{ link.title }}</a>
+    <span *ngIf="last">{{ link.title }}</span>
+  </li>
+</ol>

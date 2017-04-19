@@ -282,11 +282,15 @@ Example: `http://localhost:4200/site/folder1/@@add/Document`
 
 Display the form to add a new content in the current context folder. The content-type is specified in the location after the view.
 
+TO BE IMPLEMENTED
+
 ### @@edit
 
 Example: `http://localhost:4200/site/folder1/@@edit`
 
 Display the current context in an edit form.
+
+TO BE IMPLEMENTED
 
 ### @@layout
 
@@ -294,11 +298,15 @@ Example: `http://localhost:4200/site/folder1/@@layout`
 
 Display the layout editor for current context.
 
+TO BE IMPLEMENTED
+
 ### @@login
 
 Example: `http://localhost:4200/site/@@login`
 
 Display the login form.
+
+TO BE IMPLEMENTED
 
 ### @@search
 
@@ -306,11 +314,15 @@ Example: `http://localhost:4200/site/@@search?SearchableText=RESTAPI`
 
 Display the search results for the specified criteria.
 
+TO BE IMPLEMENTED
+
 ### @@sharing
 
 Example: `http://localhost:4200/site/folder1/@@sharing`
 
 Display the sharing form for the current context.
+
+TO BE IMPLEMENTED
 
 ### @@view
 
@@ -326,11 +338,15 @@ Display the current context.
 <plone-breadcrumb></plone-breadcrumb>
 ```
 
+Displays the breadcrumbs links for the current context.
+
 ### Footer
 
 ```html
 <plone-footer></plone-footer>
 ```
+
+TO BE IMPLEMENTED
 
 ### Forms
 
@@ -354,6 +370,7 @@ But `root="-1"` is wrong, as it would return the string `"-1"` which is not a nu
 ```html
 <plone-toolbar></plone-toolbar>
 ```
+TO BE IMPLEMENTED
 
 ## Contribute
 

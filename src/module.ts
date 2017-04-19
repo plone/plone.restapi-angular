@@ -23,6 +23,7 @@ import {
 
 import { ViewView } from './views/view';
 
+import { Breadcrumbs } from './components/breadcrumbs';
 import { GlobalNavigation } from './components/global.navigation';
 import { Navigation } from './components/navigation';
 import { NavigationLevel } from './components/navigation.level';
@@ -30,6 +31,7 @@ import { NavigationLevel } from './components/navigation.level';
 @NgModule({
   declarations: [
     ViewView,
+    Breadcrumbs,
     GlobalNavigation,
     Navigation,
     NavigationLevel,
@@ -54,6 +56,7 @@ import { NavigationLevel } from './components/navigation.level';
   ],
   exports: [
     ViewView,
+    Breadcrumbs,
     GlobalNavigation,
     Navigation,
     NavigationLevel,
