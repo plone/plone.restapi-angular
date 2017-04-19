@@ -1,17 +1,13 @@
-<md-toolbar color="primary">
-  <img src="assets/plone-toolbarlogo.svg" />
-  <button md-button (click)="sidenav.open()">
-    Open navigation
-  </button>
+<div>
+  <h2>Custom global navigation</h2>
   <custom-navigation></custom-navigation>
-</md-toolbar>
-<md-sidenav-container class="example-container">
-  <md-sidenav #sidenav class="example-sidenav">
-    <plone-navigation [root]="-1" [depth]="2"></plone-navigation>
-  </md-sidenav>
-
-  <div class="example-sidenav-content">
-    <custom-breadcrumbs></custom-breadcrumbs>
-    <traverser-outlet></traverser-outlet>
-  </div>
-</md-sidenav-container>
+</div>
+<div>
+  <h2>Local navigation</h2>
+  <plone-navigation [root]="-1" [depth]="2"></plone-navigation>
+</div>
+<main>
+  <h3>Breadcrumbs</h3>
+  <custom-breadcrumbs></custom-breadcrumbs>
+  <traverser-outlet></traverser-outlet>
+</main>

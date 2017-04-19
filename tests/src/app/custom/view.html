@@ -1,19 +1,9 @@
-<md-card class="example-card">
-  <md-card-header>
-    <div md-card-avatar class="example-header-image"></div>
-    <md-card-title>{{ context.title }}</md-card-title>
-    <md-card-subtitle>{{ context.description }}</md-card-subtitle>
-  </md-card-header>
-  <md-card-content [innerHTML]="text">
-  </md-card-content>
-  <md-chip-list class="mat-chip-list-stacked">
-    <md-chip *ngFor="let subject of context.subjects"
-        selected="true">
-      {{subject}}
-    </md-chip>
-  </md-chip-list>
-  <md-card-actions>
-    <button md-button>LIKE</button>
-    <button md-button>SHARE</button>
-  </md-card-actions>
-</md-card>
+<h1>{{ context.title }}</h1>
+<strong>{{ context.description }}</strong>
+<div [innerHTML]="text"></div>
+<h3>Subjects</h3>
+<ul>
+  <li *ngFor="let subject of context.subjects">
+    {{subject}}
+  </li>
+</ul>
