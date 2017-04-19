@@ -26,8 +26,8 @@ export class Breadcrumbs implements OnInit {
 
   ngOnInit() {
     this.traverser.target.subscribe(target => {
-      if (target.path) {
-        this.service.breadcrumbs(target.path).subscribe(res => {
+      if (target.contextPath) {
+        this.service.breadcrumbs(target.contextPath).subscribe(res => {
           this.links = res.json()[0].items;
         });
       }

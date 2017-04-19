@@ -41,6 +41,6 @@
     "typescript": "^2.2.1"
   },
   "dependencies": {
-    "angular-traversal": "^1.0.0-alpha.10"
+    "angular-traversal": "^1.0.0-alpha.11"
   }
 }
