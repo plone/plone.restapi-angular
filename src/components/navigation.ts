@@ -1,7 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Traverser } from 'angular-traversal';
 
+import { TraversingComponent } from '../traversing';
 import { NavigationService } from '../navigation.service';
 
 @Component({
@@ -9,7 +10,7 @@ import { NavigationService } from '../navigation.service';
   template: `<plone-navigation-level
       [links]="links"></plone-navigation-level>`
 })
-export class Navigation implements OnInit {
+export class Navigation extends TraversingComponent {
 
   @Input() root: string = '/';
   @Input() depth: number = -1;
@@ -18,15 +19,15 @@ export class Navigation implements OnInit {
   constructor(
     private navigation: NavigationService,
     private traverser: Traverser,
-  ) { }
+  ) {
+    super(traverser);
+  }
 
-  ngOnInit() {
-    this.traverser.target.subscribe(target => {
-      this.navigation
-        .getNavigationFor(target.context['@id'], this.root, this.depth)
-        .subscribe(tree => {
-          this.links = tree.children;
-      });
+  onTraverse(target) {
+    this.navigation
+      .getNavigationFor(target.context['@id'], this.root, this.depth)
+      .subscribe(tree => {
+        this.links = tree.children;
     });
   }
 }

@@ -1,8 +1,7 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import { Traverser } from 'angular-traversal';
 import { AuthenticationService } from '../authentication.service';
-import 'rxjs/add/operator/takeUntil';
-import { Subject } from 'rxjs/Subject';
+import { TraversingComponent } from '../traversing';
 
 @Component({
   selector: 'plone-login',
@@ -13,35 +12,25 @@ import { Subject } from 'rxjs/Subject';
     <input type="submit" value="Login" />
   </form>`
 })
-export class LoginView implements OnInit, OnDestroy {
+export class LoginView extends TraversingComponent {
 
-  context: any;
   text: string;
-  private ngUnsubscribe: Subject<void> = new Subject<void>();
 
   constructor(
     private traverser: Traverser,
     private authentication: AuthenticationService,
-  ) {}
+  ) {
+    super(traverser);
+  } 
 
-  ngOnInit() {
-    this.traverser.target
+  onTraverse(target) {
+    this.authentication.isAuthenticated
       .takeUntil(this.ngUnsubscribe)
-      .subscribe(target => {
-        this.authentication.isAuthenticated
-          .takeUntil(this.ngUnsubscribe)
-          .subscribe(logged => {
-            console.log(logged);
-            if (logged) {
-              this.traverser.traverse(target.contextPath);
-            }
-          });
+      .subscribe(logged => {
+        if (logged) {
+          this.traverser.traverse(target.contextPath);
+        }
       });
-  }
-
-  ngOnDestroy() {
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
   }
 
   onSubmit(data) {
