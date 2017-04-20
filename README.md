@@ -7,10 +7,11 @@ This package aims to provide the services and components needed to build an Angu
 
 ## Installation and usage
 
-Create an Angular application with [Angular CLI](https://github.com/angular/angular-cli) (you will need 1.0.0+):
+Create an Angular application with [Angular CLI](https://github.com/angular/angular-cli) (you will need 1.0.0+) and then change your current directory to it:
 
 ```bash
 ng new mywebsite
+cd mywebsite
 ```
 
 Install the RESTAPI package:
@@ -21,7 +22,7 @@ npm install --save @plone/restapi-angular
 
 Note: the package is not released yet, you need to install a GitHub checkout.
 
-In `src/app.module.ts`, load the module and set the backend URL:
+In `src/app/app.module.ts`, load the module and set the backend URL:
 
 ```javascript
 import { RESTAPIModule } from '@plone/restapi-angular';
