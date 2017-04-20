@@ -95,11 +95,8 @@ export class CustomNavigation extends Navigation {}
 And now create a `./src/custom/navigation.html` file, for instance based on Angular Material (see [the setup here](https://material.angular.io/guide/getting-started)):
 
 ```html
-<button md-raised-button *ngIf="parent" [traverseTo]="parent">Go back to parent</button>
 <md-list>
-  <md-list-item *ngFor="let link of links">
-    <a [traverseTo]="link.path">{{ link.title }}</a>
-  </md-list-item>
+  <plone-navigation-level [links]="links"></plone-navigation-level>
 </md-list>
 ```
 
