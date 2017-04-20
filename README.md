@@ -20,8 +20,6 @@ Install the RESTAPI package:
 npm install --save @plone/restapi-angular
 ```
 
-Note: the package is not released yet, you need to install a GitHub checkout.
-
 In `src/app/app.module.ts`, load the module and set the backend URL:
 
 ```javascript
@@ -45,7 +43,7 @@ import { RESTAPIModule } from '@plone/restapi-angular';
   ...
 ```
 
-And you have to set up the Plone views for traversal in `src/app.component.ts`:
+And you have to set up the Plone views for traversal in `src/app/app.component.ts`:
 
 ```javascript
 import { Component } from '@angular/core';
@@ -67,7 +65,7 @@ export class AppComponent {
 
 ```
 
-Now you can use the Plone components in your templates, for example in `src/app.component.html`:
+Now you can use the Plone components in your templates, for example in `src/app/app.component.html`:
 
 ```html
 <plone-navigation></plone-navigation>
