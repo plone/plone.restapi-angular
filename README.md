@@ -188,7 +188,7 @@ and visit http://locahost:4200/.
 
 By checking out this [commit](https://github.com/collective/plone-angular-demo/commit/152068ef3db2362da52e36ae7fe753992dd3bf42), you will get a site displaying the current content plus a navigation bar, with no customization.
 
-If you checkout this (commit)[https://github.com/collective/plone-angular-demo/commit/3881c003d1d253208d2db4a14c2bbec6dbe1b484], you will have bootstrap style (you will need to run `npm install` in order to update your node modules) and a custom navigation.
+If you check out this [commit](https://github.com/collective/plone-angular-demo/commit/3881c003d1d253208d2db4a14c2bbec6dbe1b484), you will have bootstrap style (you will need to run `npm install` in order to update your node modules) and a custom navigation.
 
 ## Services
 
