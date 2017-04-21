@@ -76,9 +76,9 @@ Now you can use the Plone components in your templates, for example in `src/app/
 
 **WORK IN PROGRESS** (we will propose a better customization story)
 
-If you want to change the components rendering, you can provide your own template by derivating the original Plone component.
+If you want to change the component's rendering, you can provide your own template by deriving from the original Plone component.
 
-Let's create a `./src/custom` folder, with the following `index.ts`:
+Let's create a `./src/app/custom` folder, with the following `index.ts`:
 
 ```javascript
 import { Component } from '@angular/core';
@@ -91,7 +91,7 @@ import { Navigation } from '@plone/restapi-angular';
 export class CustomNavigation extends Navigation {}
 ```
 
-And now create a `./src/custom/navigation.html` file, for instance based on Angular Material (see [the setup here](https://material.angular.io/guide/getting-started)):
+And now create a `./src/app/custom/navigation.html` file, for instance based on Angular Material (see [the setup here](https://material.angular.io/guide/getting-started)):
 
 ```html
 <button md-raised-button *ngIf="parent" [traverseTo]="parent">Go back to parent</button>
@@ -105,16 +105,31 @@ And now create a `./src/custom/navigation.html` file, for instance based on Angu
 Your custom component will have to be declared in your app module:
 
 ```javascript
-import { CustomNavigation } from './src/custom';
+import { MaterialModule } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CustomNavigation } from './custom/index';
+
 @NgModule({
   declarations: [
     AppComponent,
     CustomNavigation,
   ],
+  imports: {
+    ...
+    MaterialModule,
+    BrowserAnimationsModule,
+  ],
 ...
 ```
 
-And now you can your `<custom-navigation>` component in templates.
+Finally, add the Angular Material dependencies to your project:
+
+```bash
+npm install --save @angular/material
+npm install --save @angular/animations
+```
+
+And now you can use your `<custom-navigation>` component in templates.
 
 ## Customize views
 
