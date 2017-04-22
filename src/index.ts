@@ -3,6 +3,8 @@ export { AuthenticationService } from './authentication.service';
 export { ResourceService } from './resource.service';
 export { RESTAPIModule } from './module';
 export { PloneViews } from './traversal';
+export { EditView } from './views/edit';
+export { LoginView } from './views/login';
 export { ViewView } from './views/view';
 export { Breadcrumbs } from './components/breadcrumbs';
 export { GlobalNavigation } from './components/global.navigation';
