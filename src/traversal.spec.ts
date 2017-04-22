@@ -15,6 +15,7 @@ import {
 import { APP_BASE_HREF } from '@angular/common';
 
 import { ConfigurationService } from './configuration.service';
+import { APIService } from './api.service';
 import { AuthenticationService } from './authentication.service';
 import { ResourceService } from './resource.service';
 import { Traverser, TraversalModule, Resolver, Marker, Normalizer } from 'angular-traversal';
@@ -26,6 +27,7 @@ describe('Traversal', () => {
     TestBed.configureTestingModule({
       imports: [TraversalModule],
       providers: [
+        APIService,
         AuthenticationService,
         ConfigurationService,
         {

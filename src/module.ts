@@ -16,6 +16,7 @@ import {
   Normalizer,
 } from 'angular-traversal';
 
+import { APIService } from './api.service';
 import { AuthenticationService } from './authentication.service';
 import { ConfigurationService } from './configuration.service';
 import { NavigationService } from './navigation.service';
@@ -59,6 +60,7 @@ import { NavigationLevel } from './components/navigation.level';
     TraversalModule,
   ],
   providers: [
+    APIService,
     AuthenticationService,
     ConfigurationService,
     NavigationService,

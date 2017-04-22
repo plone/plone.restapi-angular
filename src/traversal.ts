@@ -23,7 +23,7 @@ export class RESTAPIResolver extends Resolver {
   }
 
   resolve(path: string): Observable<any> {
-    return this.resource.get(path).map(res => res.json());
+    return this.resource.get(path);
   }
 }
 

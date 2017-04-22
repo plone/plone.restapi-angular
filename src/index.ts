@@ -1,4 +1,5 @@
 export { ConfigurationService } from './configuration.service';
+export { APIService } from './api.service';
 export { AuthenticationService } from './authentication.service';
 export { ResourceService } from './resource.service';
 export { RESTAPIModule } from './module';

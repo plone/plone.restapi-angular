@@ -13,6 +13,7 @@ import {
   MockConnection
 } from '@angular/http/testing';
 
+import { APIService } from './api.service';
 import { ConfigurationService } from './configuration.service';
 import { AuthenticationService } from './authentication.service';
 import { ResourceService } from './resource.service';
@@ -22,6 +23,7 @@ describe('ResourceService', () => {
     TestBed.configureTestingModule({
       providers: [
         ResourceService,
+        APIService,
         AuthenticationService,
         ConfigurationService,
         {
@@ -80,7 +82,7 @@ describe('ResourceService', () => {
       };
       c.mockRespond(new Response(new ResponseOptions({body: response})));
     });
-    service.get('/').map(res => res.json()).subscribe(content => {
+    service.get('/').subscribe(content => {
       expect(content['@id']).toBe('http://fake/Plone/');
     });
   }));
@@ -103,7 +105,7 @@ describe('ResourceService', () => {
       };
       c.mockRespond(new Response(new ResponseOptions({body: response})));
     });
-    service.find({SearchableText: 'John', path: {query: '/folder1', depth: 2}}).map(res => res.json()).subscribe(content => {
+    service.find({SearchableText: 'John', path: {query: '/folder1', depth: 2}}).subscribe(content => {
       expect(content.items[0]['@id']).toBe('http://fake/Plone/folder1/page1');
     });
   }));
@@ -126,7 +128,7 @@ describe('ResourceService', () => {
       };
       c.mockRespond(new Response(new ResponseOptions({ body: response })));
     });
-    service.find({ SearchableText: 'John' }, '/folder1').map(res => res.json()).subscribe(content => {
+    service.find({ SearchableText: 'John' }, '/folder1').subscribe(content => {
       expect(content.items[0]['@id']).toBe('http://fake/Plone/folder1/page1');
     });
   }));
@@ -149,7 +151,7 @@ describe('ResourceService', () => {
       };
       c.mockRespond(new Response(new ResponseOptions({ body: response })));
     });
-    service.find({ SearchableText: 'John' }, '', 'created').map(res => res.json()).subscribe(content => {
+    service.find({ SearchableText: 'John' }, '', 'created').subscribe(content => {
       expect(content.items[0]['@id']).toBe('http://fake/Plone/folder1/page1');
     });
   }));
@@ -172,7 +174,7 @@ describe('ResourceService', () => {
       };
       c.mockRespond(new Response(new ResponseOptions({ body: response })));
     });
-    service.find({ SearchableText: 'John' }, '', null, ['Creator', 'CreationDate']).map(res => res.json()).subscribe(content => {
+    service.find({ SearchableText: 'John' }, '', null, ['Creator', 'CreationDate']).subscribe(content => {
       expect(content.items[0]['@id']).toBe('http://fake/Plone/folder1/page1');
     });
   }));
@@ -191,7 +193,7 @@ describe('ResourceService', () => {
         '@type': 'Document',
         'id': 'my-document',
         'title': 'My Document',
-      }).map(res => res.json()).subscribe(content => {
+      }).subscribe(content => {
       expect(content.id).toBe('my-document');
     });
   }));
@@ -201,7 +203,7 @@ describe('ResourceService', () => {
       expect(c.request.url).toBe('http://fake/Plone/page1');
       c.mockRespond(new Response(new ResponseOptions()));
     });
-    service.delete('/page1').map(res => res.json()).subscribe(content => {
+    service.delete('/page1').subscribe(content => {
       expect(content).toBe(null);     
     });
   }));
@@ -217,7 +219,7 @@ describe('ResourceService', () => {
       ];
       c.mockRespond(new Response(new ResponseOptions({ body: response })));
     });
-    service.copy('/front-page', '/copy_of_front-page').map(res => res.json()).subscribe(content => {
+    service.copy('/front-page', '/copy_of_front-page').subscribe(content => {
       expect(content[0].new).toBe('http://fake/Plone/copy_of_front-page');
     });
   }));
@@ -233,7 +235,7 @@ describe('ResourceService', () => {
       ];
       c.mockRespond(new Response(new ResponseOptions({ body: response })));
     });
-    service.move('/front-page', '/copy_of_front-page').map(res => res.json()).subscribe(content => {
+    service.move('/front-page', '/copy_of_front-page').subscribe(content => {
       expect(content[0].new).toBe('http://fake/Plone/copy_of_front-page');
     });
   }));
@@ -250,7 +252,7 @@ describe('ResourceService', () => {
       };
       c.mockRespond(new Response(new ResponseOptions({ body: response })));
     });
-    service.transition('/somepage', 'publish').map(res => res.json()).subscribe(content => {
+    service.transition('/somepage', 'publish').subscribe(content => {
       expect(content.review_state).toBe('published');
     });
   }));
@@ -260,7 +262,7 @@ describe('ResourceService', () => {
       expect(c.request.url).toBe('http://fake/Plone/somepage');
       c.mockRespond(new Response(new ResponseOptions()));
     });
-    service.update('/somepage', { 'title': 'New title' }).map(res => res.json()).subscribe(content => {
+    service.update('/somepage', { 'title': 'New title' }).subscribe(content => {
       expect(content).toBe(null);
     });
   }));
@@ -285,7 +287,7 @@ describe('ResourceService', () => {
       ];
       c.mockRespond(new Response(new ResponseOptions({ body: response })));
     });
-    service.navigation().map(res => res.json()).subscribe(content => {
+    service.navigation().subscribe(content => {
       expect(content[0].items[0].url).toBe('http://fake/Plone');
     });
   }));
@@ -310,7 +312,7 @@ describe('ResourceService', () => {
       ];
       c.mockRespond(new Response(new ResponseOptions({ body: response })));
     });
-    service.breadcrumbs('/a-folder/test').map(res => res.json()).subscribe(content => {
+    service.breadcrumbs('/a-folder/test').subscribe(content => {
       expect(content[0].items[0].title).toBe('A folder');
     });
   }));  

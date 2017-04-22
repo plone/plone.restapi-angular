@@ -1,39 +1,28 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
-import { AuthenticationService } from './authentication.service';
-import { ConfigurationService } from './configuration.service';
+import { APIService } from './api.service';
 
 @Injectable()
 export class ResourceService {
 
   constructor(
-    private authentication: AuthenticationService,
-    private config: ConfigurationService,
-    private http: Http,
+    private api: APIService,
   ) {}
 
   copy(sourcePath: string, targetPath: string) {
-    let url = this.getFullPath(targetPath) + '/@copy';
-    let headers = this.authentication.getHeaders();
-    return this.http.post(
-      url,
-      { source: this.getFullPath(sourcePath) },
-      { headers: headers }
+    return this.api.post(
+      targetPath + '/@copy',
+      { source: this.api.getFullPath(sourcePath) }
     );
   }
 
   create(path: string, model: any) {
-    let url = this.getFullPath(path);
-    let headers = this.authentication.getHeaders();
-    return this.http.post(url, model, {headers: headers});
+    return this.api.post(path, model);
   }
 
   delete(path: string) {
-    let url = this.getFullPath(path);
-    let headers = this.authentication.getHeaders();
-    return this.http.delete(url, { headers: headers });
+    return this.api.delete(path);
   }
 
   find(
@@ -45,8 +34,6 @@ export class ResourceService {
     size?: number,
   ) {
     if(!path.endsWith('/')) path += '/';
-    let url = this.getFullPath(path) + '@search';
-    let headers = this.authentication.getHeaders();
     let params: string[] = [];
     Object.keys(query).map(index => {
       let criteria = query[index];
@@ -75,64 +62,39 @@ export class ResourceService {
     if (size) {
       params.push('b_size=' + size.toString());
     }
-    return this.http.get(
-      url + '?' + params.join('&'),
-      {headers: headers}
+    return this.api.get(
+      path + '@search' + '?' + params.join('&')
     );
   }
 
   get(path: string, frames?: string[]) {
-    let url = this.getFullPath(path);
-    let headers = this.authentication.getHeaders();
-    return this.http.get(url, {headers: headers});
+    return this.api.get(path);
   }
 
   move(sourcePath: string, targetPath: string) {
-    let url = this.getFullPath(targetPath) + '/@move';
-    let headers = this.authentication.getHeaders();
-    return this.http.post(
-      url,
-      { source: this.getFullPath(sourcePath) },
-      { headers: headers }
+    return this.api.post(
+      targetPath + '/@move',
+      { source: this.api.getFullPath(sourcePath) }
     );
   }
 
   transition(path: string, transition: string) {
-    let url = this.getFullPath(path) + '/@workflow/' + transition;
-    let headers = this.authentication.getHeaders();
-    return this.http.post(url, { headers: headers });
+    return this.api.post(path + '/@workflow/' + transition, null);
   }
 
   update(path: string, model: any) {
-    let url = this.getFullPath(path);
-    let headers = this.authentication.getHeaders();
-    return this.http.patch(url, model, { headers: headers });
+    return this.api.patch(path, model);
   }
 
   navigation() {
-    let url = this.getFullPath('/@components/navigation');
-    let headers = this.authentication.getHeaders();
-    return this.http.get(url, { headers: headers });
+    return this.api.get('/@components/navigation');
   }
 
   breadcrumbs(path: string) {
-    let url = this.getFullPath(path + '/@components/breadcrumbs');
-    let headers = this.authentication.getHeaders();
-    return this.http.get(url, { headers: headers });
+    return this.api.get(path + '/@components/breadcrumbs');
   }
 
   type(typeId) {
-    let url = this.getFullPath('/@types/' + typeId);
-    let headers = this.authentication.getHeaders();
-    return this.http.get(url, { headers: headers });
-  }
-
-  private getFullPath(path: string) {
-    const base = this.config.get('BACKEND_URL');
-    if (path.startsWith(base)) {
-      return path;
-    } else {
-      return base + path;
-    }
+    return this.api.get('/@types/' + typeId);
   }
 }

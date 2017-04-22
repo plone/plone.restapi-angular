@@ -35,8 +35,7 @@ export class EditView implements OnInit {
     this.traverser.target.subscribe(target => {
       this.path = target.contextPath;
       let model = target.context;
-      this.resource.type(target.context['@type']).subscribe(res => {
-        let schema = res.json();
+      this.resource.type(target.context['@type']).subscribe(schema => {
         schema.buttons = [
           { id: 'save', label: 'Save' },
           { id: 'cancel', label: 'Cancel' }
