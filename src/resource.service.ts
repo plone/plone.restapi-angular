@@ -121,6 +121,12 @@ export class ResourceService {
     return this.http.get(url, { headers: headers });
   }
 
+  type(typeId) {
+    let url = this.getFullPath('/@types/' + typeId);
+    let headers = this.authentication.getHeaders();
+    return this.http.get(url, { headers: headers });
+  }
+
   private getFullPath(path: string) {
     const base = this.config.get('BACKEND_URL');
     if (path.startsWith(base)) {

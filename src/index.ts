@@ -4,6 +4,7 @@ export { ResourceService } from './resource.service';
 export { RESTAPIModule } from './module';
 export { PloneViews } from './traversal';
 export { TraversingComponent } from './traversing';
+export { EditView } from './views/edit';
 export { LoginView } from './views/login';
 export { ViewView } from './views/view';
 export { Breadcrumbs } from './components/breadcrumbs';
