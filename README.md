@@ -148,7 +148,7 @@ import { CustomViewView } from './custom';
   ],
 ...
 ```
-And in `app.component.ts`, you will need to register it for traversal that way:
+And in `app.component.ts`, you will need to register it for traversal this way:
 
 ```javascript
 ...
