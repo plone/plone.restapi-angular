@@ -20,7 +20,7 @@ export class ViewView extends TraversingComponent {
 
   onTraverse(target) {
     if (target.context.text) {
-      // NEEDED UNTIL PLONE.RESTAPI RETURNS FULL PATHES
+      // NEEDED UNTIL PLONE.RESTAPI RETURNS FULL PATHS
       this.text = target.context.text.data.replace(
         /(src|href)=".+(resolveuid\/.+?)"/g,
         '$1="' + this.config.get('BACKEND_URL') + '/$2"');
