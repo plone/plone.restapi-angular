@@ -109,7 +109,7 @@ Note the following changes to the boilerplate:
 - Rename the `selector`.
 - Put the `template` inline (using backticks) instead of using an external `templateUrl`, since the template is very short.
 - Replace `implements` with `extends` and extend from `Navigation`.
-- Delete the `constructor` and `onInit`.
+- Delete the `constructor` and `ngOnInit`.
 
 Let us now turn to `./src/app/custom-navigation-level/custom-navigation-level.component.ts`:
 
