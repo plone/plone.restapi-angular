@@ -1,3 +1,6 @@
+Basic usage
+===========
+
 In `src/app.module.ts`, load the module and set the backend URL:
 
 .. code-block:: javascript
@@ -49,7 +52,8 @@ Now you can use the Plone components in your templates, for example in `src/app.
   <plone-navigation></plone-navigation>
   <traverser-outlet></traverser-outlet>
 
-## Customize components
+Customize components
+---------------------
 
 **WORK IN PROGRESS** (we will propose a better customization story)
 
@@ -142,7 +146,8 @@ And load the CSS for Angular Material in the "main template" `./src/index.html`:
 
 And now you can use your `<custom-navigation>` component in templates, for example by using it instead of `<plone-navigation>`.
 
-## Customize views
+Customize views
+---------------------
 
 Customizing a view is quite similar to component customization, the only extra step is to declare it for traversal.
 
