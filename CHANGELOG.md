@@ -1,3 +1,15 @@
+# 1.0.0-alpha.16 (2017-04-25)
+
+## New features
+
+- specific service for HTTP calls
+- login view
+- edit view
+
+## Bug fixes
+
+- manage unsubscribe for all traversing aware components
+
 # 1.0.0-alpha.15 (2017-04-17)
 
 ## Bug fixes
@@ -7,7 +19,7 @@
 
 # 1.0.0-alpha.14 (2017-04-01)
 
-## New feature
+## New features
 
 - add start and size options in search
 - fully functional navigation service and component
