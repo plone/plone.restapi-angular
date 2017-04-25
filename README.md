@@ -19,6 +19,10 @@ The Plone Angular SDK provides ready-to-use components to build a wide range of 
 
 TODO: drawing here
 
+## Documentation
+
+See [documentation folder](/docs).
+
 ## Example
 
 This repository contains a very simple example: [https://github.com/collective/plone-angular-demo](https://github.com/collective/plone-angular-demo).
@@ -38,7 +42,7 @@ and visit http://locahost:4200/.
 
 By checking out this [commit](https://github.com/collective/plone-angular-demo/commit/152068ef3db2362da52e36ae7fe753992dd3bf42), you will get a site displaying the current content plus a navigation bar, with no customization.
 
-If you checkout this (commit)[https://github.com/collective/plone-angular-demo/commit/3881c003d1d253208d2db4a14c2bbec6dbe1b484], you will have bootstrap style (you will need to run `npm install` in order to update your node modules) and a custom navigation.
+If you checkout this [commit](https://github.com/collective/plone-angular-demo/commit/3881c003d1d253208d2db4a14c2bbec6dbe1b484), you will have bootstrap style (you will need to run `npm install` in order to update your node modules) and a custom navigation.
 
 ## Contribute
 
