@@ -42,6 +42,6 @@
   },
   "dependencies": {
     "angular-traversal": "^1.0.0-alpha.11",
-    "angular2-schema-form": "^1.0.0-beta.6"
+    "angular2-schema-form": "^1.0.0-beta.7"
   }
 }
