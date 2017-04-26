@@ -1,13 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { OnInit, OnDestroy } from '@angular/core';
 import { Traverser } from 'angular-traversal';
 import { ConfigurationService } from './configuration.service';
 import 'rxjs/add/operator/takeUntil';
 import { Subject } from 'rxjs/Subject';
 
-@Component({
-  selector: 'plone-traversing',
-  template: ''
-})
 export abstract class TraversingComponent implements OnInit, OnDestroy {
 
   context: any;

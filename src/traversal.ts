@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { ResourceService } from './resource.service';
 import { ConfigurationService } from './configuration.service';
+import { EditView } from './views/edit';
 import { LoginView } from './views/login';
 import { ViewView } from './views/view';
 
@@ -22,7 +23,7 @@ export class RESTAPIResolver extends Resolver {
   }
 
   resolve(path: string): Observable<any> {
-    return this.resource.get(path).map(res => res.json());
+    return this.resource.get(path);
   }
 }
 
@@ -34,6 +35,7 @@ export class PloneViews {
     initialize() {
         this.traverser.addView('login', '*', LoginView);
         this.traverser.addView('view', '*', ViewView);
+        this.traverser.addView('edit', '*', EditView);
     }
 }
 

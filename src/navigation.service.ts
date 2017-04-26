@@ -37,7 +37,7 @@ export class NavigationService {
         1000
       ).map(res => {
         let tree = { children: {} };
-        res.json().items.map(item => {
+        res.items.map(item => {
           if (item.exclude_from_nav) {
             return;
           }

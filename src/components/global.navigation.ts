@@ -27,8 +27,7 @@ export class GlobalNavigation extends TraversingComponent implements OnInit {
 
   ngOnInit() {
     super.ngOnInit();
-    this.service.navigation().subscribe(res => {
-      let data = res.json();
+    this.service.navigation().subscribe(data => {
       if (data && data[0] && data[0].items) {
         this.links = data[0].items.map(item => {
           return {

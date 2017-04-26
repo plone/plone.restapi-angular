@@ -30,7 +30,7 @@ export class Breadcrumbs extends TraversingComponent {
   onTraverse(target) {
     if (target.contextPath) {
       this.service.breadcrumbs(target.contextPath).subscribe(res => {
-        this.links = res.json()[0].items;
+        this.links = res[0].items;
       });
     }
   }

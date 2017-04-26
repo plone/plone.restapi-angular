@@ -3,6 +3,11 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { CommonModule } from '@angular/common';
 import {
+  SchemaFormModule,
+  WidgetRegistry,
+  DefaultWidgetRegistry
+} from 'angular2-schema-form';
+import {
   TraversalModule,
   Resolver,
   Marker,
@@ -11,6 +16,7 @@ import {
   Normalizer,
 } from 'angular-traversal';
 
+import { APIService } from './api.service';
 import { AuthenticationService } from './authentication.service';
 import { ConfigurationService } from './configuration.service';
 import { NavigationService } from './navigation.service';
@@ -22,6 +28,7 @@ import {
   FullPathNormalizer,
 } from './traversal';
 
+import { EditView } from './views/edit';
 import { LoginView } from './views/login';
 import { ViewView } from './views/view';
 
@@ -32,6 +39,7 @@ import { NavigationLevel } from './components/navigation.level';
 
 @NgModule({
   declarations: [
+    EditView,
     LoginView,
     ViewView,
     Breadcrumbs,
@@ -40,16 +48,19 @@ import { NavigationLevel } from './components/navigation.level';
     NavigationLevel,
   ],
   entryComponents: [
+    EditView,
     LoginView,
     ViewView,
   ],
   imports: [
     FormsModule,
+    SchemaFormModule,
     HttpModule,
     CommonModule,
     TraversalModule,
   ],
   providers: [
+    APIService,
     AuthenticationService,
     ConfigurationService,
     NavigationService,
@@ -58,8 +69,10 @@ import { NavigationLevel } from './components/navigation.level';
     { provide: Resolver, useClass: RESTAPIResolver },
     { provide: Marker, useClass: InterfaceMarker },
     { provide: Normalizer, useClass: FullPathNormalizer },
+    { provide: WidgetRegistry, useClass: DefaultWidgetRegistry },
   ],
   exports: [
+    EditView,
     LoginView,
     ViewView,
     Breadcrumbs,
