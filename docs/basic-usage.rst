@@ -149,11 +149,12 @@ Finally, edit your app module (``./src/app/app.module.ts``):
   ...
 
 And load the CSS for Angular Material in the "main template" ``./src/index.html``:
+
 .. code-block:: html
 
   <link href="../node_modules/@angular/material/prebuilt-themes/indigo-pink.css" rel="stylesheet">
 
-And now you can use your ``<custom-navigation>`` component in templates, for example by using it instead of ``<plone-navigation>``.
+Now you can use your ``<custom-navigation>`` component in templates, for example by using it instead of ``<plone-navigation>``.
 
 Customize views
 ---------------------
@@ -196,4 +197,4 @@ And in ``app.component.ts``, you will need to register it for traversal this way
     }
   }
 
-And now, your custom view will replace the original one.
+Now your custom view will replace the original one.
