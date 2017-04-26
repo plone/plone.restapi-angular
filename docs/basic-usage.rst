@@ -59,7 +59,13 @@ Customize components
 
 If you want to change the components rendering, you can provide your own template by extending the original Plone component.
 
-In this example we will override the template used by the **Navigation** component in order to use `Material Design<https://material.angular.io>`_ styling.  The navigation menu is actually provided by two separate components, **`Navigation<https://github.com/plone/plone.restapi-angular/blob/master/src/components/navigation.ts>`_** and **`NavigationLevel<https://github.com/plone/plone.restapi-angular/blob/master/src/components/navigation.level.ts>`_**.  The actual customization will happen in the latter, but we also need a custom Navigation in order to refer to our custom Navigation Level.
+In this example we will override the template used by the **Navigation** component in order to use `Material Design <https://material.angular.io>`_ styling.  The navigation menu is actually provided by two separate components, |Navigation|_ and |NavigationLevel|_.  The actual customization will happen in the latter, but we also need a custom Navigation in order to refer to our custom Navigation Level.
+
+.. |Navigation| replace:: **Navigation**
+.. _Navigation: https://github.com/plone/plone.restapi-angular/blob/master/src/components/navigation.ts
+
+.. |NavigationLevel| replace:: **NavigationLevel**
+.. _NavigationLevel: https://github.com/plone/plone.restapi-angular/blob/master/src/components/navigation.level.ts
 
 Let's use Angular CLI to create our custom components:
 
@@ -118,8 +124,10 @@ This is very similar to the custom navigation component, except that we point to
     </md-list-item>
   </md-nav-list>
 
-Note that we are using the same structure as in the `default navigation level template<https://github.com/plone/plone.restapi-angular/blob/master/src/components/navigation.level.ts#L5>`_, only using markup from Angular Material.  Before we can call this done, we also need to install the dependencies (see `the setup here<https://material.angular.io/guide/getting-started>`_):
+Note that we are using the same structure as in the |defaultNavigationLeveltemplate|_, only using markup from Angular Material.  Before we can call this done, we also need to install the dependencies (see `the setup here <https://material.angular.io/guide/getting-started>`_):
 
+.. |defaultNavigationLeveltemplate| replace:: default `NavigationLevel` template
+.. _defaultNavigationLeveltemplate: https://github.com/plone/plone.restapi-angular/blob/master/src/components/navigation.level.ts#L5
 .. code-block::
 
   npm install --save @angular/material
