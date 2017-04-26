@@ -6,13 +6,13 @@ NodeJs
 
 We will need NodeJS 6.10+.
 
-We recommend to install using NVM.
+We recommend using NVM to install NodeJS.
 
 Install nvm on our system using the instructions and provided script at:
 
 https://github.com/creationix/nvm#install-script
 
-Using nvm we will look up the latest lts version of node.js and install it::
+Using ``nvm`` we will look up the latest LTS version of node.js and install it::
 
     $ nvm ls-remote --lts
     $ nvm install 6.10
@@ -34,9 +34,9 @@ We install it with NPM::
 
     $ npm install -g @angular/cli
 
-The `-g` option install the CLI globally, meaning it is available wherever we activate our NVM.
+The ``-g`` option install the CLI globally, meaning it is available wherever we activate our NVM.
 
-ng will be available from the command line and we are ready to bootstrap an application.
+``ng`` will be available from the command line and we are ready to bootstrap an application.
 
 Backend
 -------
@@ -67,6 +67,6 @@ Stop the local server and type::
 
     $ npm install @plone/restapi-angular --save
 
-Note: the `--save` option make sure the dependency is added in our `package.json`.
+Note: the ``--save`` option ensures the dependency is added in our ``package.json``.
 
-We are now ready to use the Plone Angualr SDK features.
+We are now ready to use Plone Angular SDK.
