@@ -57,9 +57,9 @@ Customize components
 
 **WORK IN PROGRESS** (we will propose a better customization story)
 
-If you want to change the components rendering, you can provide your own template by extending the original Plone component.
+If you want to change the component's rendering, you can provide your own template by extending the original Plone component.
 
-In this example we will override the template used by the ``Navigation`` component in order to use `Material Design <https://material.angular.io>`_ styling.  The navigation menu is actually provided by two separate components, |Navigation|_ and |NavigationLevel|_.  The actual customization will happen in the latter, but we also need a custom Navigation in order to refer to our custom Navigation Level.
+In this example we will override the template used by the ``Navigation`` component in order to use `Material Design <https://material.angular.io>`_ styling.  The navigation menu is actually provided by two separate components, |Navigation|_ and |NavigationLevel|_.  The actual customization will happen in the latter, but we also need a custom ``Navigation`` in order to refer to our custom ``NavigationLevel``.
 
 .. |Navigation| replace:: ``Navigation``
 .. _Navigation: https://github.com/plone/plone.restapi-angular/blob/master/src/components/navigation.ts
@@ -160,14 +160,35 @@ Customize views
 ---------------------
 
 Customizing a view is quite similar to component customization, the only extra step is to declare it for traversal.
+In this example we will modify the default view so that it will display the context's summary under its title.
 
-So just declare your custom view component in ``./src/custom/index.ts`` and create an appropriate HTML template. 
+Let's use Angular CLI to create our custom view:
 
-In ``app.module.ts``, you will need to put it in ``declarations`` and in ``entryComponents``:
+.. code-block::
+
+  ng generate component custom-view
+
+This will create a new folder: ``./src/app/custom-view``.
+
+Edit ``./src/app/custom-view/custom-view.component.ts``:
+
+.. code-block:: javascript
+import { Component } from '@angular/core';
+import { ViewView } from '@plone/restapi-angular';
+
+@Component({
+  selector: 'custom-view',
+  template: `<h2>{{ context.title }}</h2><h4>{{ context.description }}</h4>`,
+})
+export class CustomViewView extends ViewView {}
+
+You can see in the inline template that we added the ``context.description``.
+
+In ``app.module.ts``, you will need to put our custom view in ``declarations`` and in ``entryComponents``:
 
 .. code-block:: javascript
 
-  import { CustomViewView } from './custom';
+  import { CustomViewView } from './custom-view/custom-view.component';
   @NgModule({
     declarations: [
       AppComponent,
@@ -183,7 +204,7 @@ And in ``app.component.ts``, you will need to register it for traversal this way
 .. code-block:: javascript
 
   ...
-  import { CustomViewView } from './custom';
+  import { CustomViewView } from './custom-view/custom-view.component';
 
   ...
   export class AppComponent {
