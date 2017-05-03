@@ -21,7 +21,7 @@ TO BE IMPLEMENTED
 Forms
 -----
 
-Based on [Angular2 Schema Form](https://github.com/makinacorpus/angular2-schema-form).
+Based on `Angular2 Schema Form <https://github.com/makinacorpus/angular2-schema-form>`_.
 
 Global navigation
 -----------------
@@ -41,12 +41,12 @@ Navigation
 
 Display navigation links.
 
-`root` can be either a string (to specify a static path like `/news`) or a negative number (to specify an ancestor of the current page).
+``root`` can be either a string (to specify a static path like ``/news``) or a negative number (to specify an ancestor of the current page).
 
-`depth` define the tree depth.
+``depth`` defines the tree depth.
 
-Note: be careful, in Angular templates, inputs are considered as string unless they are interpolated, so `root="/events"` returns the string `"/events"` and it works. It is equivalent to `[root]="'/events'"`.
-But `root="-1"` is wrong, as it would return the string `"-1"` which is not a number, to get an actual number, interpolation is mandatory: `[root]="-1"`.
+Note: be careful, in Angular templates, inputs are considered as string unless they are interpolated, so ``root="/events"`` returns the string ``"/events"`` and it works. It is equivalent to ``[root]="'/events'"``.
+But ``root="-1"`` is wrong, as it would return the string ``"-1"`` which is not a number. To get an actual number, interpolation is mandatory: ``[root]="-1"``.
 
 Toolbar
 -------
