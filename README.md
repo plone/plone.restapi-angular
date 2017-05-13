@@ -17,7 +17,7 @@ Plone is a flexible and powerful backend, it provides:
 
 The Plone Angular SDK provides ready-to-use components to build a wide range of applications.
 
-![Animation](docs/anim.gif)
+![Animation](https://github.com/plone/plone.restapi-angular/raw/master/docs/anim.gif)
 
 ## Documentation
 

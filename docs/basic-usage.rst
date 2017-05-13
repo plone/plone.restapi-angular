@@ -1,7 +1,7 @@
 Basic usage
 ===========
 
-In `src/app.module.ts`, load the module and set the backend URL:
+In ``src/app.module.ts``, load the module and set the backend URL:
 
 .. code-block:: javascript
 
@@ -24,7 +24,7 @@ In `src/app.module.ts`, load the module and set the backend URL:
     ],
     ...
 
-And you have to set up the Plone views for traversal in `src/app.component.ts`:
+And you have to set up the Plone views for traversal in ``src/app.component.ts``:
 
 .. code-block:: javascript
 
@@ -45,7 +45,7 @@ And you have to set up the Plone views for traversal in `src/app.component.ts`:
     }
   }
 
-Now you can use the Plone components in your templates, for example in `src/app.component.html`:
+Now you can use the Plone components in your templates, for example in ``src/app.component.html``:
 
 .. code-block:: html
 
@@ -57,9 +57,15 @@ Customize components
 
 **WORK IN PROGRESS** (we will propose a better customization story)
 
-If you want to change the components rendering, you can provide your own template by extending the original Plone component.
+If you want to change the component's rendering, you can provide your own template by extending the original Plone component.
 
-In this example we will override the template used by the **Navigation** component in order to use [Material Design](https://material.angular.io/) styling.  The navigation menu is actually provided by two separate components, **[Navigation](https://github.com/plone/plone.restapi-angular/blob/master/src/components/navigation.ts)** and **[NavigationLevel](https://github.com/plone/plone.restapi-angular/blob/master/src/components/navigation.level.ts)**.  The actual customization will happen in the latter, but we also need a custom Navigation in order to refer to our custom Navigation Level.
+In this example we will override the template used by the ``Navigation`` component in order to use `Material Design <https://material.angular.io>`_ styling.  The navigation menu is actually provided by two separate components, |Navigation|_ and |NavigationLevel|_.  The actual customization will happen in the latter, but we also need a custom ``Navigation`` in order to refer to our custom ``NavigationLevel``.
+
+.. |Navigation| replace:: ``Navigation``
+.. _Navigation: https://github.com/plone/plone.restapi-angular/blob/master/src/components/navigation.ts
+
+.. |NavigationLevel| replace:: ``NavigationLevel``
+.. _NavigationLevel: https://github.com/plone/plone.restapi-angular/blob/master/src/components/navigation.level.ts
 
 Let's use Angular CLI to create our custom components:
 
@@ -68,9 +74,9 @@ Let's use Angular CLI to create our custom components:
   ng generate component custom-navigation
   ng generate component custom-navigation-level
 
-This will create two new folders: `./src/app/custom-navigation` and `./src/app/custom-navigation-level`.
+This will create two new folders: ``./src/app/custom-navigation`` and ``./src/app/custom-navigation-level``.
 
-We will start with `./src/app/custom-navigation/custom-navigation.component.ts`:
+We will start with ``./src/app/custom-navigation/custom-navigation.component.ts``:
 
 .. code-block:: javascript
 
@@ -83,13 +89,13 @@ We will start with `./src/app/custom-navigation/custom-navigation.component.ts`:
   })
   export class CustomNavigation extends Navigation {}
 
-- We add an `import` for the default `Navigation`.
-- Rename the `selector`.
-- Put the `template` inline (using backticks) instead of using an external `templateUrl`, since the template is very short.
-- Replace `implements` with `extends` and extend from `Navigation`.
-- Delete the `constructor` and `ngOnInit`.
+- We add an ``import`` for the default ``Navigation``.
+- Rename the ``selector``.
+- Put the ``template`` inline (using backticks) instead of using an external ``templateUrl``, since the template is very short.
+- Replace ``implements`` with ``extends`` and extend from ``Navigation``.
+- Delete the ``constructor`` and ``ngOnInit``.
 
-Let us now turn to `./src/app/custom-navigation-level/custom-navigation-level.component.ts`:
+Let us now turn to ``./src/app/custom-navigation-level/custom-navigation-level.component.ts``:
 
 .. code-block:: javascript
 
@@ -103,7 +109,7 @@ Let us now turn to `./src/app/custom-navigation-level/custom-navigation-level.co
   export class CustomNavigationLevelComponent extends NavigationLevel {
   }
 
-This is very similar to the custom navigation component, except that we point to a `templateUrl`, because in this case the template (`./src/app/custom-navigation-level/custom-navigation-level.component.html`) is a little more involved.
+This is very similar to the custom navigation component, except that we point to a ``templateUrl``, because in this case the template (``./src/app/custom-navigation-level/custom-navigation-level.component.html``) is a little more involved.
 
 .. code-block:: javascript
 
@@ -118,14 +124,17 @@ This is very similar to the custom navigation component, except that we point to
     </md-list-item>
   </md-nav-list>
 
-Note that we are using the same structure as in the [default navigation level template](https://github.com/plone/plone.restapi-angular/blob/master/src/components/navigation.level.ts#L5), only using markup from Angular Material.  Before we can call this done, we also need to install the dependencies (see [the setup here](https://material.angular.io/guide/getting-started)):
+Note that we are using the same structure as in the |defaultNavigationLeveltemplate|_, only using markup from Angular Material.  Before we can call this done, we also need to install the dependencies (see `the setup here <https://material.angular.io/guide/getting-started>`_):
+
+.. |defaultNavigationLeveltemplate| replace:: default ``NavigationLevel`` template
+.. _defaultNavigationLeveltemplate: https://github.com/plone/plone.restapi-angular/blob/master/src/components/navigation.level.ts#L5
 
 .. code-block::
 
   npm install --save @angular/material
   npm install --save @angular/animations
 
-Finally, edit your app module (`./src/app/app.module.ts`):
+Finally, edit your app module (``./src/app/app.module.ts``):
 
 .. code-block:: javascript
 
@@ -139,25 +148,47 @@ Finally, edit your app module (`./src/app/app.module.ts`):
     ],
   ...
 
-And load the CSS for Angular Material in the "main template" `./src/index.html`:
+And load the CSS for Angular Material in the "main template" ``./src/index.html``:
+
 .. code-block:: html
 
   <link href="../node_modules/@angular/material/prebuilt-themes/indigo-pink.css" rel="stylesheet">
 
-And now you can use your `<custom-navigation>` component in templates, for example by using it instead of `<plone-navigation>`.
+Now you can use your ``<custom-navigation>`` component in templates, for example by using it instead of ``<plone-navigation>``.
 
 Customize views
 ---------------------
 
 Customizing a view is quite similar to component customization, the only extra step is to declare it for traversal.
+In this example we will modify the default view so that it will display the context's summary under its title.
 
-So just declare your custom view component in `./src/custom/index.ts` and create an appropriate HTML template. 
+Let's use Angular CLI to create our custom view:
 
-In `app.module.ts`, you will need to put it in `declarations` and in `entryComponents`:
+.. code-block::
+
+  ng generate component custom-view
+
+This will create a new folder: ``./src/app/custom-view``.
+
+Edit ``./src/app/custom-view/custom-view.component.ts``:
+
+.. code-block:: javascript
+import { Component } from '@angular/core';
+import { ViewView } from '@plone/restapi-angular';
+
+@Component({
+  selector: 'custom-view',
+  template: `<h2>{{ context.title }}</h2><h4>{{ context.description }}</h4>`,
+})
+export class CustomViewView extends ViewView {}
+
+You can see in the inline template that we added the ``context.description``.
+
+In ``app.module.ts``, you will need to put our custom view in ``declarations`` and in ``entryComponents``:
 
 .. code-block:: javascript
 
-  import { CustomViewView } from './custom';
+  import { CustomViewView } from './custom-view/custom-view.component';
   @NgModule({
     declarations: [
       AppComponent,
@@ -168,12 +199,12 @@ In `app.module.ts`, you will need to put it in `declarations` and in `entryCompo
     ],
   ...
 
-And in `app.component.ts`, you will need to register it for traversal this way:
+And in ``app.component.ts``, you will need to register it for traversal this way:
 
 .. code-block:: javascript
 
   ...
-  import { CustomViewView } from './custom';
+  import { CustomViewView } from './custom-view/custom-view.component';
 
   ...
   export class AppComponent {
@@ -187,4 +218,4 @@ And in `app.component.ts`, you will need to register it for traversal this way:
     }
   }
 
-And now, your custom view will replace the original one.
+Now your custom view will replace the original one.
