@@ -3,7 +3,9 @@
 [![Build Status](https://travis-ci.org/plone/plone.restapi-angular.svg?branch=master)](https://travis-ci.org/plone/plone.restapi-angular)
 [![Coverage Status](https://coveralls.io/repos/github/plone/plone.restapi-angular/badge.svg?branch=master)](https://coveralls.io/github/plone/plone.restapi-angular?branch=master)
 
-This package aims to provide the services and components needed to build an Angular application based on the [Plone REST API](http://plonerestapi.readthedocs.io/en/latest/).
+**A simple Angular SDK to build web sites easily on top of the Plone RESTAPI.**
+
+This package aims to provide the services and components needed to build an Angular applications based on the [Plone REST API](http://plonerestapi.readthedocs.io/en/latest/).
 
 Plone is a flexible and powerful backend, it provides:
 
@@ -13,11 +15,9 @@ Plone is a flexible and powerful backend, it provides:
 - workflows
 - a rich management interface
 
-See `plone.io <http://plone.io>`_ for more information.
-
 The Plone Angular SDK provides ready-to-use components to build a wide range of applications.
 
-TODO: drawing here
+![Animation](docs/anim.gif)
 
 ## Documentation
 
