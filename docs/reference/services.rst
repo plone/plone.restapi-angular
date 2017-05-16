@@ -36,23 +36,27 @@ This service gives access to all the Plone RESTAPI endpoints to manage resourcez
 
 Methods:
 
+`breadcrumbs(path: string)`: return the breadcrumbs links for the specified content.
+
 `copy(sourcePath: string, targetPath: string)`: copy the resource to another location. Returns an observable.
 
 `create(path: string, model: any)`: create a new resource in the container indicated by the path. Returns an observable.
 
 `delete(path: string)`: remove the requested resource as an observable. Returns an observable.
 
-`find(query: any,  path: string='/', sort_on?: string, metadata_fields?: string[], start?: number, size?: number)`: returns the search results as an observable. See `http://plonerestapi.readthedocs.io/en/latest/searching.html#search <http://plonerestapi.readthedocs.io/en/latest/searching.html#search>`_.
+`find(query: any,  path: string='/', sort_on?: string, metadata_fields?: string[], start?: number, size?: number, sort_order?: string)`: returns the search results as an observable. See `http://plonerestapi.readthedocs.io/en/latest/searching.html#search <http://plonerestapi.readthedocs.io/en/latest/searching.html#search>`_.
 
 `get(path: string)`: returns the requested resource as an observable.
 
 `move(sourcePath: string, targetPath: string)`: move the resource to another location. Returns an observable.
 
+`navigation()`: get the global navigation links. Returns an observable.
+
 `transition(path: string, transition: string)`: perform the transition on the resource. Returns an observable.
 
 `update(path: string, model: any)`: update the resource. Returns an observable.
 
-`navigation()`: get the global navigation links. Returns an observable.
+`type(typeId)`: return the JSON schema of the specified resource type.
 
 API service
 -----------

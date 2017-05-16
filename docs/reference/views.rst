@@ -40,8 +40,6 @@ Example: `http://localhost:4200/site/@@search?SearchableText=RESTAPI`
 
 Display the search results for the specified criteria.
 
-TO BE IMPLEMENTED
-
 @@sharing
 ---------
 
