@@ -32,6 +32,7 @@ export class ResourceService {
     metadata_fields?: string[],
     start?: number,
     size?: number,
+    sort_order?: string,
   ) {
     if(!path.endsWith('/')) path += '/';
     let params: string[] = [];
@@ -50,6 +51,9 @@ export class ResourceService {
     });
     if(sort_on) {
       params.push('sort_on=' + sort_on);
+    }
+    if (sort_order) {
+      params.push('sort_order=' + sort_on);
     }
     if (metadata_fields) {
       metadata_fields.map(field => {

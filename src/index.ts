@@ -7,6 +7,7 @@ export { PloneViews } from './traversal';
 export { TraversingComponent } from './traversing';
 export { EditView } from './views/edit';
 export { LoginView } from './views/login';
+export { SearchView } from './views/search';
 export { ViewView } from './views/view';
 export { Breadcrumbs } from './components/breadcrumbs';
 export { GlobalNavigation } from './components/global.navigation';

@@ -30,6 +30,7 @@ import {
 
 import { EditView } from './views/edit';
 import { LoginView } from './views/login';
+import { SearchView } from './views/search';
 import { ViewView } from './views/view';
 
 import { Breadcrumbs } from './components/breadcrumbs';
@@ -41,6 +42,7 @@ import { NavigationLevel } from './components/navigation.level';
   declarations: [
     EditView,
     LoginView,
+    SearchView,
     ViewView,
     Breadcrumbs,
     GlobalNavigation,
@@ -50,6 +52,7 @@ import { NavigationLevel } from './components/navigation.level';
   entryComponents: [
     EditView,
     LoginView,
+    SearchView,
     ViewView,
   ],
   imports: [
@@ -74,6 +77,7 @@ import { NavigationLevel } from './components/navigation.level';
   exports: [
     EditView,
     LoginView,
+    SearchView,
     ViewView,
     Breadcrumbs,
     GlobalNavigation,
