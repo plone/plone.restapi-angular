@@ -64,6 +64,7 @@ describe('ViewView', () => {
     fixture = TestBed.createComponent(ViewView);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    component.traverser.addView('view', '*', ViewView);
   });
 
   it('should create', () => {
@@ -110,11 +111,7 @@ describe('ViewView', () => {
     });
     component.traverser.traverse('/');
     component.traverser.target.subscribe(() => {
-      // first we come here because the location triggered the traversing
-      if(component.context.id) {
-        expect(component.context.id).toBe('Plone');
-        expect(component.text).toBe('hello here');
-      }
+      expect(component.context.id).toBe('Plone');
     });
   }));
 
@@ -122,25 +119,24 @@ describe('ViewView', () => {
     backend.connections.subscribe(c => {
       expect(c.request.url).toBe('http://fake/Plone/somepage');
       let response = {
-        "@id": "http://fake/Plone/somepage", 
-        "@type": "Document", 
+        "@id": "http://fake/Plone/somepage",
+        "@type": "Document",
         "id": "somepage",
         "text": {
-          "content-type": "text/plain", 
-          "data": "If you're seeing this instead of the web site you were expecting, the owner of this web site has just installed Plone. Do not contact the Plone Team or the Plone mailing lists about this.", 
+          "content-type": "text/plain",
+          "data": "If you're seeing this instead of the web site you were expecting, the owner of this web site has just installed Plone. Do not contact the Plone Team or the Plone mailing lists about this.",
           "encoding": "utf-8"
-        }, 
+        },
         "title": "Welcome to Plone"
       };
-      c.mockRespond(new Response(new ResponseOptions({body: response})));
+      c.mockRespond(new Response(new ResponseOptions({ body: response })));
     });
     component.traverser.traverse('/somepage');
     component.traverser.target.subscribe(() => {
-      // first we come here because the location triggered the traversing
-      if(component.context.id) {
-        expect(component.context.id).toBe('Plone');
-        expect(component.text).toBe("If you're seeing this instead of the web site you were expecting, the owner of this web site has just installed Plone. Do not contact the Plone Team or the Plone mailing lists about this.");
-      }
+      console.log(component.context);
+      expect(component.context.id).toBe('somepage');
+      expect(component.text).toBe("If you're seeing this instead of the web site you were expecting, the owner of this web site has just installed Plone. Do not contact the Plone Team or the Plone mailing lists about this.");
     });
   }));
+
 });
