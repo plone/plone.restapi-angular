@@ -1,7 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Traverser } from 'angular-traversal';
 import { AuthenticationService } from '../authentication.service';
-import { TraversingComponent } from '../traversing';
 
 @Component({
   selector: 'plone-login',
@@ -12,23 +11,19 @@ import { TraversingComponent } from '../traversing';
     <input type="submit" value="Login" />
   </form>`
 })
-export class LoginView extends TraversingComponent {
-
-  text: string;
+export class LoginView implements OnInit {
 
   constructor(
     private traverser: Traverser,
     private authentication: AuthenticationService,
   ) {
-    super(traverser);
   } 
 
-  onTraverse(target) {
+  ngOnInit() {
     this.authentication.isAuthenticated
-      .takeUntil(this.ngUnsubscribe)
       .subscribe(logged => {
         if (logged) {
-          this.traverser.traverse(target.contextPath);
+          this.traverser.traverse(this.traverser.target.getValue().contextPath);
         }
       });
   }

@@ -133,7 +133,6 @@ describe('ViewView', () => {
     });
     component.traverser.traverse('/somepage');
     component.traverser.target.subscribe(() => {
-      console.log(component.context);
       expect(component.context.id).toBe('somepage');
       expect(component.text).toBe("If you're seeing this instead of the web site you were expecting, the owner of this web site has just installed Plone. Do not contact the Plone Team or the Plone mailing lists about this.");
     });

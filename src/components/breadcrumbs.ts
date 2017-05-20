@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { Traverser } from 'angular-traversal';
 
 import { ResourceService } from '../resource.service';
-import { ConfigurationService } from '../configuration.service';
 import { TraversingComponent } from '../traversing';
 
 @Component({
@@ -20,7 +19,6 @@ export class Breadcrumbs extends TraversingComponent {
   links: any[] = [];
 
   constructor(
-    private config: ConfigurationService,
     private service: ResourceService,
     private traverser: Traverser,
   ) {
