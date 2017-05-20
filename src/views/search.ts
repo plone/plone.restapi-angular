@@ -8,7 +8,7 @@ import { TraversingComponent } from '../traversing';
   <div>Total results: {{ total }}</div>
   <ol>
     <li *ngFor="let item of results">
-      <a traverseTo="item['@id']">{{ item.title }}</a>
+      <a [traverseTo]="item['@id']">{{ item.title }}</a>
     </li>
   </ol>`,
 })
