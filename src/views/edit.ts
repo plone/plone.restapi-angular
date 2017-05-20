@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Traverser } from 'angular-traversal';
+
+import { TraversingComponent } from '../traversing';
 import { ResourceService } from '../resource.service';
+import { AuthenticationService } from '../authentication.service';
 
 @Component({
   selector: 'plone-edit',
   template: `<sf-form [schema]="schema" [model]="model" [actions]="actions"></sf-form>`
 })
-export class EditView implements OnInit {
+export class EditView extends TraversingComponent {
 
   schema: any;
   model: any;
@@ -16,7 +19,9 @@ export class EditView implements OnInit {
   constructor(
     private resource: ResourceService,
     private traverser: Traverser,
+    private authentication: AuthenticationService,
   ) {
+    super(traverser);
     this.model = {};
     this.schema = {
       'properties': {},
@@ -27,12 +32,14 @@ export class EditView implements OnInit {
     };
   }
 
-  ngOnInit() {
+  onTraverse() {
     this.actions = {
       save: this.onSave.bind(this),
       cancel: this.onCancel.bind(this)
     };
-    this.traverser.target.subscribe(target => {
+    this.traverser.target
+      .takeUntil(this.ngUnsubscribe)  
+      .subscribe(target => {
       this.path = target.contextPath;
       let model = target.context;
       this.resource.type(target.context['@type']).subscribe(schema => {
@@ -58,7 +65,7 @@ export class EditView implements OnInit {
 
         this.schema = schema;
         this.model = model;
-      });
+      }, this.loginOn401.bind(this));
     });
   }
 
@@ -76,5 +83,18 @@ export class EditView implements OnInit {
 
   onCancel() {
     this.traverser.traverse(this.path);
+  }
+
+  loginOn401(err) {
+    if (err.status === 401) {
+      this.authentication.logout();
+      this.traverser.traverse(this.traverser.target.getValue().contextPath + '/@@login');
+    } else {
+      this.onError(err);
+    }
+  }
+
+  onError(err) {
+    console.log(err);
   }
 }
