@@ -22,26 +22,26 @@
   },
   "homepage": "https://github.com/plone/plone.restapi-angular#readme",
   "peerDependencies": {
-    "@angular/common": "^4.0.0",
-    "@angular/compiler": "^4.0.0",
-    "@angular/core": "^4.0.0",
-    "@angular/forms": "^4.0.0",
-    "@angular/http": "^4.0.0",
-    "@angular/platform-browser": "^4.0.0",
+    "@angular/common": "~4.0.0",
+    "@angular/compiler": "~4.0.0",
+    "@angular/core": "~4.0.0",
+    "@angular/forms": "~4.0.0",
+    "@angular/http": "~4.0.0",
+    "@angular/platform-browser": "~4.0.0",
     "core-js": "^2.4.1",
     "rxjs": "^5.0.1",
     "zone.js": "^0.8.5"
   },
   "devDependencies": {
-    "@angular/compiler-cli": "^4.0.0",
-    "@angular/platform-server": "^4.0.0",
+    "@angular/compiler-cli": "~4.0.0",
+    "@angular/platform-server": "~4.0.0",
     "@types/jasmine": "2.5.38",
     "@types/node": "^6.0.42",
     "rimraf": "^2.5.4",
-    "typescript": "^2.2.1"
+    "typescript": "~2.2.1"
   },
   "dependencies": {
-    "angular-traversal": "^1.0.0-alpha.12",
+    "angular-traversal": "^1.0.0-alpha.13",
     "angular2-schema-form": "^1.0.0-beta.7"
   }
 }
