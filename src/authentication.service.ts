@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { Http, Headers } from '@angular/http';
 import { BehaviorSubject } from 'rxjs/Rx';
 
@@ -12,55 +13,66 @@ export class AuthenticationService {
   constructor(
     private config: ConfigurationService,
     private http: Http,
+    @Inject(PLATFORM_ID) private platformId: Object,
   ) {
-    let token = localStorage.getItem('auth');
-    if (token) {
-      this.isAuthenticated.next(true);
+    if (isPlatformBrowser(this.platformId)) {
+      let token = localStorage.getItem('auth');
+      if (token) {
+        this.isAuthenticated.next(true);
+      }
     }
   }
 
   getUserInfo() {
-    let token = localStorage.getItem('auth');
-    if(token) {
-      let tokenParts = token.split('.');
-      return JSON.parse(atob(tokenParts[1]));
-    } else {
-      return null;
+    if (isPlatformBrowser(this.platformId)) {
+      let token = localStorage.getItem('auth');
+      if (token) {
+        let tokenParts = token.split('.');
+        return JSON.parse(atob(tokenParts[1]));
+      } else {
+        return null;
+      }
     }
   }
 
   login(login: string, password: string) {
-    let headers = this.getHeaders();
-    let body = JSON.stringify({
-      login: login,
-      password: password
-    });
-    this.http.post(
-      this.config.get('BACKEND_URL') + '/@login', body, {headers: headers})
-    .subscribe(res => {
-      let data = res.json();
-      if (data.token) {
-        localStorage.setItem('auth', data.token);
-        this.isAuthenticated.next(true);
-      } else {
-        localStorage.removeItem('auth');
-        this.isAuthenticated.next(false);
-      }
-    });
+    if (isPlatformBrowser(this.platformId)) {
+      let headers = this.getHeaders();
+      let body = JSON.stringify({
+        login: login,
+        password: password
+      });
+      this.http.post(
+        this.config.get('BACKEND_URL') + '/@login', body, { headers: headers })
+        .subscribe(res => {
+          let data = res.json();
+          if (data.token) {
+            localStorage.setItem('auth', data.token);
+            this.isAuthenticated.next(true);
+          } else {
+            localStorage.removeItem('auth');
+            this.isAuthenticated.next(false);
+          }
+        });
+    }
   }
 
   logout() {
-    localStorage.removeItem('auth');
-    this.isAuthenticated.next(false);
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.removeItem('auth');
+      this.isAuthenticated.next(false);
+    }
   }
 
   getHeaders(): Headers {
     let headers = new Headers();
     headers.append('Accept', 'application/json');
     headers.append('Content-Type', 'application/json');
-    let auth = localStorage.getItem('auth');
-    if (auth) {
-      headers.append('Authorization', 'Bearer ' + auth);
+    if (isPlatformBrowser(this.platformId)) {
+      let auth = localStorage.getItem('auth');
+      if (auth) {
+        headers.append('Authorization', 'Bearer ' + auth);
+      }
     }
     return headers;
   }
