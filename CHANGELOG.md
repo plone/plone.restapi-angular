@@ -1,3 +1,12 @@
+# 1.0.0-alpha.17 (2017-05-25)
+
+## New features
+
+- search view
+- redirect to login page if not authorized
+- Angular Universal support
+- expose title and description meta in HEAD
+
 # 1.0.0-alpha.16 (2017-04-25)
 
 ## New features
