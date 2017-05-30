@@ -7,7 +7,6 @@ import { Subject } from 'rxjs/Subject';
 export abstract class TraversingComponent implements OnInit, OnDestroy {
 
   context: any;
-  text: string;
   ngUnsubscribe: Subject<void> = new Subject<void>();
 
   constructor(
