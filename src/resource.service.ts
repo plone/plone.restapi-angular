@@ -53,7 +53,7 @@ export class ResourceService {
       params.push('sort_on=' + sort_on);
     }
     if (sort_order) {
-      params.push('sort_order=' + sort_on);
+      params.push('sort_order=' + sort_order);
     }
     if (metadata_fields) {
       metadata_fields.map(field => {
