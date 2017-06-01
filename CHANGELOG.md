@@ -1,3 +1,13 @@
+# 1.0.0-alpha.18 (2017-06-01)
+
+## New features
+
+- Use TypeMarker as default marker for traversing view registration.
+
+## Bug fixes
+
+- Fix sort_order in find() method.
+
 # 1.0.0-alpha.17 (2017-05-25)
 
 ## New features
