@@ -22,7 +22,7 @@ import { ConfigurationService } from './configuration.service';
 import { NavigationService } from './navigation.service';
 import { ResourceService } from './resource.service';
 import {
-  InterfaceMarker,
+  TypeMarker,
   PloneViews,
   RESTAPIResolver,
   FullPathNormalizer,
@@ -70,7 +70,7 @@ import { NavigationLevel } from './components/navigation.level';
     ResourceService,
     PloneViews,
     { provide: Resolver, useClass: RESTAPIResolver },
-    { provide: Marker, useClass: InterfaceMarker },
+    { provide: Marker, useClass: TypeMarker },
     { provide: Normalizer, useClass: FullPathNormalizer },
     { provide: WidgetRegistry, useClass: DefaultWidgetRegistry },
   ],

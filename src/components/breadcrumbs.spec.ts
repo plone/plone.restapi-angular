@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { APP_BASE_HREF } from '@angular/common';
 import { Traverser, TraversalModule, Resolver, Marker, Normalizer } from 'angular-traversal';
 import {
-  InterfaceMarker,
+  TypeMarker,
   PloneViews,
   RESTAPIResolver,
   FullPathNormalizer,
@@ -55,12 +55,12 @@ describe('Breadcrumbs', () => {
           }
         },
         ResourceService,
-        InterfaceMarker,
+        TypeMarker,
         RESTAPIResolver,
         PloneViews,
         Traverser,
         { provide: Resolver, useClass: RESTAPIResolver },
-        { provide: Marker, useClass: InterfaceMarker },
+        { provide: Marker, useClass: TypeMarker },
         { provide: APP_BASE_HREF, useValue: '/' },
         { provide: Normalizer, useClass: FullPathNormalizer },
         { provide: ResourceService, useClass: MockResourceService },

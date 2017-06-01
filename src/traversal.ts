@@ -18,6 +18,13 @@ export class InterfaceMarker extends Marker {
 }
 
 @Injectable()
+export class TypeMarker extends Marker {
+  mark(context: any): string {
+    return context['@type'];
+  }
+}
+
+@Injectable()
 export class RESTAPIResolver extends Resolver {
 
   constructor(

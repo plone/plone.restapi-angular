@@ -22,7 +22,7 @@ import { APIService } from '../api.service';
 import { AuthenticationService } from '../authentication.service';
 import { ResourceService } from '../resource.service';
 import { Traverser, TraversalModule, Resolver, Marker, Normalizer } from 'angular-traversal';
-import { InterfaceMarker, RESTAPIResolver, PloneViews, FullPathNormalizer } from '../traversal';
+import { TypeMarker, RESTAPIResolver, PloneViews, FullPathNormalizer } from '../traversal';
 import { EditView } from './edit';
 
 describe('EditView', () => {
@@ -43,12 +43,12 @@ describe('EditView', () => {
           }
         },
         ResourceService,
-        InterfaceMarker,
+        TypeMarker,
         RESTAPIResolver,
         PloneViews,
         Traverser,
         { provide: Resolver, useClass: RESTAPIResolver },
-        { provide: Marker, useClass: InterfaceMarker },
+        { provide: Marker, useClass: TypeMarker },
         { provide: APP_BASE_HREF, useValue: '/' },
         { provide: Normalizer, useClass: FullPathNormalizer },
         { provide: WidgetRegistry, useClass: DefaultWidgetRegistry },
