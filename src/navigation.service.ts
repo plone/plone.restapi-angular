@@ -57,6 +57,9 @@ export class NavigationService {
               current.children[folder] = {children: {}};
             }
             current = current.children[folder];
+            if (!current.children) {
+              current.children = {};
+            }
           });
           if (!current.children[id]) {
             current.children[id] = {};
