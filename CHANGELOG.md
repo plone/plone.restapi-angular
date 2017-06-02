@@ -1,3 +1,13 @@
+# 1.0.0-alpha.19 (2017-06-02)
+
+## New features
+
+- Allow 0 as root level (i.e. current folder) for local navigation.
+
+## Bug fixes
+
+- Fix local navigation.
+
 # 1.0.0-alpha.18 (2017-06-01)
 
 ## New features
