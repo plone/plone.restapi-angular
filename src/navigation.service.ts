@@ -101,7 +101,7 @@ export class NavigationService {
     currentPath = this.config.urlToPath(currentPath || '/');
     let rootPath = (typeof root === 'string') ? root : '/';
     if (typeof root === 'number') {
-      if (root < 0) {
+      if (root <= 0) {
         let path = currentPath.split('/');
         if (root < path.length) {
           rootPath = path.slice(0, path.length + root).join('/');
