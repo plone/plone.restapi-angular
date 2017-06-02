@@ -41,7 +41,7 @@ Navigation
 
 Display navigation links.
 
-``root`` can be either a string (to specify a static path like ``/news``) or a negative number (to specify an ancestor of the current page).
+``root`` can be either a string (to specify a static path like ``/news``) or a null or negative number to specify an ancestor of the current page (0 means current folder).
 
 ``depth`` defines the tree depth.
 
