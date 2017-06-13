@@ -29,6 +29,19 @@ Methods:
 
 `logout()`: delete the current authentication token.
 
+Comments
+--------
+
+Methods:
+
+`add(path: string, data: any)`: add a new comment in the content corresponding to the path.
+
+`delete(path: string)`:  delete the comment corresponding to the path.
+
+`get(path: string)`: get all the comments of the content corresponding to the path.
+
+`update(path: string, data: any)`: update the comment corresponding to the path.
+
 Resources
 ---------
 
@@ -62,3 +75,5 @@ API service
 -----------
 
 This service allows to call HTTP verbs (for instance to call non-standard endpoints implemented on our backend).
+
+It also exposes a `loading` observable which allows to know when an API call is pending (useful to display a load spinner for instance).
