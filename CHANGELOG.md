@@ -1,3 +1,13 @@
+# 1.0.0-alpha.20 (2017-06-15)
+
+## New features
+
+- Can subscribe to APIService.loading to knwo when loading is done or not.
+
+## Bug fixes
+
+- Fix find() method when criteria are lists.
+
 # 1.0.0-alpha.19 (2017-06-02)
 
 ## New features
