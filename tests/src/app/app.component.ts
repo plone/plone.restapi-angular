@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Traverser } from 'angular-traversal';
-import { PloneViews, ConfigurationService, APIService } from './lib';
+import { PloneViews, ConfigurationService, APIService, ResourceService } from './lib';
 
 import { CustomViewView } from './custom';
 
@@ -16,8 +16,12 @@ export class AppComponent {
     private traverser: Traverser,
     private config: ConfigurationService,
     private api: APIService,
+    private resource: ResourceService,
   ) {
     this.views.initialize();
     this.traverser.addView('view', '*', CustomViewView);
+    this.resource.find({ portal_type: ['Document', 'Folder'] }).subscribe((res) => {
+      console.log(res);
+    });
   }
 }

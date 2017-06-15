@@ -19,6 +19,7 @@ import {
 import { APIService } from './api.service';
 import { AuthenticationService } from './authentication.service';
 import { ConfigurationService } from './configuration.service';
+import { CommentsService } from './comments.service';
 import { NavigationService } from './navigation.service';
 import { ResourceService } from './resource.service';
 import {
@@ -34,6 +35,7 @@ import { SearchView } from './views/search';
 import { ViewView } from './views/view';
 
 import { Breadcrumbs } from './components/breadcrumbs';
+import { Comments, Comment, CommentAdd } from './components/comments';
 import { GlobalNavigation } from './components/global.navigation';
 import { Navigation } from './components/navigation';
 import { NavigationLevel } from './components/navigation.level';
@@ -45,6 +47,9 @@ import { NavigationLevel } from './components/navigation.level';
     SearchView,
     ViewView,
     Breadcrumbs,
+    Comments,
+    Comment,
+    CommentAdd,
     GlobalNavigation,
     Navigation,
     NavigationLevel,
@@ -65,6 +70,7 @@ import { NavigationLevel } from './components/navigation.level';
   providers: [
     APIService,
     AuthenticationService,
+    CommentsService,
     ConfigurationService,
     NavigationService,
     ResourceService,
@@ -80,6 +86,9 @@ import { NavigationLevel } from './components/navigation.level';
     SearchView,
     ViewView,
     Breadcrumbs,
+    Comments,
+    Comment,
+    CommentAdd,
     GlobalNavigation,
     Navigation,
     NavigationLevel,

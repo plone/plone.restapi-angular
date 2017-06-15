@@ -9,15 +9,6 @@ Breadcrumbs
 
 Displays the breadcrumbs links for the current context.
 
-Footer
-------
-
-.. code-block:: html
-
-  <plone-footer></plone-footer>
-
-TO BE IMPLEMENTED
-
 Forms
 -----
 
@@ -47,6 +38,15 @@ Display navigation links.
 
 Note: be careful, in Angular templates, inputs are considered as string unless they are interpolated, so ``root="/events"`` returns the string ``"/events"`` and it works. It is equivalent to ``[root]="'/events'"``.
 But ``root="-1"`` is wrong, as it would return the string ``"-1"`` which is not a number. To get an actual number, interpolation is mandatory: ``[root]="-1"``.
+
+Comments
+--------
+
+.. code-block:: html
+
+  <plone-comments></plone-comments>
+
+Display the existing comments and allow to add new ones.
 
 Toolbar
 -------
