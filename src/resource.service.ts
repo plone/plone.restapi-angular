@@ -40,9 +40,12 @@ export class ResourceService {
       let criteria = query[index];
       if (typeof criteria === 'boolean') {
         params.push(index + '=' + (criteria ? '1' : '0'));
-      }
-      else if(typeof criteria === 'string') {
+      } else if(typeof criteria === 'string') {
         params.push(index + '=' + encodeURIComponent(criteria));
+      } else if (Array.isArray(criteria)) {
+        criteria.map(value => {
+          params.push(index + '=' + encodeURIComponent(value));
+        });
       } else {
         Object.keys(criteria).map(key => {
           params.push(index + '.' + key + '=' + encodeURIComponent(criteria[key]));
