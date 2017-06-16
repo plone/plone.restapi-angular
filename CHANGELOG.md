@@ -1,3 +1,15 @@
+# 1.0.0-alpha.21 (2017-06-16)
+
+## Breaking changes
+
+- The resource service find() method signature has changed
+- Requires Plone RESTAPI >= 1.0a18
+
+## New features
+
+- find(): all search options passed as a unique dictionary
+- find(): add fullobjects option to retrieve full objects
+
 # 1.0.0-alpha.20 (2017-06-15)
 
 ## New features
