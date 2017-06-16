@@ -65,6 +65,9 @@ export class ResourceService {
     if (options.size) {
       params.push('b_size=' + options.size.toString());
     }
+    if (options.fullobjects) {
+      params.push('fullobjects');
+    }
     return this.api.get(
       path + '@search' + '?' + params.join('&')
     );
