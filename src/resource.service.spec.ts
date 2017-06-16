@@ -151,7 +151,7 @@ describe('ResourceService', () => {
       };
       c.mockRespond(new Response(new ResponseOptions({ body: response })));
     });
-    service.find({ SearchableText: 'John' }, '', 'created').subscribe(content => {
+    service.find({ SearchableText: 'John' }, '', { sort_on: 'created' }).subscribe(content => {
       expect(content.items[0]['@id']).toBe('http://fake/Plone/folder1/page1');
     });
   }));
@@ -174,7 +174,7 @@ describe('ResourceService', () => {
       };
       c.mockRespond(new Response(new ResponseOptions({ body: response })));
     });
-    service.find({ SearchableText: 'John' }, '', null, ['Creator', 'CreationDate']).subscribe(content => {
+    service.find({ SearchableText: 'John' }, '', { metadata_fields: ['Creator', 'CreationDate'] }).subscribe(content => {
       expect(content.items[0]['@id']).toBe('http://fake/Plone/folder1/page1');
     });
   }));

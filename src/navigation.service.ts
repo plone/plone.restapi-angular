@@ -31,10 +31,11 @@ export class NavigationService {
           path: {depth: depth}
         },
         rootPath,
-        'getObjPositionInParent',
-        ['exclude_from_nav', 'getObjPositionInParent'],
-        undefined,
-        1000
+        {
+          sort_on: 'getObjPositionInParent',
+          metadata_fields: ['exclude_from_nav', 'getObjPositionInParent'],
+          size: 1000,
+        }
       ).map(res => {
         let tree = { children: {} };
         res.items.map(item => {
