@@ -57,7 +57,17 @@ Methods:
 
 `delete(path: string)`: remove the requested resource as an observable. Returns an observable.
 
-`find(query: any,  path: string='/', sort_on?: string, metadata_fields?: string[], start?: number, size?: number, sort_order?: string)`: returns the search results as an observable. See `http://plonerestapi.readthedocs.io/en/latest/searching.html#search <http://plonerestapi.readthedocs.io/en/latest/searching.html#search>`_.
+`find(query: any,  path: string='/', options: any={})`: returns the search results as an observable.
+
+  See `http://plonerestapi.readthedocs.io/en/latest/searching.html#search <http://plonerestapi.readthedocs.io/en/latest/searching.html#search>`_.
+  The `options` parameter can contain the following attributes:
+
+  - sort_on: string, name of the index used to sort the result.
+  - metadata_fields: string[], list of extra metadata fields to retrieve
+  - start: number, rank of the first item (used for batching, default is 0),
+  - size: number, length of the batching (default is 20)
+  - sort_order: string, `'reverse'` to get a reversed order,
+  - fullobjects: boolean, if `True`, the result will be fully serialized objects, not just metadata.
 
 `get(path: string)`: returns the requested resource as an observable.
 
