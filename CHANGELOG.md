@@ -1,3 +1,9 @@
+# 1.0.0-alpha.22 (2017-06-26)
+
+## Breaking changes
+
+- The `isAuthenticated` observable is not a boolean anymore but an object (state + error)
+
 # 1.0.0-alpha.21 (2017-06-16)
 
 ## Breaking changes
