@@ -8,6 +8,7 @@ import { ConfigurationService } from './configuration.service';
 import { EditView } from './views/edit';
 import { LoginView } from './views/login';
 import { SearchView } from './views/search';
+import { SitemapView } from './views/sitemap';
 import { ViewView } from './views/view';
 
 @Injectable()
@@ -53,6 +54,7 @@ export class PloneViews {
         this.traverser.addView('edit', '*', EditView);
         this.traverser.addView('login', '*', LoginView);
         this.traverser.addView('search', '*', SearchView);
+        this.traverser.addView('sitemap', '*', SitemapView);
         this.traverser.addView('view', '*', ViewView);
     }
 }

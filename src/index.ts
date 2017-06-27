@@ -8,6 +8,7 @@ export { TraversingComponent } from './traversing';
 export { EditView } from './views/edit';
 export { LoginView } from './views/login';
 export { SearchView } from './views/search';
+export { SitemapView } from './views/sitemap';
 export { ViewView } from './views/view';
 export { Breadcrumbs } from './components/breadcrumbs';
 export { GlobalNavigation } from './components/global.navigation';
