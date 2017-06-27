@@ -1,3 +1,10 @@
+# 1.0.0-alpha.23 (2017-06-27)
+
+## New features
+
+- When search results contain File contents, return an actual link, not a traverse
+- Sitemap view
+
 # 1.0.0-alpha.22 (2017-06-26)
 
 ## Breaking changes
