@@ -13,9 +13,9 @@ export class ViewView extends TraversingComponent {
   text: string;
 
   constructor(
-    private traverser: Traverser,
-    private meta: Meta,
-    private title: Title,
+    public traverser: Traverser,
+    public meta: Meta,
+    public title: Title,
   ) {
     super(traverser);
   }

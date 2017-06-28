@@ -19,7 +19,6 @@ before_install:
   - "sh -e /etc/init.d/xvfb start"
 install:
   - npm install
-  - npm info . peerDependencies | sed -n 's/^{\{0,1\}[[:space:]]*'\''\{0,1\}\([^:'\'']*\)'\''\{0,1\}:[[:space:]]'\''\([^'\'']*\).*$/\1@\2/p' | xargs npm i
   - cd ./tests && npm install && npm install coveralls mocha-lcov-reporter && cd ..
 after_success:
   - cd ./tests && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js

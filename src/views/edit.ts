@@ -17,9 +17,9 @@ export class EditView extends TraversingComponent {
   path: string;
 
   constructor(
-    private resource: ResourceService,
-    private traverser: Traverser,
-    private authentication: AuthenticationService,
+    public resource: ResourceService,
+    public traverser: Traverser,
+    public authentication: AuthenticationService,
   ) {
     super(traverser);
     this.model = {};

@@ -295,6 +295,6 @@ describe('EditView', () => {
     component.traverser.target.subscribe(() => {
       expect(component.schema.properties.text.widget).toBe('tinymce');
     }).unsubscribe();
-    component.onSave({value: { title: 'New title', '@type': 'Document' });
+    component.onSave({ value: { title: 'New title', '@type': 'Document' } });
   }));
 });

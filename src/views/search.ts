@@ -19,7 +19,7 @@ export class SearchView extends TraversingComponent {
   total: number = 0;
 
   constructor(
-    private traverser: Traverser,
+    public traverser: Traverser,
   ) {
     super(traverser);
   }

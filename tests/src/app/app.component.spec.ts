@@ -2,7 +2,6 @@ import { TestBed, async, inject } from '@angular/core/testing';
 import { Component } from '@angular/core';
 import { BrowserDynamicTestingModule, platformBrowserDynamicTesting } from '@angular/platform-browser-dynamic/testing';
 import { APP_BASE_HREF } from '@angular/common';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { BaseRequestOptions, Response, ResponseOptions } from '@angular/http';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { Http } from '@angular/http';

@@ -48,9 +48,9 @@ describe('NavigationService', () => {
 
   it('should return navigation tree', inject([NavigationService, MockBackend], (service, backend) => {
     backend.connections.subscribe(c => {
-      expect(c.request.url).toBe('http://fake/Plone/@search?is_default_page=0&path.depth=2&sort_on=getObjPositionInParent&metadata_fields:list=exclude_from_nav&metadata_fields:list=getObjPositionInParent&b_size=1000');
+      expect(c.request.url).toBe('http://fake/Plone/@search?is_default_page=0&path.query=%2F&path.depth=2&sort_on=getObjPositionInParent&metadata_fields:list=exclude_from_nav&metadata_fields:list=getObjPositionInParent&b_size=1000');
       let response = {
-        '@id': "http://fake/Plone/@search?is_default_page=0&path.depth=2&sort_on=getObjPositionInParent&metadata_fields:list=exclude_from_nav&metadata_fields:list=getObjPositionInParent&b_size=1000",
+        '@id': "http://fake/Plone/@search?is_default_page=0&path.query=%2F&path.depth=2&sort_on=getObjPositionInParent&metadata_fields:list=exclude_from_nav&metadata_fields:list=getObjPositionInParent&b_size=1000",
         "items": [
           {
             '@id': "http://fake/Plone/a-folder/test",

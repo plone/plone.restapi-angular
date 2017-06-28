@@ -14,8 +14,8 @@ import { AuthenticationService } from '../authentication.service';
 export class LoginView implements OnInit {
 
   constructor(
-    private traverser: Traverser,
-    private authentication: AuthenticationService,
+    public traverser: Traverser,
+    public authentication: AuthenticationService,
   ) {
   } 
 
