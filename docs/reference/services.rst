@@ -86,4 +86,7 @@ API service
 
 This service allows to call HTTP verbs (for instance to call non-standard endpoints implemented on our backend).
 
-It also exposes a `loading` observable which allows to know when an API call is pending (useful to display a load spinner for instance).
+It also exposes a `status` observable which returns an object containing:
+
+- `loading`, boolean, true if call is pending, false if finished
+- `error`, the HTTP error if any.

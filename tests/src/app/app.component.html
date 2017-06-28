@@ -1,8 +1,5 @@
 <p>Status:
-  <span [ngSwitch]="api.loading | async">
-    <span *ngSwitchCase="true">Loading...</span>
-    <span *ngSwitchCase="false">OK</span>
-  </span>
+  {{ loading }} {{ error }}
 </p>
 <div>
   <h2>Custom global navigation</h2>

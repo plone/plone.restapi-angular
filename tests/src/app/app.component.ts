@@ -11,6 +11,9 @@ import { CustomViewView } from './custom';
 })
 export class AppComponent {
 
+  loading = 'OK';
+  error = '';
+  
   constructor(
     private views:PloneViews,
     private traverser: Traverser,
@@ -20,8 +23,12 @@ export class AppComponent {
   ) {
     this.views.initialize();
     this.traverser.addView('view', '*', CustomViewView);
-    this.resource.find({ portal_type: ['Document', 'Folder'] }).subscribe((res) => {
-      console.log(res);
+  }
+
+  ngOnInit() {
+    this.api.status.subscribe(status => {
+      this.loading = status.loading ? 'Loading...' : 'OK';
+      this.error = status.error;
     });
   }
 }

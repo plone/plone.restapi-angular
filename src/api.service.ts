@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/Rx';
+import 'rxjs/add/operator/catch';
 
 import { AuthenticationService } from './authentication.service';
 import { ConfigurationService } from './configuration.service';
@@ -9,7 +10,9 @@ import { ConfigurationService } from './configuration.service';
 @Injectable()
 export class APIService {
 
-  public loading: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  public status: BehaviorSubject<any> = new BehaviorSubject(
+    { loading: false }
+  );
 
   constructor(
     private authentication: AuthenticationService,
@@ -17,44 +20,48 @@ export class APIService {
     private http: Http,
   ) { }
 
-  get(path) {
+  get(path): Observable<any> {
     let url = this.getFullPath(path);
     let headers = this.authentication.getHeaders();
-    this.loading.next(true);
+    this.status.next({ loading: true });
     return this.http.get(url, { headers: headers }).map(res => {
-      this.loading.next(false);
+      this.status.next({ loading: false });
       return res.json()
-    }, err => this.loading.next(false));
+    })
+    .catch(this.error.bind(this));
   }
 
-  post(path, data) {
+  post(path, data): Observable<any> {
     let url = this.getFullPath(path);
     let headers = this.authentication.getHeaders();
-    this.loading.next(true);
+    this.status.next({ loading: true });
     return this.http.post(url, data, { headers: headers }).map(res => {
-      this.loading.next(false);
+      this.status.next({ loading: false });
       return res.json()
-    }, err => this.loading.next(false));
+    })
+    .catch(this.error.bind(this));
   }
 
-  patch(path, data) {
+  patch(path, data): Observable<any> {
     let url = this.getFullPath(path);
     let headers = this.authentication.getHeaders();
-    this.loading.next(true);
+    this.status.next(true);
     return this.http.patch(url, data, { headers: headers }).map(res => {
-      this.loading.next(false);
+      this.status.next({ loading: false });
       return res.json()
-    }, err => this.loading.next(false));
+    })
+    .catch(this.error.bind(this));
   }
 
-  delete(path) {
+  delete(path): Observable<any> {
     let url = this.getFullPath(path);
     let headers = this.authentication.getHeaders();
-    this.loading.next(true);
+    this.status.next(true);
     return this.http.delete(url, { headers: headers }).map(res => {
-      this.loading.next(false);
+      this.status.next({ loading: false });
       return res.json()
-    }, err => this.loading.next(false));
+    })
+    .catch(this.error.bind(this));
   }
 
   getFullPath(path: string) {
@@ -64,5 +71,13 @@ export class APIService {
     } else {
       return base + path;
     }
+  }
+
+  private error(err: any) {
+    if (err instanceof Response) {
+      err = err.json();
+    }
+    this.status.next({ loading: false, error: err });
+    return Observable.throw(err);
   }
 }
