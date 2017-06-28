@@ -28,7 +28,7 @@ export class NavigationService {
       return this.resource.find(
         {
           is_default_page: false,
-          path: {depth: depth}
+          path: { query: '/', depth: depth },
         },
         rootPath,
         {
