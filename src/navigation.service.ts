@@ -60,7 +60,9 @@ export class NavigationService {
             }
           });
           if (!current.children[id]) {
-            current.children[id] = {};
+            current.children[id] = {
+              properties: null,
+            };
           }
           current.children[id].properties = item;
         });
@@ -82,7 +84,7 @@ export class NavigationService {
         child.children = this.getChildrenArray(child.children);
       }
       return child;
-    }).sort((a, b) => {
+    }).filter(item => item.properties).sort((a, b) => {
       return a.properties.getObjPositionInParent - b.properties.getObjPositionInParent;
     });
   }
