@@ -1,3 +1,38 @@
+# 1.0.0-alpha.23 (2017-06-27)
+
+## New features
+
+- When search results contain File contents, return an actual link, not a traverse
+- Sitemap view
+
+# 1.0.0-alpha.22 (2017-06-26)
+
+## Breaking changes
+
+- The `isAuthenticated` observable is not a boolean anymore but an object (state + error)
+
+# 1.0.0-alpha.21 (2017-06-16)
+
+## Breaking changes
+
+- The resource service find() method signature has changed
+- Requires Plone RESTAPI >= 1.0a18
+
+## New features
+
+- find(): all search options passed as a unique dictionary
+- find(): add fullobjects option to retrieve full objects
+
+# 1.0.0-alpha.20 (2017-06-15)
+
+## New features
+
+- Can subscribe to APIService.loading to knwo when loading is done or not.
+
+## Bug fixes
+
+- Fix find() method when criteria are lists.
+
 # 1.0.0-alpha.19 (2017-06-02)
 
 ## New features

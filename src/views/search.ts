@@ -8,7 +8,8 @@ import { TraversingComponent } from '../traversing';
   <div>Total results: {{ total }}</div>
   <ol>
     <li *ngFor="let item of results">
-      <a [traverseTo]="item['@id']">{{ item.title }}</a>
+      <a *ngIf="item['@type']!='File'" [traverseTo]="item['@id']">{{ item.title }}</a>
+      <a *ngIf="item['@type']=='File'" [href]="item['@id']">{{ item.title }}</a>
     </li>
   </ol>`,
 })

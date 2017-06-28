@@ -27,7 +27,9 @@ export class Navigation extends TraversingComponent {
     this.navigation
       .getNavigationFor(target.context['@id'], this.root, this.depth)
       .subscribe(tree => {
-        this.links = tree.children;
+        this.links = tree.children.filter(item => {
+          return !item.properties || !item.properties.exclude_from_nav;
+        });
     });
   }
 }

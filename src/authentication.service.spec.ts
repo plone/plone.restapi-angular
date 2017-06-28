@@ -51,7 +51,7 @@ describe('AuthenticationService', () => {
     });
     service.login();
     service.isAuthenticated.subscribe(authenticated => {
-      expect(authenticated).toBe(true);
+      expect(authenticated.state).toBe(true);
     });
   }));
 
@@ -65,7 +65,7 @@ describe('AuthenticationService', () => {
     });
     service.login();
     service.isAuthenticated.subscribe(authenticated => {
-      expect(authenticated).toBe(false);
+      expect(authenticated.state).toBe(false);
     });
   }));
 
@@ -96,7 +96,7 @@ describe('AuthenticationService', () => {
     service.login();
     service.logout();
     service.isAuthenticated.subscribe(authenticated => {
-      expect(authenticated).toBe(false);
+      expect(authenticated.state).toBe(false);
       expect(service.getUserInfo()).toEqual(null);
     });
   }));

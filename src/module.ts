@@ -32,6 +32,7 @@ import {
 import { EditView } from './views/edit';
 import { LoginView } from './views/login';
 import { SearchView } from './views/search';
+import { SitemapView } from './views/sitemap';
 import { ViewView } from './views/view';
 
 import { Breadcrumbs } from './components/breadcrumbs';
@@ -45,6 +46,7 @@ import { NavigationLevel } from './components/navigation.level';
     EditView,
     LoginView,
     SearchView,
+    SitemapView,
     ViewView,
     Breadcrumbs,
     Comments,
@@ -58,6 +60,7 @@ import { NavigationLevel } from './components/navigation.level';
     EditView,
     LoginView,
     SearchView,
+    SitemapView,
     ViewView,
   ],
   imports: [

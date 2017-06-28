@@ -92,7 +92,7 @@ describe('LoginView', () => {
     // component.traverser.traverse('/@@login');
     component.onSubmit({ login: 'eric', password: 'secret' });
     component.authentication.isAuthenticated.subscribe(logged => {
-      expect(logged).toBe(true);
+      expect(logged.state).toBe(true);
     });
   }));
 });

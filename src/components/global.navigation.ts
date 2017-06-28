@@ -29,7 +29,10 @@ export class GlobalNavigation extends TraversingComponent implements OnInit {
     super.ngOnInit();
     this.service.navigation().subscribe(data => {
       if (data && data[0] && data[0].items) {
-        this.links = data[0].items.map(item => {
+        this.links = data[0].items.filter(item => {
+          return !item.properties || !item.properties.exclude_from_nav;
+        })
+        .map(item => {
           return {
             title: item.title,
             path: this.config.urlToPath(item.url),

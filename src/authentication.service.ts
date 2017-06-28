@@ -8,7 +8,7 @@ import { ConfigurationService } from './configuration.service';
 @Injectable()
 export class AuthenticationService {
 
-  public isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  public isAuthenticated: BehaviorSubject<any> = new BehaviorSubject({ state: false });
   
   constructor(
     private config: ConfigurationService,
@@ -18,7 +18,7 @@ export class AuthenticationService {
     if (isPlatformBrowser(this.platformId)) {
       let token = localStorage.getItem('auth');
       if (token) {
-        this.isAuthenticated.next(true);
+        this.isAuthenticated.next({ state: true });
       }
     }
   }
@@ -44,23 +44,29 @@ export class AuthenticationService {
       });
       this.http.post(
         this.config.get('BACKEND_URL') + '/@login', body, { headers: headers })
-        .subscribe(res => {
+        .subscribe(
+        res => {
           let data = res.json();
           if (data.token) {
             localStorage.setItem('auth', data.token);
-            this.isAuthenticated.next(true);
+            this.isAuthenticated.next({ state: true });
           } else {
             localStorage.removeItem('auth');
-            this.isAuthenticated.next(false);
+            this.isAuthenticated.next({ state: false });
           }
-        });
+        },
+        err => {
+          localStorage.removeItem('auth');
+          this.isAuthenticated.next({ state: false, error: err.json().error });
+        }
+      );
     }
   }
 
   logout() {
     if (isPlatformBrowser(this.platformId)) {
       localStorage.removeItem('auth');
-      this.isAuthenticated.next(false);
+      this.isAuthenticated.next({ state: false });
     }
   }
 

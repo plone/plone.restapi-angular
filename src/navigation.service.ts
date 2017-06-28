@@ -31,16 +31,14 @@ export class NavigationService {
           path: {depth: depth}
         },
         rootPath,
-        'getObjPositionInParent',
-        ['exclude_from_nav', 'getObjPositionInParent'],
-        undefined,
-        1000
+        {
+          sort_on: 'getObjPositionInParent',
+          metadata_fields: ['exclude_from_nav', 'getObjPositionInParent'],
+          size: 1000,
+        }
       ).map(res => {
         let tree = { children: {} };
         res.items.map(item => {
-          if (item.exclude_from_nav) {
-            return;
-          }
           let localpath = this.config.urlToPath(item['@id']);
           let path = localpath.slice(
             localpath.indexOf(rootPath) + rootPath.length).split('/');
@@ -85,7 +83,7 @@ export class NavigationService {
       }
       return child;
     }).sort((a, b) => {
-      return (a.properties ? a.properties.getObjPositionInParent : 0) - (b.properties ? b.properties.getObjPositionInParent : 0);
+      return a.properties.getObjPositionInParent - b.properties.getObjPositionInParent;
     });
   }
 

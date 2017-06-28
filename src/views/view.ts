@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 
 import { Traverser } from 'angular-traversal';
-import { ConfigurationService } from '../configuration.service';
 import { TraversingComponent } from '../traversing';
 
 @Component({
@@ -14,7 +13,6 @@ export class ViewView extends TraversingComponent {
   text: string;
 
   constructor(
-    private config: ConfigurationService,
     private traverser: Traverser,
     private meta: Meta,
     private title: Title,
@@ -29,10 +27,7 @@ export class ViewView extends TraversingComponent {
       content: target.context.description
     });
     if (target.context.text) {
-      // NEEDED UNTIL PLONE.RESTAPI RETURNS FULL PATHS
-      this.text = target.context.text.data.replace(
-        /(src|href)=".+(resolveuid\/.+?)"/g,
-        '$1="' + this.config.get('BACKEND_URL') + '/$2"');
+      this.text = target.context.text.data;
     }
   }
 

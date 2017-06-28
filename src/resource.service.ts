@@ -28,11 +28,7 @@ export class ResourceService {
   find(
     query: any,
     path: string = '/',
-    sort_on?: string,
-    metadata_fields?: string[],
-    start?: number,
-    size?: number,
-    sort_order?: string,
+    options: any = {},
   ) {
     if(!path.endsWith('/')) path += '/';
     let params: string[] = [];
@@ -52,22 +48,25 @@ export class ResourceService {
         });
       }
     });
-    if(sort_on) {
-      params.push('sort_on=' + sort_on);
+    if(options.sort_on) {
+      params.push('sort_on=' + options.sort_on);
     }
-    if (sort_order) {
-      params.push('sort_order=' + sort_order);
+    if (options.sort_order) {
+      params.push('sort_order=' + options.sort_order);
     }
-    if (metadata_fields) {
-      metadata_fields.map(field => {
+    if (options.metadata_fields) {
+      options.metadata_fields.map(field => {
         params.push('metadata_fields:list=' + field);
       });
     }
-    if (start) {
-      params.push('b_start=' + start.toString());
+    if (options.start) {
+      params.push('b_start=' + options.start.toString());
     }
-    if (size) {
-      params.push('b_size=' + size.toString());
+    if (options.size) {
+      params.push('b_size=' + options.size.toString());
+    }
+    if (options.fullobjects) {
+      params.push('fullobjects');
     }
     return this.api.get(
       path + '@search' + '?' + params.join('&')

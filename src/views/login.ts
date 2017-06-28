@@ -22,7 +22,7 @@ export class LoginView implements OnInit {
   ngOnInit() {
     this.authentication.isAuthenticated
       .subscribe(logged => {
-        if (logged) {
+        if (logged.state) {
           this.traverser.traverse(this.traverser.target.getValue().contextPath);
         }
       });
