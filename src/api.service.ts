@@ -24,7 +24,7 @@ export class APIService {
     return this.http.get(url, { headers: headers }).map(res => {
       this.loading.next(false);
       return res.json()
-    });
+    }, err => this.loading.next(false));
   }
 
   post(path, data) {
@@ -34,7 +34,7 @@ export class APIService {
     return this.http.post(url, data, { headers: headers }).map(res => {
       this.loading.next(false);
       return res.json()
-    });
+    }, err => this.loading.next(false));
   }
 
   patch(path, data) {
@@ -44,7 +44,7 @@ export class APIService {
     return this.http.patch(url, data, { headers: headers }).map(res => {
       this.loading.next(false);
       return res.json()
-    });
+    }, err => this.loading.next(false));
   }
 
   delete(path) {
@@ -54,7 +54,7 @@ export class APIService {
     return this.http.delete(url, { headers: headers }).map(res => {
       this.loading.next(false);
       return res.json()
-    });
+    }, err => this.loading.next(false));
   }
 
   getFullPath(path: string) {
