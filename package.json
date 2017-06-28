@@ -33,14 +33,15 @@
     "zone.js": "^0.8.5"
   },
   "devDependencies": {
-    "@angular/compiler-cli": "^4.0.3",
+    "@angular/compiler-cli": "^4.2.4",
     "@angular/platform-server": "^4.0.3",
     "@types/jasmine": "2.5.38",
     "@types/node": "^6.0.42",
     "rimraf": "^2.5.4",
-    "typescript": "^2.2.1"
+    "typescript": "2.3.4"
   },
   "dependencies": {
+    "@angular/compiler": "^4.2.4",
     "angular-traversal": "^1.0.0-alpha.14",
     "angular2-schema-form": "^1.0.0-beta.7"
   }
