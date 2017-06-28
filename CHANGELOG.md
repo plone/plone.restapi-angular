@@ -1,3 +1,9 @@
+# 1.0.0-alpha.24 (2017-06-28)
+
+## New features
+
+- Comments read/add
+
 # 1.0.0-alpha.23 (2017-06-27)
 
 ## New features
