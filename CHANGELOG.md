@@ -1,3 +1,18 @@
+# 1.0.0-alpha.25 (2017-06-28)
+
+## Breaking changes
+
+- API service `loading` observable is now replaced by a `status` observable.
+
+## New features
+
+- Handle errors in API service
+
+## Bug fixes
+
+- Fix navigation request parameter
+- Fix navigation tree
+
 # 1.0.0-alpha.24 (2017-06-28)
 
 ## New features
