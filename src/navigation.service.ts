@@ -28,17 +28,18 @@ export class NavigationService {
       return this.resource.find(
         {
           is_default_page: false,
-          path: { query: '/', depth: depth },
+          path: { depth: depth },
         },
         rootPath,
         {
-          sort_on: 'getObjPositionInParent',
           metadata_fields: ['exclude_from_nav', 'getObjPositionInParent'],
           size: 1000,
         }
       ).map(res => {
         let tree = { children: {} };
-        res.items.map(item => {
+        res.items
+          .sort(item => item.getObjPositionInParent)
+          .map(item => {
           let localpath = this.config.urlToPath(item['@id']);
           let path = localpath.slice(
             localpath.indexOf(rootPath) + rootPath.length).split('/');
