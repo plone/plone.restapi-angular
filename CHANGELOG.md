@@ -1,3 +1,9 @@
+# 1.0.0-alpha.26 (2017-06-30)
+
+## Bug fixes
+
+- Fix navigation request parameter
+
 # 1.0.0-alpha.25 (2017-06-28)
 
 ## Breaking changes
