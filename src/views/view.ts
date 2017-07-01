@@ -6,7 +6,13 @@ import { TraversingComponent } from '../traversing';
 
 @Component({
   selector: 'plone-view',
-  template: '<h2>{{ context.title }}</h2><div [innerHTML]="text"></div>'
+  template: `<h1>{{ context.title }}</h1>
+  <div [innerHTML]="text"></div>
+  <ul *ngIf="context.items">
+    <li *ngFor="let item of context.items">
+      <a [traverseTo]="item['@id']">{{ item.title}}</a>
+    </li>
+  </ul>`
 })
 export class ViewView extends TraversingComponent {
 
