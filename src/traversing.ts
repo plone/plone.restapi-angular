@@ -18,6 +18,7 @@ export abstract class TraversingComponent implements OnInit, OnDestroy {
       .takeUntil(this.ngUnsubscribe)
       .subscribe(target => {
         this.context = target.context;
+        window.scrollTo(0, 0);
         this.onTraverse(target);
       });
   }
