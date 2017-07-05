@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
-import { Traverser } from 'angular-traversal';
-
-import { ResourceService } from '../resource.service';
+import { Services } from '../services';
 import { TraversingComponent } from '../traversing';
 
 @Component({
@@ -19,15 +17,14 @@ export class Breadcrumbs extends TraversingComponent {
   links: any[] = [];
 
   constructor(
-    private service: ResourceService,
-    private traverser: Traverser,
+    public services: Services,
   ) {
-    super(traverser);
+    super(services);
   }
 
   onTraverse(target) {
     if (target.contextPath) {
-      this.service.breadcrumbs(target.contextPath).subscribe(res => {
+      this.services.resource.breadcrumbs(target.contextPath).subscribe(res => {
         this.links = res[0].items;
       });
     }

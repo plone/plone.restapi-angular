@@ -5,9 +5,8 @@ import {
   EventEmitter,
 } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Traverser } from 'angular-traversal';
 
-import { CommentsService } from '../comments.service';
+import { Services } from '../services';
 import { TraversingComponent } from '../traversing';
 
 @Component({
@@ -50,10 +49,12 @@ export class CommentAdd {
   @Output() onCreate: EventEmitter<boolean> = new EventEmitter<boolean>();
   error: string;
   
-  constructor(private service: CommentsService) { }
+  constructor(
+    private services: Services,
+  ) { }
   
   add(form: NgForm) {
-    this.service.add(this.path, form.value).subscribe(res => {
+    this.services.comments.add(this.path, form.value).subscribe(res => {
       this.onCreate.next(true);
       form.resetForm();
     }, err => {
@@ -76,12 +77,11 @@ export class Comments extends TraversingComponent {
 
   comments: any[] = [];
   contextPath: string;
-  
+
   constructor(
-    private service: CommentsService,
-    private traverser: Traverser,
+    public services: Services,
   ) {
-    super(traverser);
+    super(services);
   }
 
   onTraverse(target) {
@@ -92,7 +92,7 @@ export class Comments extends TraversingComponent {
   }
 
   loadComments() {
-    this.service.get(this.contextPath).subscribe(res => {
+    this.services.comments.get(this.contextPath).subscribe(res => {
       this.comments = res.items;
     });
   }

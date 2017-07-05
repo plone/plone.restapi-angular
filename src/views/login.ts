@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Traverser } from 'angular-traversal';
-import { AuthenticationService } from '../authentication.service';
+import { Services } from '../services';
 
 @Component({
   selector: 'plone-login',
@@ -14,22 +13,21 @@ import { AuthenticationService } from '../authentication.service';
 export class LoginView implements OnInit {
 
   constructor(
-    public traverser: Traverser,
-    public authentication: AuthenticationService,
-  ) {
-  } 
+    public services: Services,
+  ) { } 
 
   ngOnInit() {
-    this.authentication.isAuthenticated
+    this.services.authentication.isAuthenticated
       .subscribe(logged => {
         if (logged.state) {
-          this.traverser.traverse(this.traverser.target.getValue().contextPath);
+          this.services.traverser.traverse(
+            this.services.traverser.target.getValue().contextPath);
         }
       });
   }
 
   onSubmit(data) {
-    this.authentication.login(data.login, data.password);
+    this.services.authentication.login(data.login, data.password);
   }
 
 }

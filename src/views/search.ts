@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { Traverser } from 'angular-traversal';
 import { TraversingComponent } from '../traversing';
+import { Services } from '../services';
 
 @Component({
   selector: 'plone-search',
@@ -19,9 +19,9 @@ export class SearchView extends TraversingComponent {
   total: number = 0;
 
   constructor(
-    public traverser: Traverser,
+    public services: Services,
   ) {
-    super(traverser);
+    super(services);
   }
 
   onTraverse(target) {

@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { Meta, Title } from '@angular/platform-browser';
 
-import { Traverser } from 'angular-traversal';
+import { Services } from '../services';
 import { TraversingComponent } from '../traversing';
 
 @Component({
@@ -19,16 +18,14 @@ export class ViewView extends TraversingComponent {
   text: string;
 
   constructor(
-    public traverser: Traverser,
-    public meta: Meta,
-    public title: Title,
+    public services: Services,
   ) {
-    super(traverser);
+    super(services);
   }
 
   onTraverse(target) {
-    this.title.setTitle(target.context.title);
-    this.meta.updateTag({
+    this.services.title.setTitle(target.context.title);
+    this.services.meta.updateTag({
       name: 'description',
       content: target.context.description
     });

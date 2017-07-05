@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Traverser } from 'angular-traversal';
-import { PloneViews, ConfigurationService, APIService, ResourceService } from './lib';
+import { PloneViews, Services } from './lib';
 
 import { CustomViewView } from './custom';
 
@@ -15,18 +15,15 @@ export class AppComponent {
   error = '';
   
   constructor(
-    private views:PloneViews,
-    private traverser: Traverser,
-    private config: ConfigurationService,
-    private api: APIService,
-    private resource: ResourceService,
+    private views: PloneViews,
+    private services: Services,
   ) {
     this.views.initialize();
-    this.traverser.addView('view', '*', CustomViewView);
+    this.services.traverser.addView('view', '*', CustomViewView);
   }
 
   ngOnInit() {
-    this.api.status.subscribe(status => {
+    this.services.api.status.subscribe(status => {
       this.loading = status.loading ? 'Loading...' : 'OK';
       this.error = status.error;
     });

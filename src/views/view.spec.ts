@@ -16,6 +16,9 @@ import { ConfigurationService } from '../configuration.service';
 import { APIService } from '../api.service';
 import { AuthenticationService } from '../authentication.service';
 import { ResourceService } from '../resource.service';
+import { CommentsService } from '../comments.service';
+import { NavigationService } from '../navigation.service';
+import { Services } from '../services';
 import { Traverser, TraversalModule, Resolver, Marker, Normalizer } from 'angular-traversal';
 import { TypeMarker, RESTAPIResolver, PloneViews, FullPathNormalizer } from '../traversal';
 import { ViewView } from './view';
@@ -37,9 +40,12 @@ describe('ViewView', () => {
             BACKEND_URL: 'http://fake/Plone',
           }
         },
+        CommentsService,
+        NavigationService,
         ResourceService,
         TypeMarker,
         RESTAPIResolver,
+        Services,
         PloneViews,
         Traverser,
         { provide: Resolver, useClass: RESTAPIResolver },
@@ -64,7 +70,7 @@ describe('ViewView', () => {
     fixture = TestBed.createComponent(ViewView);
     component = fixture.componentInstance;
     fixture.detectChanges();
-    component.traverser.addView('view', '*', ViewView);
+    component.services.traverser.addView('view', '*', ViewView);
   });
 
   it('should create', () => {
@@ -109,8 +115,8 @@ describe('ViewView', () => {
       };
       c.mockRespond(new Response(new ResponseOptions({body: response})));
     });
-    component.traverser.traverse('/');
-    component.traverser.target.subscribe(() => {
+    component.services.traverser.traverse('/');
+    component.services.traverser.target.subscribe(() => {
       expect(component.context.id).toBe('Plone');
     });
   }));
@@ -131,8 +137,8 @@ describe('ViewView', () => {
       };
       c.mockRespond(new Response(new ResponseOptions({ body: response })));
     });
-    component.traverser.traverse('/somepage');
-    component.traverser.target.subscribe(() => {
+    component.services.traverser.traverse('/somepage');
+    component.services.traverser.target.subscribe(() => {
       expect(component.context.id).toBe('somepage');
       expect(component.text).toBe("If you're seeing this instead of the web site you were expecting, the owner of this web site has just installed Plone. Do not contact the Plone Team or the Plone mailing lists about this.");
     });

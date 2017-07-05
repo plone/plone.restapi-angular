@@ -1,9 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { Traverser } from 'angular-traversal';
-
+import { Services } from '../services';  
 import { TraversingComponent } from '../traversing';
-import { NavigationService } from '../navigation.service';
 
 @Component({
   selector: 'plone-navigation',
@@ -17,14 +15,13 @@ export class Navigation extends TraversingComponent {
   links: any[];
 
   constructor(
-    private navigation: NavigationService,
-    private traverser: Traverser,
+    public services: Services,
   ) {
-    super(traverser);
+    super(services);
   }
 
   onTraverse(target) {
-    this.navigation
+    this.services.navigation
       .getNavigationFor(target.context['@id'], this.root, this.depth)
       .subscribe(tree => {
         this.links = tree.children.filter(item => {

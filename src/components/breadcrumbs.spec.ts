@@ -12,8 +12,11 @@ import {
 
 import { ConfigurationService } from '../configuration.service';
 import { APIService } from '../api.service';
+import { CommentsService } from '../comments.service';
+import { NavigationService } from '../navigation.service';
 import { AuthenticationService } from '../authentication.service';
 import { ResourceService } from '../resource.service';
+import { Services } from '../services';
 import { Breadcrumbs } from './breadcrumbs';
 
 @Injectable()
@@ -54,10 +57,13 @@ describe('Breadcrumbs', () => {
             BACKEND_URL: 'http://fake/Plone',
           }
         },
+        CommentsService,
+        NavigationService,
         ResourceService,
         TypeMarker,
         RESTAPIResolver,
         PloneViews,
+        Services,
         Traverser,
         { provide: Resolver, useClass: RESTAPIResolver },
         { provide: Marker, useClass: TypeMarker },

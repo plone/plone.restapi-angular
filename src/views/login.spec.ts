@@ -17,6 +17,9 @@ import { ConfigurationService } from '../configuration.service';
 import { APIService } from '../api.service';
 import { AuthenticationService } from '../authentication.service';
 import { ResourceService } from '../resource.service';
+import { CommentsService } from '../comments.service';
+import { NavigationService } from '../navigation.service';
+import { Services } from '../services';
 import { Traverser, TraversalModule, Resolver, Marker, Normalizer } from 'angular-traversal';
 import { TypeMarker, RESTAPIResolver, PloneViews, FullPathNormalizer } from '../traversal';
 import { LoginView } from './login';
@@ -39,9 +42,12 @@ describe('LoginView', () => {
             BACKEND_URL: 'http://fake/Plone',
           }
         },
+        CommentsService,
+        NavigationService,
         ResourceService,
         TypeMarker,
         RESTAPIResolver,
+        Services,
         PloneViews,
         Traverser,
         { provide: Resolver, useClass: RESTAPIResolver },
@@ -66,8 +72,8 @@ describe('LoginView', () => {
     fixture = TestBed.createComponent(LoginView);
     component = fixture.componentInstance;
     fixture.detectChanges();
-    component.traverser.addView('view', '*', ViewView);
-    component.traverser.addView('login', '*', LoginView);
+    component.services.traverser.addView('view', '*', ViewView);
+    component.services.traverser.addView('login', '*', LoginView);
   });
 
   it('should create', () => {
@@ -89,9 +95,9 @@ describe('LoginView', () => {
       }
       c.mockRespond(new Response(new ResponseOptions({ body: response })));
     });
-    // component.traverser.traverse('/@@login');
+    // component.services.traverser.traverse('/@@login');
     component.onSubmit({ login: 'eric', password: 'secret' });
-    component.authentication.isAuthenticated.subscribe(logged => {
+    component.services.authentication.isAuthenticated.subscribe(logged => {
       expect(logged.state).toBe(true);
     });
   }));

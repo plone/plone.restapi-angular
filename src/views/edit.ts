@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Traverser } from 'angular-traversal';
 
 import { TraversingComponent } from '../traversing';
-import { ResourceService } from '../resource.service';
-import { AuthenticationService } from '../authentication.service';
+import { Services } from '../services';
 
 @Component({
   selector: 'plone-edit',
@@ -17,11 +15,9 @@ export class EditView extends TraversingComponent {
   path: string;
 
   constructor(
-    public resource: ResourceService,
-    public traverser: Traverser,
-    public authentication: AuthenticationService,
+    public services: Services,
   ) {
-    super(traverser);
+    super(services);
     this.model = {};
     this.schema = {
       'properties': {},
@@ -37,12 +33,12 @@ export class EditView extends TraversingComponent {
       save: this.onSave.bind(this),
       cancel: this.onCancel.bind(this)
     };
-    this.traverser.target
+    this.services.traverser.target
       .takeUntil(this.ngUnsubscribe)  
       .subscribe(target => {
       this.path = target.contextPath;
       let model = target.context;
-      this.resource.type(target.context['@type']).subscribe(schema => {
+      this.services.resource.type(target.context['@type']).subscribe(schema => {
         schema.buttons = [
           { id: 'save', label: 'Save' },
           { id: 'cancel', label: 'Cancel' }
@@ -76,19 +72,20 @@ export class EditView extends TraversingComponent {
         model[key] = null;
       }
     });
-    this.resource.update(this.path, model).subscribe(res => {
-      this.traverser.traverse(this.path);
+    this.services.resource.update(this.path, model).subscribe(res => {
+      this.services.traverser.traverse(this.path);
     });
   }
 
   onCancel() {
-    this.traverser.traverse(this.path);
+    this.services.traverser.traverse(this.path);
   }
 
   loginOn401(err) {
     if (err.status === 401) {
-      this.authentication.logout();
-      this.traverser.traverse(this.traverser.target.getValue().contextPath + '/@@login');
+      this.services.authentication.logout();
+      this.services.traverser.traverse(
+        this.services.traverser.target.getValue().contextPath + '/@@login');
     } else {
       this.onError(err);
     }

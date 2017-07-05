@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Traverser } from 'angular-traversal';
-
-import { ResourceService } from '../resource.service';
-import { ConfigurationService } from '../configuration.service';
+import { Services } from '../services';
 import { TraversingComponent } from '../traversing';
 
 @Component({
@@ -18,16 +15,14 @@ export class GlobalNavigation extends TraversingComponent implements OnInit {
   links: any[] = [];
 
   constructor(
-    private config: ConfigurationService,
-    private service: ResourceService,
-    private traverser: Traverser,
+    public services: Services,
   ) {
-    super(traverser);
+    super(services);
   }
 
   ngOnInit() {
     super.ngOnInit();
-    this.service.navigation().subscribe(data => {
+    this.services.resource.navigation().subscribe(data => {
       if (data && data[0] && data[0].items) {
         this.links = data[0].items.filter(item => {
           return !item.properties || !item.properties.exclude_from_nav;
@@ -35,7 +30,7 @@ export class GlobalNavigation extends TraversingComponent implements OnInit {
         .map(item => {
           return {
             title: item.title,
-            path: this.config.urlToPath(item.url),
+            path: this.services.configuration.urlToPath(item.url),
           };
         });
       }

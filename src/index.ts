@@ -3,6 +3,7 @@ export { APIService } from './api.service';
 export { AuthenticationService } from './authentication.service';
 export { ResourceService } from './resource.service';
 export { CommentsService } from './comments.service';
+export { Services } from './services';
 export { RESTAPIModule } from './module';
 export { PloneViews, InterfaceMarker, TypeMarker } from './traversal';
 export { TraversingComponent } from './traversing';

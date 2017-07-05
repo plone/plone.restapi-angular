@@ -16,6 +16,9 @@ import { ConfigurationService } from '../configuration.service';
 import { APIService } from '../api.service';
 import { AuthenticationService } from '../authentication.service';
 import { ResourceService } from '../resource.service';
+import { CommentsService } from '../comments.service';
+import { NavigationService } from '../navigation.service';
+import { Services } from '../services';
 import { Traverser, TraversalModule, Resolver, Marker, Normalizer } from 'angular-traversal';
 import { TypeMarker, RESTAPIResolver, PloneViews, FullPathNormalizer } from '../traversal';
 import { SearchView } from './search';
@@ -37,9 +40,12 @@ describe('SearchView', () => {
             BACKEND_URL: 'http://fake/Plone',
           }
         },
+        CommentsService,
+        NavigationService,
         ResourceService,
         TypeMarker,
         RESTAPIResolver,
+        Services,
         PloneViews,
         Traverser,
         { provide: Resolver, useClass: RESTAPIResolver },
@@ -64,7 +70,7 @@ describe('SearchView', () => {
     fixture = TestBed.createComponent(SearchView);
     component = fixture.componentInstance;
     fixture.detectChanges();
-    component.traverser.addView('search', '*', SearchView);
+    component.services.traverser.addView('search', '*', SearchView);
   });
 
   it('should create', () => {
@@ -96,8 +102,8 @@ describe('SearchView', () => {
       };
       c.mockRespond(new Response(new ResponseOptions({ body: response })));
     });
-    component.traverser.traverse('/@@search?SearchableText=test');
-    component.traverser.target.subscribe(() => {
+    component.services.traverser.traverse('/@@search?SearchableText=test');
+    component.services.traverser.target.subscribe(() => {
       expect(component.context.items.length).toBe(2);
     });
   }));

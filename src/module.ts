@@ -22,6 +22,7 @@ import { ConfigurationService } from './configuration.service';
 import { CommentsService } from './comments.service';
 import { NavigationService } from './navigation.service';
 import { ResourceService } from './resource.service';
+import { Services } from './services';
 import {
   TypeMarker,
   PloneViews,
@@ -78,6 +79,7 @@ import { NavigationLevel } from './components/navigation.level';
     NavigationService,
     ResourceService,
     PloneViews,
+    Services,
     { provide: Resolver, useClass: RESTAPIResolver },
     { provide: Marker, useClass: TypeMarker },
     { provide: Normalizer, useClass: FullPathNormalizer },
