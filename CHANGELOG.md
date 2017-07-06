@@ -1,3 +1,14 @@
+# 1.0.0-alpha.27 (2017-07-06)
+
+## Breaking changes
+
+- Inject all services in a single service for all the components.
+
+## New features
+
+- Scroll to top after traversing.
+- Display subcontents in default view.
+
 # 1.0.0-alpha.26 (2017-06-30)
 
 ## Bug fixes
