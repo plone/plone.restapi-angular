@@ -47,6 +47,10 @@ Resources
 
 This service gives access to all the Plone RESTAPI endpoints to manage resourcezs (i.e contents).
 
+Properties:
+
+`defaultExpand`: array of string indicating the default expansions that will be asked to the backend when we call `get`.
+
 Methods:
 
 `breadcrumbs(path: string)`: return the breadcrumbs links for the specified content.
@@ -69,7 +73,7 @@ Methods:
   - sort_order: string, `'reverse'` to get a reversed order,
   - fullobjects: boolean, if `True`, the result will be fully serialized objects, not just metadata.
 
-`get(path: string)`: returns the requested resource as an observable.
+`get(path: string, expand?: string[])`: returns the requested resource as an observable. `expand` allow to specify extra expansion (they will be added to `defaultExpand`).
 
 `move(sourcePath: string, targetPath: string)`: move the resource to another location. Returns an observable.
 

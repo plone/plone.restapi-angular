@@ -86,7 +86,7 @@ describe('Breadcrumbs', () => {
   });
 
   it('should provide links', () => {
-    component.onTraverse({ contextPath: '/' });
+    component.onTraverse({ contextPath: '/', context: {} });
     expect(component.links.length).toBeTruthy(2);
   });
 

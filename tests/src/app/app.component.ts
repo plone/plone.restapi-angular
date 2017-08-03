@@ -20,6 +20,8 @@ export class AppComponent {
   ) {
     this.views.initialize();
     this.services.traverser.addView('view', '*', CustomViewView);
+    this.services.resource.defaultExpand.breadcrumbs = true;
+    this.services.resource.defaultExpand.navigation = true;
   }
 
   ngOnInit() {

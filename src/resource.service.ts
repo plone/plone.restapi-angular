@@ -6,9 +6,11 @@ import { APIService } from './api.service';
 @Injectable()
 export class ResourceService {
 
+  public defaultExpand: any = {};
+
   constructor(
     private api: APIService,
-  ) {}
+  ) { }
 
   copy(sourcePath: string, targetPath: string) {
     return this.api.post(
@@ -30,13 +32,13 @@ export class ResourceService {
     path: string = '/',
     options: any = {},
   ) {
-    if(!path.endsWith('/')) path += '/';
+    if (!path.endsWith('/')) path += '/';
     let params: string[] = [];
     Object.keys(query).map(index => {
       let criteria = query[index];
       if (typeof criteria === 'boolean') {
         params.push(index + '=' + (criteria ? '1' : '0'));
-      } else if(typeof criteria === 'string') {
+      } else if (typeof criteria === 'string') {
         params.push(index + '=' + encodeURIComponent(criteria));
       } else if (Array.isArray(criteria)) {
         criteria.map(value => {
@@ -48,7 +50,7 @@ export class ResourceService {
         });
       }
     });
-    if(options.sort_on) {
+    if (options.sort_on) {
       params.push('sort_on=' + options.sort_on);
     }
     if (options.sort_order) {
@@ -73,7 +75,11 @@ export class ResourceService {
     );
   }
 
-  get(path: string, frames?: string[]) {
+  get(path: string, expand?: string[]) {
+    expand = Object.keys(this.defaultExpand).concat(expand || []);
+    if (expand.length > 0) {
+      path = path + '?expand=' + expand.join(',');
+    }
     return this.api.get(path);
   }
 

@@ -23,10 +23,15 @@ export class Breadcrumbs extends TraversingComponent {
   }
 
   onTraverse(target) {
-    if (target.contextPath) {
-      this.services.resource.breadcrumbs(target.contextPath).subscribe(res => {
-        this.links = res[0].items;
-      });
+    let components = target.context['@components']
+    if (components && components.breadcrumbs.items) {
+      this.links = components.breadcrumbs.items;
+    } else {
+      if (target.contextPath) {
+        this.services.resource.breadcrumbs(target.contextPath).subscribe(res => {
+          this.links = res[0].items;
+        });
+      }
     }
   }
 }
