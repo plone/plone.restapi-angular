@@ -1,3 +1,9 @@
+# 1.0.0-alpha.28 (2017-08-03)
+
+## New features
+
+- Allow to use Plone REST API expansion (provided by 1.0a19).
+
 # 1.0.0-alpha.27 (2017-07-06)
 
 ## Breaking changes
