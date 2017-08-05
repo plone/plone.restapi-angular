@@ -13,7 +13,8 @@ export class AppComponent {
 
   loading = 'OK';
   error = '';
-  
+  logged = false;
+
   constructor(
     private views: PloneViews,
     private services: Services,
@@ -25,6 +26,9 @@ export class AppComponent {
   }
 
   ngOnInit() {
+    this.services.authentication.isAuthenticated.subscribe(auth => {
+      this.logged = auth.state;
+    })
     this.services.api.status.subscribe(status => {
       this.loading = status.loading ? 'Loading...' : 'OK';
       this.error = status.error;

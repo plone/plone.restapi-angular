@@ -1,6 +1,9 @@
 <p>Status:
   {{ loading }} {{ error }}
 </p>
+<p>
+  <a *ngIf="!logged" traverseTo="@@login">Log in</a>
+</p>
 <div>
   <h2>Custom global navigation</h2>
   <custom-navigation></custom-navigation>

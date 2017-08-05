@@ -17,6 +17,13 @@ export class AuthenticationService {
   ) {
     if (isPlatformBrowser(this.platformId)) {
       let token = localStorage.getItem('auth');
+      let lastLogin = localStorage.getItem('auth_time');
+      // token expires after 12 hours
+      const expire = 12 * 60 * 60 * 1000;
+      if (!lastLogin || (Date.now() - Date.parse(lastLogin) > expire)) {
+        localStorage.removeItem('auth');
+        token = null;
+      }
       if (token) {
         this.isAuthenticated.next({ state: true });
       }
@@ -49,14 +56,17 @@ export class AuthenticationService {
           let data = res.json();
           if (data.token) {
             localStorage.setItem('auth', data.token);
+            localStorage.setItem('auth_time', (new Date()).toISOString());
             this.isAuthenticated.next({ state: true });
           } else {
             localStorage.removeItem('auth');
+            localStorage.removeItem('auth_time');
             this.isAuthenticated.next({ state: false });
           }
         },
         err => {
           localStorage.removeItem('auth');
+          localStorage.removeItem('auth_time');
           this.isAuthenticated.next({ state: false, error: err.json().error });
         }
       );
@@ -66,6 +76,7 @@ export class AuthenticationService {
   logout() {
     if (isPlatformBrowser(this.platformId)) {
       localStorage.removeItem('auth');
+      localStorage.removeItem('auth_time');
       this.isAuthenticated.next({ state: false });
     }
   }
