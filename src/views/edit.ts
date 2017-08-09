@@ -45,12 +45,6 @@ export class EditView extends TraversingComponent {
         ];
         // FIX THE SCHEMA AND THE MODEL
         for (let property in schema.properties) {
-          if (schema.properties[property].widget === 'richtext') {
-            schema.properties[property].widget = 'tinymce';
-            if (model[property] && model[property].data) {
-              model[property] = model[property].data
-            }
-          }
           if (property === 'allow_discussion') {
             schema.properties[property].type = 'boolean';
           }
