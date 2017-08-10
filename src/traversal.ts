@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { ResourceService } from './resource.service';
 import { APIService } from './api.service';
 import { ConfigurationService } from './configuration.service';
+import { AddView } from './views/add';
 import { EditView } from './views/edit';
 import { LoginView } from './views/login';
 import { SearchView } from './views/search';
@@ -51,6 +52,7 @@ export class PloneViews {
     constructor(private traverser: Traverser) {}
 
     initialize() {
+        this.traverser.addView('add', '*', AddView);
         this.traverser.addView('edit', '*', EditView);
         this.traverser.addView('login', '*', LoginView);
         this.traverser.addView('search', '*', SearchView);

@@ -29,7 +29,7 @@ import { CustomGlobalNavigation } from './custom';
   providers: [
     {
       provide: 'CONFIGURATION', useValue: {
-        BACKEND_URL: 'http://localhost:8080/Plone',
+        BACKEND_URL: 'http://localhost:8080/test2',
       }
     },
   ],

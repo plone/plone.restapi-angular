@@ -7,6 +7,7 @@ export { Services } from './services';
 export { RESTAPIModule } from './module';
 export { PloneViews, InterfaceMarker, TypeMarker } from './traversal';
 export { TraversingComponent } from './traversing';
+export { AddView } from './views/add';
 export { EditView } from './views/edit';
 export { LoginView } from './views/login';
 export { SearchView } from './views/search';

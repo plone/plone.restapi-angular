@@ -30,6 +30,7 @@ import {
   FullPathNormalizer,
 } from './traversal';
 
+import { AddView } from './views/add';
 import { EditView } from './views/edit';
 import { LoginView } from './views/login';
 import { SearchView } from './views/search';
@@ -44,6 +45,7 @@ import { NavigationLevel } from './components/navigation.level';
 
 @NgModule({
   declarations: [
+    AddView,
     EditView,
     LoginView,
     SearchView,
@@ -58,6 +60,7 @@ import { NavigationLevel } from './components/navigation.level';
     NavigationLevel,
   ],
   entryComponents: [
+    AddView,
     EditView,
     LoginView,
     SearchView,

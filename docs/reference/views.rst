@@ -4,11 +4,9 @@ Views
 @@add
 -----
 
-Example: `http://localhost:4200/site/folder1/@@add/Document`
+Example: `http://localhost:4200/site/folder1/@@add?type=Document`
 
-Display the form to add a new content in the current context folder. The content-type is specified in the location after the view.
-
-TO BE IMPLEMENTED
+Display the form to add a new content in the current context folder. The content-type is specified in the query string.
 
 @@edit
 ------
