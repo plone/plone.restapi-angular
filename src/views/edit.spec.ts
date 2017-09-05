@@ -299,7 +299,7 @@ describe('EditView', () => {
     });
     component.services.traverser.traverse('/somepage/@@edit');
     component.services.traverser.target.subscribe(() => {
-      expect(component.schema.properties.text.widget).toBe('tinymce');
+      expect(component.schema.properties.text.widget).toBe('richtext');
     }).unsubscribe();
     component.onSave({ value: { title: 'New title', '@type': 'Document' } });
   }));

@@ -42,9 +42,9 @@ angular-traversal@^1.0.0-alpha.14:
   version "1.0.0-alpha.14"
   resolved "https://registry.yarnpkg.com/angular-traversal/-/angular-traversal-1.0.0-alpha.14.tgz#08074b53dfc06a40175642a845d883bb8cbdcd63"
 
-angular2-schema-form@^1.0.0-beta.7:
-  version "1.0.0-beta.7"
-  resolved "https://registry.yarnpkg.com/angular2-schema-form/-/angular2-schema-form-1.0.0-beta.7.tgz#4b40c1e004c07b1b22fa06f12d570aac26aeb1e8"
+angular2-schema-form@^1.0.0-beta.12:
+  version "1.0.0-beta.12"
+  resolved "https://registry.yarnpkg.com/angular2-schema-form/-/angular2-schema-form-1.0.0-beta.12.tgz#4bd15ebfb06aa662901f71f4cf1d5c8beab855ce"
   dependencies:
     body-parser "^1.15.1"
     methods "^1.1.2"

@@ -43,6 +43,6 @@
   "dependencies": {
     "@angular/compiler": "^4.2.4",
     "angular-traversal": "^1.0.0-alpha.14",
-    "angular2-schema-form": "^1.0.0-beta.7"
+    "angular2-schema-form": "^1.0.0-beta.12"
   }
 }
