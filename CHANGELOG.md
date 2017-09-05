@@ -1,3 +1,14 @@
+# 1.0.0-alpha.29 (2017-09-05)
+
+## New features
+
+- @@add view
+- manage authentication token expiration
+
+## Bug fixes
+
+- do not change richtext widget to tiny
+
 # 1.0.0-alpha.28 (2017-08-03)
 
 ## New features
