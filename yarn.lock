@@ -38,9 +38,9 @@
   version "6.0.78"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-6.0.78.tgz#5d4a3f579c1524e01ee21bf474e6fba09198f470"
 
-angular-traversal@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/angular-traversal/-/angular-traversal-1.0.1.tgz#56067be2d2b9ed25652910acaf31bbbce844d47c"
+angular-traversal@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/angular-traversal/-/angular-traversal-1.0.2.tgz#07ee166091bd670097ab50da1e275c24e8b99707"
 
 angular2-schema-form@^1.0.0-beta.12:
   version "1.0.0-beta.12"

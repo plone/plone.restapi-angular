@@ -247,9 +247,9 @@ amdefine@>=0.0.4:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
 
-angular-traversal@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/angular-traversal/-/angular-traversal-1.0.1.tgz#56067be2d2b9ed25652910acaf31bbbce844d47c"
+angular-traversal@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/angular-traversal/-/angular-traversal-1.0.2.tgz#07ee166091bd670097ab50da1e275c24e8b99707"
 
 angular2-schema-form@^1.0.0-beta.7:
   version "1.0.0-beta.7"
