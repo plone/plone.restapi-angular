@@ -1,13 +1,8 @@
-# 1.0.0-alpha.29 (2017-09-05)
+# 1.0.1 (2017-09-08)
 
 ## New features
 
-- @@add view
-- manage authentication token expiration
-
-## Bug fixes
-
-- do not change richtext widget to tiny
+- Support local URLs for backend
 
 # 1.0.0-alpha.28 (2017-08-03)
 
