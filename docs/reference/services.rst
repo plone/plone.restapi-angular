@@ -1,6 +1,22 @@
 Services
 ========
 
+Services injection
+------------------
+
+To make injection easier, all the following services are available in a unique service named `Services`. Example:
+
+.. code-block:: javascript
+
+  import { Services } from '@plone/restapi-angular';
+  ...
+
+    constructor(public services: Services) { }
+
+    ...
+
+      this.services.resource.find(...);
+
 Configuration
 -------------
 
@@ -101,7 +117,7 @@ In addition, it provides a specific method to download a file as a blob:
 
 `download(path)` returns an observable containing a `Blob object <https://developer.mozilla.org/en-US/docs/Web/API/Blob>`_.
 
-A Blob object can be turn into an URL like this:
+A Blob object can be turned into an URL like this:
 
 .. code-block:: javascript
 
