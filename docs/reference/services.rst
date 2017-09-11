@@ -88,7 +88,35 @@ Methods:
 API service
 -----------
 
-This service allows to call HTTP verbs (for instance to call non-standard endpoints implemented on our backend).
+This service allows to call regular HTTP verbs (for instance to call non-standard endpoints implemented on our backend):
+
+- `get(path)`
+- `post(path, data)`
+- `patch(path, data)`
+- `delete(path)`
+
+They all takes care to add the appropriate headers (like authentication token), and return an observable.
+
+In addition, it provides a specific method to download a file as a blob:
+
+`download(path)` returns an observable containing a `Blob object <https://developer.mozilla.org/en-US/docs/Web/API/Blob>`_.
+
+A Blob object can be turn into an URL like this:
+
+.. code-block:: javascript
+
+  import { DomSanitizer } from '@angular/platform-browser';
+
+  constructor(
+    ...
+    public sanitizer: DomSanitizer,
+  ) { }
+
+  ...
+    this.services.api.download(path).subscribe(blob => {
+      this.downloadURL = this.sanitizer.bypassSecurityTrustUrl(
+        window.URL.createObjectURL(blob));
+    });
 
 It also exposes a `status` observable which returns an object containing:
 

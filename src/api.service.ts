@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Http, Response, ResponseContentType } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/Rx';
 import 'rxjs/add/operator/catch';
@@ -60,6 +60,20 @@ export class APIService {
     return this.http.delete(url, { headers: headers }).map(res => {
       this.status.next({ loading: false });
       return res.json()
+    })
+    .catch(this.error.bind(this));
+  }
+
+  download(path): Observable<any> {
+    let url = this.getFullPath(path);
+    let headers = this.authentication.getHeaders();
+    headers['Content-Type'] = 'application/x-www-form-urlencoded';
+    this.status.next(true);
+    return this.http.get(url, {
+      responseType: ResponseContentType.Blob,
+      headers: headers
+    }).map(res => {
+      return new Blob([res.blob()], { type: (res as any)._body.type });
     })
     .catch(this.error.bind(this));
   }
