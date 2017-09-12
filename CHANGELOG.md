@@ -1,3 +1,13 @@
+# 1.1.0 (2017-09-12)
+
+## New features
+
+- api.download() allows the user to access a file from the backend via a local blob
+
+## Bug fixes
+
+- Fix api call for workflow transition
+
 # 1.0.1 (2017-09-08)
 
 ## New features
