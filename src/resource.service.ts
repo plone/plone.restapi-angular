@@ -91,7 +91,7 @@ export class ResourceService {
   }
 
   transition(path: string, transition: string) {
-    return this.api.post(path + '/@workflow/' + transition, null);
+    return this.api.post(path + '/@workflow/' + transition, {});
   }
 
   update(path: string, model: any) {
