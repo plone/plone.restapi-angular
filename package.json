@@ -5,12 +5,14 @@
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {
+    "start": "npm test:updateLib && cd tests && npm install && npm start",
     "clean": "rimraf dist/",
     "build:aot": "ngc -p tsconfig.json",
     "build:jit": "tsc -p tsconfig.json",
     "build": "npm run clean && npm run build:aot",
+    "test:updateLib": "cd tests/src/app && rm -rf ./lib && cp -r ../../../src/ ./lib && cd -",
     "test":
-      "cd tests/src/app && rm -rf ./lib && cp -r ../../../src/ ./lib && cd ../.. && ng test --single-run --code-coverage"
+      "npm run test:updateLib && ng test --single-run --code-coverage"
   },
   "repository": {
     "type": "git",
