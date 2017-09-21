@@ -9,7 +9,13 @@ import { ConfigurationService } from './configuration.service';
 
 export interface Status {
   loading?: boolean;
-  error?: any;
+  error?: Error;
+}
+
+export interface Error {
+  type: string;
+  message: string;
+  traceback:string[];
 }
 
 @Injectable()
@@ -94,9 +100,9 @@ export class APIService {
     }
   }
 
-  private error(err: any) {
+  private error(err: Error | Response) {
     if (err instanceof Response) {
-      err = err.json();
+      err = <Error>(err.json());
     }
     this.status.next({ loading: false, error: err });
     return Observable.throw(err);

@@ -57,8 +57,8 @@ export class CommentAdd {
     this.services.comments.add(this.path, form.value).subscribe(res => {
       this.onCreate.next(true);
       form.resetForm();
-    }, err => {
-      this.error = err.json().message;
+    }, (err: Error) => {
+      this.error = err.message;
     });
   }
 }
