@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Response, ResponseContentType } from '@angular/http';
+import { Headers, Http, Response, ResponseContentType } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/Rx';
 import 'rxjs/add/operator/catch';
@@ -25,7 +25,7 @@ export class APIService {
     private http: Http,
   ) { }
 
-  get(path): Observable<any> {
+  get(path: string): Observable<any> {
     let url = this.getFullPath(path);
     let headers = this.authentication.getHeaders();
     this.status.next({ loading: true });
@@ -36,7 +36,7 @@ export class APIService {
     .catch(this.error.bind(this));
   }
 
-  post(path, data): Observable<any> {
+  post(path: string, data: Object): Observable<any> {
     let url = this.getFullPath(path);
     let headers = this.authentication.getHeaders();
     this.status.next({ loading: true });
@@ -47,7 +47,7 @@ export class APIService {
     .catch(this.error.bind(this));
   }
 
-  patch(path, data): Observable<any> {
+  patch(path: string, data: Object): Observable<any> {
     let url = this.getFullPath(path);
     let headers = this.authentication.getHeaders();
     this.status.next({ loading: true });
@@ -58,7 +58,7 @@ export class APIService {
     .catch(this.error.bind(this));
   }
 
-  delete(path): Observable<any> {
+  delete(path: string): Observable<any> {
     let url = this.getFullPath(path);
     let headers = this.authentication.getHeaders();
     this.status.next({ loading: true });
@@ -69,10 +69,10 @@ export class APIService {
     .catch(this.error.bind(this));
   }
 
-  download(path): Observable<any> {
+  download(path: string): Observable<any> {
     let url = this.getFullPath(path);
-    let headers = this.authentication.getHeaders();
-    headers['Content-Type'] = 'application/x-www-form-urlencoded';
+    let headers: Headers = this.authentication.getHeaders();
+    headers.set('Content-Type', 'application/x-www-form-urlencoded');
     this.status.next({ loading: true });
     return this.http.get(url, {
       responseType: ResponseContentType.Blob,
@@ -83,7 +83,7 @@ export class APIService {
     .catch(this.error.bind(this));
   }
 
-  getFullPath(path: string) {
+  getFullPath(path: string): string {
     const base = this.config.get('BACKEND_URL');
     // if path is already prefixed by base, no need to prefix twice
     // if path is already a full url, and base is a local url, no need to prefix either
