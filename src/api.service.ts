@@ -7,10 +7,15 @@ import 'rxjs/add/operator/catch';
 import { AuthenticationService } from './authentication.service';
 import { ConfigurationService } from './configuration.service';
 
+export interface Status {
+  loading?: boolean;
+  error?: any;
+}
+
 @Injectable()
 export class APIService {
 
-  public status: BehaviorSubject<any> = new BehaviorSubject(
+  public status: BehaviorSubject<Status> = new BehaviorSubject(
     { loading: false }
   );
 
@@ -45,7 +50,7 @@ export class APIService {
   patch(path, data): Observable<any> {
     let url = this.getFullPath(path);
     let headers = this.authentication.getHeaders();
-    this.status.next(true);
+    this.status.next({ loading: true });
     return this.http.patch(url, data, { headers: headers }).map(res => {
       this.status.next({ loading: false });
       return res.json()
@@ -56,7 +61,7 @@ export class APIService {
   delete(path): Observable<any> {
     let url = this.getFullPath(path);
     let headers = this.authentication.getHeaders();
-    this.status.next(true);
+    this.status.next({ loading: true });
     return this.http.delete(url, { headers: headers }).map(res => {
       this.status.next({ loading: false });
       return res.json()
@@ -68,7 +73,7 @@ export class APIService {
     let url = this.getFullPath(path);
     let headers = this.authentication.getHeaders();
     headers['Content-Type'] = 'application/x-www-form-urlencoded';
-    this.status.next(true);
+    this.status.next({ loading: true });
     return this.http.get(url, {
       responseType: ResponseContentType.Blob,
       headers: headers
