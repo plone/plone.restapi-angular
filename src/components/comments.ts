@@ -23,7 +23,7 @@ export class Comment {
 
   formatText(text) {
     if (text['mime-type'] == 'text/plain') {
-      return text.data.replace(/\n/g, '<br/>');
+      return text.data.replace(/\n/g, '<br>');
     } else {
       return text.data;
     }
@@ -48,11 +48,11 @@ export class CommentAdd {
   @Input() path: string;
   @Output() onCreate: EventEmitter<boolean> = new EventEmitter<boolean>();
   error: string;
-  
+
   constructor(
     private services: Services,
   ) { }
-  
+
   add(form: NgForm) {
     this.services.comments.add(this.path, form.value).subscribe(res => {
       this.onCreate.next(true);
