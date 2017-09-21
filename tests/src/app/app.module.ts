@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { CustomViewView } from './custom';
 import { CustomBreadcrumbs } from './custom';
 import { CustomGlobalNavigation } from './custom';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,7 @@ import { CustomGlobalNavigation } from './custom';
   providers: [
     {
       provide: 'CONFIGURATION', useValue: {
-        BACKEND_URL: 'http://localhost:8080/test2',
+        BACKEND_URL: environment.backendUrl,
       }
     },
   ],
