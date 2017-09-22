@@ -12,3 +12,20 @@ export interface NavTree {
   active?: boolean;
   properties?: any;
 }
+
+
+export interface TextValue {
+  data: string;
+  'mime-type': string;
+}
+
+export interface Comment {
+  comment_id: string ;
+  in_reply_to: string ;
+  text: TextValue;
+  user_notification: string;
+  author_username: string;
+  author_name: string;
+  creation_date: Date;
+  modification_date: Date;
+}

@@ -2,27 +2,32 @@ import {
   Component,
   Input,
   Output,
-  EventEmitter,
+  EventEmitter
 } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
 import { Services } from '../services';
 import { TraversingComponent } from '../traversing';
 import { Target } from 'angular-traversal';
+import { Error } from '../api.service';
+import { Comment as CommentItem, TextValue } from '../interfaces';
 
 @Component({
   selector: 'plone-comment',
   template: `<p>
-      <span class="comment-author">{{ comment.author_name }}</span>
-      <span class="comment-date">{{ comment.creation_date | date }}</span>
-    </p>
-    <div class="comment-body" [innerHTML]="formatText(comment.text)"></div>`
+    <span class="comment-author">{{ comment.author_name }}</span>
+    <span class="comment-date">{{ comment.creation_date | date }}</span>
+  </p>
+  <div class="comment-body" [innerHTML]="formatText(comment.text)"></div>`
 })
 export class Comment {
 
-  @Input() comment: any;
+  @Input() comment: CommentItem;
 
-  formatText(text) {
+  formatText(text: TextValue) {
+    if (!text) {
+      return '';
+    }
     if (text['mime-type'] == 'text/plain') {
       return text.data.replace(/\n/g, '<br>');
     } else {
@@ -33,16 +38,17 @@ export class Comment {
 
 @Component({
   selector: 'plone-comment-add',
-  template: `<form #f="ngForm" (submit)="add(f)">
-    <div *ngIf="error">{{ error }}</div>
-    <div>
-      <label>E-mail <input type="email" name="author_email" ngModel /></label>
-    </div>
-    <div>
-      <label>Comment <textarea name="text" ngModel></textarea></label>
-    </div>
-    <input type="submit" value="Comment" />
-  </form>`
+  template: `
+    <form #f="ngForm" (submit)="add(f)">
+      <div *ngIf="error">{{ error }}</div>
+      <div>
+        <label>E-mail <input type="email" name="author_email" ngModel/></label>
+      </div>
+      <div>
+        <label>Comment <textarea name="text" ngModel></textarea></label>
+      </div>
+      <input type="submit" value="Comment"/>
+    </form>`
 })
 export class CommentAdd {
 
@@ -68,8 +74,10 @@ export class CommentAdd {
   selector: 'plone-comments',
   template: `
     <div class="comments">
-      <plone-comment-add [path]="contextPath"
-                         (onCreate)="loadComments()"></plone-comment-add>
+      <plone-comment-add
+        *ngIf="allowDiscussion"
+        [path]="contextPath"
+        (onCreate)="loadComments()"></plone-comment-add>
       <div class="comment" *ngFor="let comment of comments">
         <plone-comment [comment]="comment"></plone-comment>
       </div>
@@ -77,8 +85,9 @@ export class CommentAdd {
 })
 export class Comments extends TraversingComponent {
 
-  comments: any[] = [];
-  contextPath: string;
+  public comments: CommentItem[] = [];
+  public contextPath: string;
+  public allowDiscussion: boolean;
 
   constructor(public services: Services) {
     super(services);
@@ -87,6 +96,7 @@ export class Comments extends TraversingComponent {
   onTraverse(target: Target) {
     if (target.contextPath) {
       this.contextPath = target.contextPath;
+      this.allowDiscussion = target.context.allow_discussion || false;
       this.loadComments();
     }
   }
