@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {
-    "start": "npm test:updateLib && cd tests && npm install && npm start",
+    "start": "npm run test:updateLib && cd tests && npm install && npm start",
     "clean": "rimraf dist/",
     "build:aot": "ngc -p tsconfig.json",
     "build:jit": "tsc -p tsconfig.json",
