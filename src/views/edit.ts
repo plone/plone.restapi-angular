@@ -75,7 +75,7 @@ export class EditView extends TraversingComponent {
     this.services.traverser.traverse(this.path);
   }
 
-  loginOn401(err) {
+  loginOn401(err: Response) {
     if (err.status === 401) {
       this.services.authentication.logout();
       this.services.traverser.traverse(
@@ -85,7 +85,7 @@ export class EditView extends TraversingComponent {
     }
   }
 
-  onError(err) {
+  onError(err: Response) {
     console.log(err);
   }
 }
