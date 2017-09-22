@@ -4,12 +4,22 @@ import { Http, Headers } from '@angular/http';
 import { BehaviorSubject } from 'rxjs/Rx';
 
 import { ConfigurationService } from './configuration.service';
+import {Error} from './api.service';
+
+export interface Authenticated {
+  state: boolean;
+  error?: string
+}
+
+export interface LoginToken {
+  token: string;
+}
 
 @Injectable()
 export class AuthenticationService {
 
-  public isAuthenticated: BehaviorSubject<any> = new BehaviorSubject({ state: false });
-  
+  public isAuthenticated: BehaviorSubject<Authenticated> = new BehaviorSubject({ state: false });
+
   constructor(
     private config: ConfigurationService,
     private http: Http,
@@ -53,7 +63,7 @@ export class AuthenticationService {
         this.config.get('BACKEND_URL') + '/@login', body, { headers: headers })
         .subscribe(
         res => {
-          let data = res.json();
+          const data: LoginToken = res.json();
           if (data.token) {
             localStorage.setItem('auth', data.token);
             localStorage.setItem('auth_time', (new Date()).toISOString());
@@ -67,7 +77,7 @@ export class AuthenticationService {
         err => {
           localStorage.removeItem('auth');
           localStorage.removeItem('auth_time');
-          this.isAuthenticated.next({ state: false, error: err.json().error });
+          this.isAuthenticated.next({ state: false, error: ((<Error>err.json()).message) });
         }
       );
     }
