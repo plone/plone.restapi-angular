@@ -1,7 +1,8 @@
-import {Component} from '@angular/core';
-import {Services} from '../services';
-import {TraversingComponent} from '../traversing';
-import {NavLink} from '../interfaces';
+import { Component } from '@angular/core';
+import { Services } from '../services';
+import { TraversingComponent } from '../traversing';
+import { NavLink } from '../interfaces';
+import { Target } from 'angular-traversal';
 
 
 @Component({
@@ -23,7 +24,7 @@ export class Breadcrumbs extends TraversingComponent {
     super(services);
   }
 
-  onTraverse(target: any) {
+  onTraverse(target: Target) {
     const components = target.context['@components'];
     if (components && components.breadcrumbs.items) {
       this.links = components.breadcrumbs.items;

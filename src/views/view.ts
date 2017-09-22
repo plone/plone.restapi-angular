@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 
 import { Services } from '../services';
 import { TraversingComponent } from '../traversing';
+import { Target } from 'angular-traversal';
 
 @Component({
   selector: 'plone-view',
@@ -23,7 +24,7 @@ export class ViewView extends TraversingComponent {
     super(services);
   }
 
-  onTraverse(target) {
+  onTraverse(target: Target) {
     this.services.title.setTitle(target.context.title);
     this.services.meta.updateTag({
       name: 'description',

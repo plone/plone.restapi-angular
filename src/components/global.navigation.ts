@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Services } from '../services';
 import { TraversingComponent } from '../traversing';
 import { NavLink } from '../interfaces';
+import { Target } from 'angular-traversal';
 
 
 @Component({
@@ -30,7 +31,7 @@ export class GlobalNavigation extends TraversingComponent implements OnInit {
     });
   }
 
-  onTraverse(target: any) {
+  onTraverse(target: Target) {
     this.links.map((link: NavLink) => {
       if (!target.path || target.path === '/') {
         link.active = (!link.path || link.path === '/');

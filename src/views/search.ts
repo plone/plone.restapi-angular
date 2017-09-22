@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Target } from 'angular-traversal';
 import { TraversingComponent } from '../traversing';
 import { Services } from '../services';
 
@@ -24,7 +25,7 @@ export class SearchView extends TraversingComponent {
     super(services);
   }
 
-  onTraverse(target) {
+  onTraverse(target: Target) {
     this.results = target.context.items;
     this.total = target.context.items_total;
   }

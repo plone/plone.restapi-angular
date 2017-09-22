@@ -8,6 +8,7 @@ import { NgForm } from '@angular/forms';
 
 import { Services } from '../services';
 import { TraversingComponent } from '../traversing';
+import { Target } from 'angular-traversal';
 
 @Component({
   selector: 'plone-comment',
@@ -65,26 +66,25 @@ export class CommentAdd {
 
 @Component({
   selector: 'plone-comments',
-  template: `<div class="comments">
-    <plone-comment-add [path]="contextPath"
-      (onCreate)="loadComments()"></plone-comment-add>
-    <div class="comment" *ngFor="let comment of comments">
-      <plone-comment [comment]="comment"></plone-comment>
-    </div>
-  </div>`
+  template: `
+    <div class="comments">
+      <plone-comment-add [path]="contextPath"
+                         (onCreate)="loadComments()"></plone-comment-add>
+      <div class="comment" *ngFor="let comment of comments">
+        <plone-comment [comment]="comment"></plone-comment>
+      </div>
+    </div>`
 })
 export class Comments extends TraversingComponent {
 
   comments: any[] = [];
   contextPath: string;
 
-  constructor(
-    public services: Services,
-  ) {
+  constructor(public services: Services) {
     super(services);
   }
 
-  onTraverse(target) {
+  onTraverse(target: Target) {
     if (target.contextPath) {
       this.contextPath = target.contextPath;
       this.loadComments();
