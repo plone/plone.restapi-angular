@@ -1,10 +1,10 @@
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 
-import {ResourceService} from './resource.service';
-import {ConfigurationService} from './configuration.service';
-import {NavTree} from './interfaces';
+import { ResourceService } from './resource.service';
+import { ConfigurationService } from './configuration.service';
+import { NavTree } from './interfaces';
 
 interface UnorderedContentTree {
   children: { [key: string]: UnorderedContentTree };
@@ -14,7 +14,7 @@ interface UnorderedContentTree {
 @Injectable()
 export class NavigationService {
 
-  private cache: {[key: string]: NavTree} = {};
+  private cache: { [key: string]: NavTree } = {};
 
   constructor(private resource: ResourceService,
               private config: ConfigurationService) {
@@ -33,7 +33,7 @@ export class NavigationService {
       return this.resource.find(
         {
           is_default_page: false,
-          path: {depth: depth}
+          path: { depth: depth }
         },
         rootPath,
         {
@@ -41,7 +41,7 @@ export class NavigationService {
           size: 1000
         }
       ).map(res => {
-        const tree: UnorderedContentTree = {children: {}};
+        const tree: UnorderedContentTree = { children: {} };
         res.items
           .sort((item: any) => item.getObjPositionInParent)
           .map((item: any) => {
@@ -58,7 +58,7 @@ export class NavigationService {
             let current: UnorderedContentTree = tree;
             path.map((folder: string) => {
               if (!current.children[folder]) {
-                current.children[folder] = {children: {}};
+                current.children[folder] = { children: {} };
               }
               current = current.children[folder];
               if (!current.children) {
@@ -73,13 +73,15 @@ export class NavigationService {
             }
             current.children[id].properties = item;
           });
-        const orderedTree = {children: this.getOrderedChildren(tree.children), properties: tree.properties};
+        const orderedTree = { children: this.getOrderedChildren(tree.children), properties: tree.properties };
         this.cache[cacheKey] = orderedTree;
         if (currentPath) {
           return this.markActive(currentPath, orderedTree);
         } else {
           return orderedTree;
         }
+      }).filter((item: NavTree) => {
+        return !item.properties || !item.properties.exclude_from_nav;
       });
     }
   }
@@ -88,7 +90,7 @@ export class NavigationService {
     return Object.keys(children).map(key => {
       const child: UnorderedContentTree = children[key];
       const orderedChild: NavTree[] = child.children ? this.getOrderedChildren(child.children) : [];
-      return <NavTree>Object.assign({}, child, {children: orderedChild});
+      return <NavTree>Object.assign({}, child, { children: orderedChild });
     }).filter(item => item.properties).sort((a, b) => {
       return a.properties.getObjPositionInParent - b.properties.getObjPositionInParent;
     });
