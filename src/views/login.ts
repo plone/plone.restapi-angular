@@ -14,7 +14,7 @@ export class LoginView implements OnInit {
 
   constructor(
     public services: Services,
-  ) { } 
+  ) { }
 
   ngOnInit() {
     this.services.authentication.isAuthenticated

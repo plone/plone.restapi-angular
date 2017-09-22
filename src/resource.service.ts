@@ -1,7 +1,22 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs/Observable';
 
-import { APIService } from './api.service';
+import {APIService} from './api.service';
+import {ConfigurationService} from './configuration.service';
+import {NavLink} from './interfaces';
+
+
+interface NavigationItem {
+  title: string;
+  url: string
+  properties?: any;
+}
+
+interface NavigationItems {
+  '@id': string;
+  items: NavigationItem[];
+}
+
 
 @Injectable()
 export class ResourceService {
@@ -10,7 +25,8 @@ export class ResourceService {
 
   constructor(
     private api: APIService,
-  ) { }
+    private configuration: ConfigurationService) {
+  }
 
   copy(sourcePath: string, targetPath: string) {
     return this.api.post(
@@ -57,7 +73,7 @@ export class ResourceService {
       params.push('sort_order=' + options.sort_order);
     }
     if (options.metadata_fields) {
-      options.metadata_fields.map(field => {
+      options.metadata_fields.map((field: any) => {
         params.push('metadata_fields:list=' + field);
       });
     }
@@ -98,15 +114,38 @@ export class ResourceService {
     return this.api.patch(path, model);
   }
 
-  navigation() {
-    return this.api.get('/@components/navigation');
+  navigation(): Observable<NavLink[]> {
+    return this.api.get('/@components/navigation')
+      .map((data: NavigationItems[]) => {
+        if (data && data[0]) {
+          return data[0].items.filter(item => {
+            return !item.properties || !item.properties.exclude_from_nav;
+          }).map(this.linkFromItem.bind(this))
+        } else {
+          return [];
+        }
+      });
   }
 
-  breadcrumbs(path: string) {
-    return this.api.get(path + '/@components/breadcrumbs');
+  breadcrumbs(path: string): Observable<NavLink[]> {
+    return this.api.get(path + '/@components/breadcrumbs')
+      .map((data: NavigationItems[]) => {
+        if (data && data[0]) {
+          return data[0].items.map(this.linkFromItem.bind(this))
+        } else {
+          return []
+        }
+      });
   }
 
-  type(typeId) {
+  type(typeId: string) {
     return this.api.get('/@types/' + typeId);
+  }
+
+  private linkFromItem(item: NavigationItem): NavLink {
+    return <NavLink>Object.assign({
+      active: false,
+      path: this.configuration.urlToPath(item.url)
+    }, item)
   }
 }
