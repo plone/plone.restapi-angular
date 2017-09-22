@@ -1,4 +1,8 @@
 import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
+import {
+  HttpTestingController,
+  HttpClientTestingModule
+} from '@angular/common/http/testing';
 import { Injectable, Directive, Input } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { APP_BASE_HREF } from '@angular/common';
@@ -47,7 +51,7 @@ describe('Breadcrumbs', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [Breadcrumbs],
-      imports: [TraversalModule],
+      imports: [HttpClientTestingModule, TraversalModule],
       providers: [
         APIService,
         AuthenticationService,

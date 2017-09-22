@@ -2,16 +2,10 @@
 
 import { TestBed, inject } from '@angular/core/testing';
 import {
-  BaseRequestOptions,
-  Response,
-  ResponseOptions,
-  Http
-} from '@angular/http';
+  HttpTestingController,
+  HttpClientTestingModule
+} from '@angular/common/http/testing';
 
-import {
-  MockBackend,
-  MockConnection
-} from '@angular/http/testing';
 import { APP_BASE_HREF } from '@angular/common';
 
 import { ConfigurationService } from './configuration.service';
@@ -25,7 +19,7 @@ import { ViewView } from '.';
 describe('Traversal', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [TraversalModule],
+      imports: [HttpClientTestingModule, TraversalModule],
       providers: [
         APIService,
         AuthenticationService,
@@ -44,73 +38,72 @@ describe('Traversal', () => {
         { provide: Marker, useClass: InterfaceMarker },
         { provide: APP_BASE_HREF, useValue: '/' },
         { provide: Normalizer, useClass: FullPathNormalizer },
-        BaseRequestOptions,
-        MockBackend,
-        {
-          provide: Http,
-          useFactory: (backend: MockBackend, defaultOptions: BaseRequestOptions) => {
-            return new Http(backend, defaultOptions);
-          },
-          deps: [MockBackend, BaseRequestOptions],
-        },
       ]
     });
   });
 
-  it('should mark context according interfaces', inject([InterfaceMarker], (service) => {
+  it('should mark context according to interfaces', () => {
+    const service = TestBed.get(InterfaceMarker);
+    const http = TestBed.get(HttpTestingController);
     let context = {
       '@id': 'http://fake/Plone/page',
       'interfaces': ['ISomething', 'IWhatever']
     };
     expect(service.mark(context)).toEqual(['ISomething', 'IWhatever']);
-  }));
+  });
 
-  it('should register ViewView as default view', inject([PloneViews, Traverser], (service, traverser) => {
+  it('should register ViewView as default view', () => {
+    const service = TestBed.get(PloneViews);
+    const traverser = TestBed.get(Traverser);
     service.initialize();
     expect(traverser.views['view']['*']).toBe(ViewView);
-  }));
+  });
 
-  it('should call backend to resolve path', inject([RESTAPIResolver, MockBackend], (service, backend) => {
-    backend.connections.subscribe(c => {
-      expect(c.request.url).toBe('http://fake/Plone/');
-      let response = {
-        "@id": "http://fake/Plone/", 
-        "@type": "Plone Site", 
-        "id": "Plone", 
-        "items": [
-          {
-            "@id": "http://fake/Plone/front-page", 
-            "@type": "Document", 
-            "description": "Congratulations! You have successfully installed Plone.", 
-            "title": "Welcome to Plone"
-          }, 
-          {
-            "@id": "http://fake/Plone/news", 
-            "@type": "Folder", 
-            "description": "Site News", 
-            "title": "News"
-          }, 
-          {
-            "@id": "http://fake/Plone/events", 
-            "@type": "Folder", 
-            "description": "Site Events", 
-            "title": "Events"
-          }, 
-          {
-            "@id": "http://fake/Plone/Members", 
-            "@type": "Folder", 
-            "description": "Site Users", 
-            "title": "Users"
-          }
-        ], 
-        "items_total": 5, 
-        "parent": {}
-      };
-      c.mockRespond(new Response(new ResponseOptions({body: response})));
-    });
+  it('should call backend to resolve path', () => {
+    const service = TestBed.get(RESTAPIResolver);
+    const http = TestBed.get(HttpTestingController);
+    let id = '';
+    const response = {
+      "@id": "http://fake/Plone/",
+      "@type": "Plone Site",
+      "id": "Plone",
+      "items": [
+        {
+          "@id": "http://fake/Plone/front-page",
+          "@type": "Document",
+          "description": "Congratulations! You have successfully installed Plone.",
+          "title": "Welcome to Plone"
+        },
+        {
+          "@id": "http://fake/Plone/news",
+          "@type": "Folder",
+          "description": "Site News",
+          "title": "News"
+        },
+        {
+          "@id": "http://fake/Plone/events",
+          "@type": "Folder",
+          "description": "Site Events",
+          "title": "Events"
+        },
+        {
+          "@id": "http://fake/Plone/Members",
+          "@type": "Folder",
+          "description": "Site Users",
+          "title": "Users"
+        }
+      ],
+      "items_total": 5,
+      "parent": {}
+    };
+
     service.resolve('/').subscribe(content => {
-      expect(content['@id']).toBe('http://fake/Plone/');
+      id = content['@id'];
     });
-  }));
+
+    http.expectOne('http://fake/Plone/').flush(response);
+
+    expect(id).toBe('http://fake/Plone/');
+  });
 
 });
