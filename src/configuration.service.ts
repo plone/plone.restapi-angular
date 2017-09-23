@@ -7,8 +7,12 @@ export class ConfigurationService {
     @Inject('CONFIGURATION') private config: any,
   ) {}
 
-  get(key: string): any {
-    return this.config[key];
+  get(key: string, defaultValue? :any): any {
+    if (defaultValue !== undefined && !(this.config.hasOwnProperty(key))) {
+      return defaultValue;
+    } else {
+      return this.config[key];
+    }
   }
 
   urlToPath(url: string): string {
