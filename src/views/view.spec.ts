@@ -1,15 +1,8 @@
-import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
+import { ComponentFixture, TestBed, inject } from '@angular/core/testing';
 import {
-  BaseRequestOptions,
-  Response,
-  ResponseOptions,
-  Http
-} from '@angular/http';
-
-import {
-  MockBackend,
-  MockConnection
-} from '@angular/http/testing';
+  HttpTestingController,
+  HttpClientTestingModule
+} from '@angular/common/http/testing';
 import { APP_BASE_HREF } from '@angular/common';
 
 import { ConfigurationService } from '../configuration.service';
@@ -27,10 +20,10 @@ describe('ViewView', () => {
   let component: ViewView;
   let fixture: ComponentFixture<ViewView>;
 
-  beforeEach(async(() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [ ViewView ],
-      imports: [TraversalModule],
+      imports: [HttpClientTestingModule, TraversalModule],
       providers: [
         APIService,
         AuthenticationService,
@@ -52,19 +45,10 @@ describe('ViewView', () => {
         { provide: Marker, useClass: TypeMarker },
         { provide: APP_BASE_HREF, useValue: '/' },
         { provide: Normalizer, useClass: FullPathNormalizer },
-        BaseRequestOptions,
-        MockBackend,
-        {
-          provide: Http,
-          useFactory: (backend: MockBackend, defaultOptions: BaseRequestOptions) => {
-            return new Http(backend, defaultOptions);
-          },
-          deps: [MockBackend, BaseRequestOptions],
-        },
       ]
     })
     .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ViewView);
@@ -77,71 +61,78 @@ describe('ViewView', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should get current context according path', inject([MockBackend], (backend) => {
-    backend.connections.subscribe(c => {
-      expect(c.request.url).toBe('http://fake/Plone/');
-      let response = {
-        "@id": "http://fake/Plone/", 
-        "@type": "Plone Site", 
-        "id": "Plone", 
-        "items": [
-          {
-            "@id": "http://fake/Plone/front-page", 
-            "@type": "Document", 
-            "description": "Congratulations! You have successfully installed Plone.", 
-            "title": "Welcome to Plone"
-          }, 
-          {
-            "@id": "http://fake/Plone/news", 
-            "@type": "Folder", 
-            "description": "Site News", 
-            "title": "News"
-          }, 
-          {
-            "@id": "http://fake/Plone/events", 
-            "@type": "Folder", 
-            "description": "Site Events", 
-            "title": "Events"
-          }, 
-          {
-            "@id": "http://fake/Plone/Members", 
-            "@type": "Folder", 
-            "description": "Site Users", 
-            "title": "Users"
-          }
-        ],
-        "items_total": 5, 
-        "parent": {}
-      };
-      c.mockRespond(new Response(new ResponseOptions({body: response})));
-    });
+  it('should get current context according to path', () => {
+    const http = TestBed.get(HttpTestingController);
+    let id = '';
+    const response = {
+      "@id": "http://fake/Plone/",
+      "@type": "Plone Site",
+      "id": "Plone",
+      "items": [
+        {
+          "@id": "http://fake/Plone/front-page",
+          "@type": "Document",
+          "description": "Congratulations! You have successfully installed Plone.",
+          "title": "Welcome to Plone"
+        },
+        {
+          "@id": "http://fake/Plone/news",
+          "@type": "Folder",
+          "description": "Site News",
+          "title": "News"
+        },
+        {
+          "@id": "http://fake/Plone/events",
+          "@type": "Folder",
+          "description": "Site Events",
+          "title": "Events"
+        },
+        {
+          "@id": "http://fake/Plone/Members",
+          "@type": "Folder",
+          "description": "Site Users",
+          "title": "Users"
+        }
+      ],
+      "items_total": 5,
+      "parent": {}
+    };
+
     component.services.traverser.traverse('/');
     component.services.traverser.target.subscribe(() => {
-      expect(component.context.id).toBe('Plone');
+      id = component.context.id;
     });
-  }));
 
-  it('should get current context text content', inject([MockBackend], (backend) => {
-    backend.connections.subscribe(c => {
-      expect(c.request.url).toBe('http://fake/Plone/somepage');
-      let response = {
-        "@id": "http://fake/Plone/somepage",
-        "@type": "Document",
-        "id": "somepage",
-        "text": {
-          "content-type": "text/plain",
-          "data": "If you're seeing this instead of the web site you were expecting, the owner of this web site has just installed Plone. Do not contact the Plone Team or the Plone mailing lists about this.",
-          "encoding": "utf-8"
-        },
-        "title": "Welcome to Plone"
-      };
-      c.mockRespond(new Response(new ResponseOptions({ body: response })));
-    });
+    http.expectOne('http://fake/Plone/').flush(response);
+
+    expect(id).toBe('Plone');
+  });
+
+  it('should get current context text content', () => {
+    const http = TestBed.get(HttpTestingController);
+    let id = '';
+    let text = '';
+    const response = {
+      "@id": "http://fake/Plone/somepage",
+      "@type": "Document",
+      "id": "somepage",
+      "text": {
+        "content-type": "text/plain",
+        "data": "If you're seeing this instead of the web site you were expecting, the owner of this web site has just installed Plone. Do not contact the Plone Team or the Plone mailing lists about this.",
+        "encoding": "utf-8"
+      },
+      "title": "Welcome to Plone"
+    };
     component.services.traverser.traverse('/somepage');
     component.services.traverser.target.subscribe(() => {
-      expect(component.context.id).toBe('somepage');
-      expect(component.text).toBe("If you're seeing this instead of the web site you were expecting, the owner of this web site has just installed Plone. Do not contact the Plone Team or the Plone mailing lists about this.");
+      id = component.context.id;
+      text = component.text;
     });
-  }));
+
+    http.expectOne('http://fake/Plone/somepage').flush(response);
+
+    expect(id).toBe('somepage');
+    expect(text).toBe("If you're seeing this instead of the web site you were expecting, the owner of this web site has just installed Plone. Do not contact the Plone Team or the Plone mailing lists about this.");
+  });
 
 });
