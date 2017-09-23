@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing'
 import { Injectable, Directive, Input } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { APP_BASE_HREF } from '@angular/common';
-import { Traverser, TraversalModule, Resolver, Marker, Normalizer } from 'angular-traversal';
+import { Traverser, TraversalModule, Resolver, Marker, Normalizer, Target } from 'angular-traversal';
 import {
   TypeMarker,
   PloneViews,
@@ -86,7 +86,7 @@ describe('Breadcrumbs', () => {
   });
 
   it('should provide links', () => {
-    component.onTraverse({ contextPath: '/', context: {} });
+    component.onTraverse(<Target>{ contextPath: '/', context: {}});
     expect(component.links.length).toBeTruthy(2);
   });
 

@@ -13,19 +13,18 @@ export interface NavTree {
   properties?: any;
 }
 
-
 export interface TextValue {
   data: string;
   'mime-type': string;
 }
 
 export interface Comment {
-  comment_id: string ;
-  in_reply_to: string ;
-  text: TextValue;
-  user_notification: string;
-  author_username: string;
   author_name: string;
+  author_username: string;
+  comment_id: string ;
   creation_date: Date;
+  in_reply_to?: string | null;
   modification_date: Date;
+  text: TextValue;
+  user_notification: boolean | null;
 }

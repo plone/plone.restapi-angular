@@ -287,8 +287,8 @@ describe('ResourceService', () => {
       ];
       c.mockRespond(new Response(new ResponseOptions({ body: response })));
     });
-    service.navigation().subscribe(content => {
-      expect(content[0].items[0].url).toBe('http://fake/Plone');
+    service.navigation().subscribe(links => {
+      expect(links[0].url).toBe('http://fake/Plone');
     });
   }));
 
@@ -312,8 +312,8 @@ describe('ResourceService', () => {
       ];
       c.mockRespond(new Response(new ResponseOptions({ body: response })));
     });
-    service.breadcrumbs('/a-folder/test').subscribe(content => {
-      expect(content[0].items[0].title).toBe('A folder');
+    service.breadcrumbs('/a-folder/test').subscribe(links => {
+      expect(links[0].title).toBe('A folder');
     });
-  }));  
+  }));
 });

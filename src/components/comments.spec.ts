@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
 import { DatePipe } from '@angular/common';
+import { Comment as CommentItem } from '../interfaces';
 
 import { Comment } from './comments';
 
@@ -25,8 +25,9 @@ describe('Comment component', () => {
   });
 
   it('should display author, date and format content', () => {
-    let comment = {
-      creation_date: '01/01/2000',
+    let comment = <CommentItem>{
+      comment_id: '13233313',
+      creation_date: new Date('2000/01/01'),
       author_name: 'Dynausor',
       text: { 'mime-type': 'text/plain', 'data': 'Roaaaar\nRoooar\nRoooar' }
     };
