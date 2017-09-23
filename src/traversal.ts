@@ -67,8 +67,8 @@ export class FullPathNormalizer extends Normalizer {
   constructor(private config: ConfigurationService) {
     super();
   }
-  
-  normalize(path): string {
+
+  normalize(path: string): string {
     const base = this.config.get('BACKEND_URL');
     if (path.startsWith(base)) {
       return path.split(base)[1];

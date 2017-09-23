@@ -84,7 +84,7 @@ export class AddView extends TraversingComponent implements OnInit {
     }
   }
 
-  onSave(schemaForm) {
+  onSave(schemaForm: any) {
     let model = schemaForm.value;
     Object.keys(model).forEach(key => {
       if (model[key] === '' && this.schema.properties[key].widget.id === 'date') {

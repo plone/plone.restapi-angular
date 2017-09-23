@@ -138,7 +138,7 @@ export class ResourceService {
       });
   }
 
-  type(typeId: string) {
+  type(typeId: string): Observable<any> {
     return this.api.get('/@types/' + typeId);
   }
 

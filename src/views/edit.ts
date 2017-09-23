@@ -34,7 +34,7 @@ export class EditView extends TraversingComponent {
       cancel: this.onCancel.bind(this)
     };
     this.services.traverser.target
-      .takeUntil(this.ngUnsubscribe)  
+      .takeUntil(this.ngUnsubscribe)
       .subscribe(target => {
       this.path = target.contextPath;
       let model = target.context;
@@ -59,7 +59,7 @@ export class EditView extends TraversingComponent {
     });
   }
 
-  onSave(schemaForm) {
+  onSave(schemaForm: any) {
     let model = schemaForm.value;
     Object.keys(model).forEach(key => {
       if (model[key]==='' && this.schema.properties[key].widget.id === 'date') {
