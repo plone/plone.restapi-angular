@@ -1,9 +1,9 @@
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import { Injectable} from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 
-import {APIService} from './api.service';
-import {ConfigurationService} from './configuration.service';
-import {NavLink} from './interfaces';
+import { APIService } from './api.service';
+import { ConfigurationService } from './configuration.service';
+import { NavLink, SearchOptions } from './interfaces';
 
 
 interface NavigationItem {
@@ -43,12 +43,12 @@ export class ResourceService {
     return this.api.delete(path);
   }
 
-  find(
-    query: any,
-    path: string = '/',
-    options: any = {},
-  ) {
-    if (!path.endsWith('/')) path += '/';
+  find(query: any,
+       path: string = '/',
+       options: SearchOptions = {}) {
+    if (!path.endsWith('/')) {
+      path += '/';
+    }
     let params: string[] = [];
     Object.keys(query).map(index => {
       let criteria = query[index];

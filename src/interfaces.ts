@@ -28,3 +28,12 @@ export interface Comment {
   text: TextValue;
   user_notification: boolean | null;
 }
+
+export interface SearchOptions {
+  sort_on?: string;
+  sort_order?: string;
+  metadata_fields?: string[];
+  start?: number;
+  size?: number;
+  fullobjects?: boolean;
+}
