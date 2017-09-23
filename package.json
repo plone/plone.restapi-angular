@@ -12,7 +12,7 @@
     "build": "npm run clean && npm run build:aot",
     "test:updateLib": "cd tests/src/app && rm -rf ./lib && cp -r ../../../src/ ./lib && cd -",
     "test":
-      "npm run test:updateLib && ng test --single-run --code-coverage"
+      "npm run test:updateLib && cd tests && ng test --single-run --code-coverage"
   },
   "repository": {
     "type": "git",
