@@ -10,7 +10,6 @@ import {
 
 import {
   MockBackend,
-  MockConnection
 } from '@angular/http/testing';
 
 import { ConfigurationService } from './configuration.service';

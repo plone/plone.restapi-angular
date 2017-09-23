@@ -21,6 +21,7 @@ import { ResourceService } from './resource.service';
 import { Traverser, TraversalModule, Resolver, Marker, Normalizer } from 'angular-traversal';
 import { InterfaceMarker, RESTAPIResolver, PloneViews, FullPathNormalizer } from './traversal';
 import { ViewView } from '.';
+import { CacheService } from './cache.service';
 
 describe('Traversal', () => {
   beforeEach(() => {
@@ -29,6 +30,7 @@ describe('Traversal', () => {
       providers: [
         APIService,
         AuthenticationService,
+        CacheService,
         ConfigurationService,
         {
           provide: 'CONFIGURATION', useValue: {

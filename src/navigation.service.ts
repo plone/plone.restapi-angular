@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
-
-import { ResourceService } from './resource.service';
+import { Observable } from 'rxjs/Observable';
 import { ConfigurationService } from './configuration.service';
 import { NavTree } from './interfaces';
+
+import { ResourceService } from './resource.service';
 
 interface UnorderedContentTree {
   children: { [key: string]: UnorderedContentTree };
@@ -14,76 +14,64 @@ interface UnorderedContentTree {
 @Injectable()
 export class NavigationService {
 
-  private cache: { [key: string]: NavTree } = {};
-
   constructor(private resource: ResourceService,
               private config: ConfigurationService) {
   }
 
   getNavigationFor(currentPath: string, root: string | number, depth: number): Observable<NavTree> {
     const rootPath = this.getRoot(currentPath, root);
-    const cacheKey = rootPath + ' > ' + depth.toString();
-    if (this.cache[cacheKey]) {
-      let tree = this.cache[cacheKey];
-      if (currentPath) {
-        tree = this.markActive(currentPath, tree);
+    return this.resource.find(
+      {
+        is_default_page: false,
+        path: { depth: depth }
+      },
+      rootPath,
+      {
+        metadata_fields: ['exclude_from_nav', 'getObjPositionInParent'],
+        size: 1000
       }
-      return Observable.of(tree);
-    } else {
-      return this.resource.find(
-        {
-          is_default_page: false,
-          path: { depth: depth }
-        },
-        rootPath,
-        {
-          metadata_fields: ['exclude_from_nav', 'getObjPositionInParent'],
-          size: 1000
-        }
-      ).map(res => {
-        const tree: UnorderedContentTree = { children: {} };
-        res.items
-          .sort((item: any) => item.getObjPositionInParent)
-          .map((item: any) => {
-            const localpath: string = this.config.urlToPath(item['@id']);
-            const path: string[] = localpath.slice(
-              localpath.indexOf(rootPath) + rootPath.length).split('/');
-            if (path[0] === '') {
-              path.shift();
-              if (!path.length) {
-                return;
-              }
+    ).map((res: any) => {
+      const tree: UnorderedContentTree = { children: {} };
+      res.items
+        .sort((item: any) => item.getObjPositionInParent)
+        .map((item: any) => {
+          const localpath: string = this.config.urlToPath(item['@id']);
+          const path: string[] = localpath.slice(
+            localpath.indexOf(rootPath) + rootPath.length).split('/');
+          if (path[0] === '') {
+            path.shift();
+            if (!path.length) {
+              return;
             }
-            const id = path.pop() || '';
-            let current: UnorderedContentTree = tree;
-            path.map((folder: string) => {
-              if (!current.children[folder]) {
-                current.children[folder] = { children: {} };
-              }
-              current = current.children[folder];
-              if (!current.children) {
-                current.children = {};
-              }
-            });
-            if (!current.children[id]) {
-              current.children[id] = {
-                children: {},
-                properties: null
-              };
+          }
+          const id = path.pop() || '';
+          let current: UnorderedContentTree = tree;
+          path.map((folder: string) => {
+            if (!current.children[folder]) {
+              current.children[folder] = { children: {} };
             }
-            current.children[id].properties = item;
+            current = current.children[folder];
+            if (!current.children) {
+              current.children = {};
+            }
           });
-        const orderedTree = { children: this.getOrderedChildren(tree.children), properties: tree.properties };
-        this.cache[cacheKey] = orderedTree;
-        if (currentPath) {
-          return this.markActive(currentPath, orderedTree);
-        } else {
-          return orderedTree;
-        }
-      }).filter((item: NavTree) => {
-        return !item.properties || !item.properties.exclude_from_nav;
-      });
-    }
+          if (!current.children[id]) {
+            current.children[id] = {
+              children: {},
+              properties: null
+            };
+          }
+          current.children[id].properties = item;
+        });
+      const orderedTree = { children: this.getOrderedChildren(tree.children), properties: tree.properties };
+      if (currentPath) {
+        return this.markActive(currentPath, orderedTree);
+      } else {
+        return orderedTree;
+      }
+    }).filter((item: NavTree) => {
+      return !item.properties || !item.properties.exclude_from_nav;
+    });
   }
 
   private getOrderedChildren(children: { [key: string]: UnorderedContentTree }): NavTree[] {

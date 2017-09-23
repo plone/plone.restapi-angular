@@ -27,6 +27,7 @@ import { Services } from '../services';
 import { Traverser, TraversalModule, Resolver, Marker, Normalizer } from 'angular-traversal';
 import { TypeMarker, RESTAPIResolver, PloneViews, FullPathNormalizer } from '../traversal';
 import { EditView } from './edit';
+import { CacheService } from '../cache.service';
 
 describe('EditView', () => {
   let component: EditView;
@@ -39,6 +40,7 @@ describe('EditView', () => {
       providers: [
         APIService,
         AuthenticationService,
+        CacheService,
         ConfigurationService,
         {
           provide: 'CONFIGURATION', useValue: {

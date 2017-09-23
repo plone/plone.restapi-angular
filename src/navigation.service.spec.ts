@@ -10,7 +10,6 @@ import {
 
 import {
   MockBackend,
-  MockConnection
 } from '@angular/http/testing';
 
 import { ConfigurationService } from './configuration.service';
@@ -18,6 +17,7 @@ import { APIService } from './api.service';
 import { AuthenticationService } from './authentication.service';
 import { ResourceService } from './resource.service';
 import { NavigationService } from './navigation.service';
+import { CacheService } from './cache.service';
 
 describe('NavigationService', () => {
   beforeEach(() => {
@@ -27,6 +27,7 @@ describe('NavigationService', () => {
         APIService,
         AuthenticationService,
         ConfigurationService,
+        CacheService,
         NavigationService,
         {
           provide: 'CONFIGURATION', useValue: {

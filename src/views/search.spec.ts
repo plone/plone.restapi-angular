@@ -14,6 +14,7 @@ import { APP_BASE_HREF } from '@angular/common';
 
 import { ConfigurationService } from '../configuration.service';
 import { APIService } from '../api.service';
+import { CacheService } from '../cache.service';
 import { AuthenticationService } from '../authentication.service';
 import { ResourceService } from '../resource.service';
 import { CommentsService } from '../comments.service';
@@ -34,6 +35,7 @@ describe('SearchView', () => {
       providers: [
         APIService,
         AuthenticationService,
+        CacheService,
         ConfigurationService,
         {
           provide: 'CONFIGURATION', useValue: {

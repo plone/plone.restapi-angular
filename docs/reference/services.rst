@@ -138,3 +138,23 @@ It also exposes a `status` observable which returns an object containing:
 
 - `loading`, boolean, true if call is pending, false if finished
 - `error`, the HTTP error if any.
+
+
+Cache service
+-------------
+
+The CacheService service provides a `get` method which wraps `get` method from Api service with caching features.
+
+The http request observable is piped into a Subject that repeats the same response during a delay. This delay can be set while providing `CACHE_REFRESH_DELAY` property of `CONFIGURATION` provider.
+
+You can clear the cache emitting the `revoke` event of the service. It revokes all the cache if you give no argument to the emission. It revokes cache for a single path if you give it a string.
+
+.. code-block:: javascript
+
+    this.cache.revoke.emit('http://example.com/home')
+
+The cache can't store more than as many entries as set on `CACHE_MAX_SIZE` property.
+
+A `hits` property contains the hits statistics (number of hits by path).
+
+Cache service is massively used by `resource` and `comments` service. All get requests are cached and all create/update/delete requests revokes cache.

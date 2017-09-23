@@ -22,6 +22,7 @@ import { Services } from '../services';
 import { Traverser, TraversalModule, Resolver, Marker, Normalizer } from 'angular-traversal';
 import { TypeMarker, RESTAPIResolver, PloneViews, FullPathNormalizer } from '../traversal';
 import { ViewView } from './view';
+import { CacheService } from '../cache.service';
 
 describe('ViewView', () => {
   let component: ViewView;
@@ -40,6 +41,7 @@ describe('ViewView', () => {
             BACKEND_URL: 'http://fake/Plone',
           }
         },
+        CacheService,
         CommentsService,
         NavigationService,
         ResourceService,

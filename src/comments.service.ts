@@ -2,27 +2,35 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { APIService } from './api.service';
+import { CacheService } from './cache.service';
 
 @Injectable()
 export class CommentsService {
 
-  constructor(
-    private api: APIService,
-  ) { }
+  constructor(private api: APIService,
+              private cache: CacheService) {
+  }
 
   add(path: string, data: Object): Observable<any> {
-    return this.api.post(path + '/@comments', data);
+    const url = path + '/@comments';
+    return this.cache.revoking(
+      this.api.post(url, data), url
+    );
   }
 
   delete(path: string): Observable<any> {
-    return this.api.delete(path);
+    return this.cache.revoking(
+      this.api.delete(path), path
+    );
   }
 
   get(path: string): Observable<any> {
-    return this.api.get(path + '/@comments');
+    return this.cache.get(path + '/@comments');
   }
 
   update(path: string, data: Object): Observable<any> {
-    return this.api.patch(path, data);
+    return this.cache.revoking(
+      this.api.patch(path, data), path
+    )
   }
 }

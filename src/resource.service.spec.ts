@@ -17,6 +17,7 @@ import { APIService } from './api.service';
 import { ConfigurationService } from './configuration.service';
 import { AuthenticationService } from './authentication.service';
 import { ResourceService } from './resource.service';
+import { CacheService } from './cache.service';
 
 describe('ResourceService', () => {
   beforeEach(() => {
@@ -31,6 +32,7 @@ describe('ResourceService', () => {
             BACKEND_URL: 'http://fake/Plone',
           }
         },
+        CacheService,
         BaseRequestOptions,
         MockBackend,
         {

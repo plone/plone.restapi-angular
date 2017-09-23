@@ -11,6 +11,7 @@ import { LoginView } from './views/login';
 import { SearchView } from './views/search';
 import { SitemapView } from './views/sitemap';
 import { ViewView } from './views/view';
+import { CacheService } from './cache.service';
 
 @Injectable()
 export class InterfaceMarker extends Marker {
@@ -30,8 +31,9 @@ export class TypeMarker extends Marker {
 export class RESTAPIResolver extends Resolver {
 
   constructor(
-    private resource: ResourceService,
     private api: APIService,
+    private cache: CacheService,
+    private resource: ResourceService
   ) {
     super();
   }

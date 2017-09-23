@@ -4,7 +4,7 @@ import { Http, Headers } from '@angular/http';
 import { BehaviorSubject } from 'rxjs/Rx';
 
 import { ConfigurationService } from './configuration.service';
-import {Error} from './api.service';
+import { Error } from './api.service';
 
 export interface Authenticated {
   state: boolean;
