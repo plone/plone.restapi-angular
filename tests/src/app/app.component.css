@@ -1,16 +1,20 @@
-.example-container {
-  width: 100%;
-  height: 700px;
-  border: 1px solid rgba(0, 0, 0, 0.5);
-}
-
-.example-sidenav-content {
+.container {
   display: flex;
-  height: 100%;
-  align-items: center;
-  justify-content: center;
+  flex-wrap: wrap;
 }
 
-.example-sidenav {
-  padding: 20px;
+.container > * {
+  margin: 24px;
+}
+
+header {
+  width: 100%;
+}
+
+nav {
+  width: auto;
+}
+
+main {
+  width: auto;
 }

@@ -1,10 +1,17 @@
-<h1>{{ context.title }}</h1>
-<strong>{{ context.description }}</strong>
-<div [innerHTML]="text"></div>
-<h3>Subjects</h3>
-<ul>
-  <li *ngFor="let subject of context.subjects">
-    {{subject}}
-  </li>
-</ul>
-<plone-comments></plone-comments>
+<button *ngIf="mode !== 'edit'" (click)="mode = 'edit'">Edit</button>
+<ng-container *ngIf="mode === 'view'">
+  <h1>{{ context.title }}</h1>
+
+  <strong>{{ context.description }}</strong>
+  <div [innerHTML]="text"></div>
+  <h3>Subjects</h3>
+  <ul>
+    <li *ngFor="let subject of context.subjects">
+      {{subject}}
+    </li>
+  </ul>
+  <plone-comments></plone-comments>
+</ng-container>
+<ng-container *ngIf="mode === 'edit'">
+  <plone-edit></plone-edit>
+</ng-container>

@@ -19,4 +19,10 @@ export class CustomGlobalNavigation extends GlobalNavigation { }
   selector: 'custom-view',
   templateUrl: './view.html'
 })
-export class CustomViewView extends ViewView {}
+export class CustomViewView extends ViewView {
+  mode: 'view' | 'edit' = 'view';
+
+  changeMode(mode: 'view' | 'edit') {
+    this.mode = mode;
+  }
+}
