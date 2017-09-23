@@ -5,11 +5,22 @@ cache:
   directories:
     - node_modules
 dist: trusty
+addons:
+  apt:
+    sources:
+      - google-chrome
+    packages:
+      - google-chrome-stable
 before_install:
+  - wget "http://chromedriver.storage.googleapis.com/2.24/chromedriver_linux64.zip"
+  - unzip chromedriver_linux64.zip
+  - sudo mv chromedriver /usr/local/bin
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
   - npm install -g yarn
 install:
   - yarn install
-  - cd ./tests && yarn install && yarn install coveralls mocha-lcov-reporter && cd ..
+  - cd ./tests && yarn install && npm install coveralls mocha-lcov-reporter && cd ..
 after_success:
   - cd ./tests && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
 notifications:
