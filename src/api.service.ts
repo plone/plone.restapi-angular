@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Headers, Http, Response, ResponseContentType } from '@angular/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/Rx';
 import 'rxjs/add/operator/catch';
@@ -28,7 +28,7 @@ export class APIService {
   constructor(
     private authentication: AuthenticationService,
     private config: ConfigurationService,
-    private http: Http,
+    private http: HttpClient,
   ) { }
 
   get(path: string): Observable<any> {
@@ -37,7 +37,7 @@ export class APIService {
     this.status.next({ loading: true });
     return this.http.get(url, { headers: headers }).map(res => {
       this.status.next({ loading: false });
-      return res.json()
+      return res
     })
     .catch(this.error.bind(this));
   }
@@ -48,7 +48,7 @@ export class APIService {
     this.status.next({ loading: true });
     return this.http.post(url, data, { headers: headers }).map(res => {
       this.status.next({ loading: false });
-      return res.json()
+      return res
     })
     .catch(this.error.bind(this));
   }
@@ -59,7 +59,7 @@ export class APIService {
     this.status.next({ loading: true });
     return this.http.patch(url, data, { headers: headers }).map(res => {
       this.status.next({ loading: false });
-      return res.json()
+      return res
     })
     .catch(this.error.bind(this));
   }
@@ -70,21 +70,19 @@ export class APIService {
     this.status.next({ loading: true });
     return this.http.delete(url, { headers: headers }).map(res => {
       this.status.next({ loading: false });
-      return res.json()
+      return res
     })
     .catch(this.error.bind(this));
   }
 
   download(path: string): Observable<any> {
     let url = this.getFullPath(path);
-    let headers: Headers = this.authentication.getHeaders();
+    let headers: HttpHeaders = this.authentication.getHeaders();
     headers.set('Content-Type', 'application/x-www-form-urlencoded');
     this.status.next({ loading: true });
     return this.http.get(url, {
-      responseType: ResponseContentType.Blob,
+      responseType: 'blob',
       headers: headers
-    }).map(res => {
-      return new Blob([res.blob()], { type: (res as any)._body.type });
     })
     .catch(this.error.bind(this));
   }
@@ -100,10 +98,7 @@ export class APIService {
     }
   }
 
-  private error(err: Error | Response) {
-    if (err instanceof Response) {
-      err = <Error>(err.json());
-    }
+  private error(err: any) {
     this.status.next({ loading: false, error: err });
     return Observable.throw(err);
   }

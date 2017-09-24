@@ -1,15 +1,10 @@
 import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
 import {
-  BaseRequestOptions,
-  Response,
-  ResponseOptions,
-  Http
-} from '@angular/http';
+  HttpTestingController,
+  HttpClientTestingModule
+} from '@angular/common/http/testing';
 import { FormsModule } from '@angular/forms';
 
-import {
-  MockBackend,
-} from '@angular/http/testing';
 import { APP_BASE_HREF } from '@angular/common';
 
 import { ConfigurationService } from '../configuration.service';
@@ -32,7 +27,7 @@ describe('LoginView', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [LoginView, ViewView],
-      imports: [TraversalModule, FormsModule],
+      imports: [HttpClientTestingModule, TraversalModule, FormsModule],
       providers: [
         APIService,
         AuthenticationService,
@@ -55,15 +50,6 @@ describe('LoginView', () => {
         { provide: Marker, useClass: TypeMarker },
         { provide: APP_BASE_HREF, useValue: '/' },
         { provide: Normalizer, useClass: FullPathNormalizer },
-        BaseRequestOptions,
-        MockBackend,
-        {
-          provide: Http,
-          useFactory: (backend: MockBackend, defaultOptions: BaseRequestOptions) => {
-            return new Http(backend, defaultOptions);
-          },
-          deps: [MockBackend, BaseRequestOptions],
-        },
       ]
     })
       .compileComponents();
@@ -81,25 +67,24 @@ describe('LoginView', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should authenticate on submit', inject([MockBackend], (backend) => {
-    backend.connections.subscribe(c => {
-      let response;
-      if (c.request.url === 'http://fake/Plone') {
-        response = {
-          "@id": "Plone"
-        };
-      }
-      if (c.request.url === 'http://fake/Plone/@login') {
-        response = {
-          "token": "11111"
-        };
-      }
-      c.mockRespond(new Response(new ResponseOptions({ body: response })));
-    });
-    // component.services.traverser.traverse('/@@login');
+  it('should authenticate on submit', () => {
+    const http = TestBed.get(HttpTestingController);
+    let state = false;
+    const response_home = {
+      "@id": "Plone"
+    };
+    const response_login = {
+      "token": "11111"
+    };
+    component.services.traverser.traverse('/@@login');
     component.onSubmit({ login: 'eric', password: 'secret' });
     component.services.authentication.isAuthenticated.subscribe(logged => {
-      expect(logged.state).toBe(true);
+      state = logged.state;
     });
-  }));
+
+    http.expectOne('http://fake/Plone').flush(response_home);
+    http.expectOne('http://fake/Plone/@login').flush(response_login);
+
+    expect(state).toBe(true);
+  });
 });

@@ -1,16 +1,8 @@
-/* tslint:disable:no-unused-variable */
-
 import { TestBed, inject } from '@angular/core/testing';
 import {
-  BaseRequestOptions,
-  Response,
-  ResponseOptions,
-  Http
-} from '@angular/http';
-
-import {
-  MockBackend,
-} from '@angular/http/testing';
+  HttpTestingController,
+  HttpClientTestingModule
+} from '@angular/common/http/testing';
 
 import { ConfigurationService } from './configuration.service';
 import { AuthenticationService } from './authentication.service';
@@ -18,6 +10,7 @@ import { AuthenticationService } from './authentication.service';
 describe('AuthenticationService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
       providers: [
         AuthenticationService,
         ConfigurationService,
@@ -26,77 +19,82 @@ describe('AuthenticationService', () => {
             BACKEND_URL: 'http://fake/Plone',
           }
         },
-        BaseRequestOptions,
-        MockBackend,
-        {
-          provide: Http,
-          useFactory: (backend: MockBackend, defaultOptions: BaseRequestOptions) => {
-            return new Http(backend, defaultOptions);
-          },
-          deps: [MockBackend, BaseRequestOptions],
-        },
       ]
     });
   });
 
-  it('should authenticate to backend', inject([AuthenticationService, MockBackend], (service, backend) => {
-    backend.connections.subscribe(c => {
-      expect(c.request.url).toBe('http://fake/Plone/@login');
-      let response = {
-        'success': true,
-        'token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiZnVsbG5hbWUiOiJGb28gYmFyIiwiZXhwaXJlcyI6MTQ2NjE0MDA2Ni42MzQ5ODYsInR5cGUiOiJKV1QiLCJhbGdvcml0aG0iOiJIUzI1NiJ9.D9EL5A9xD1z3E_HPecXA-Ee7kKlljYvpDtan69KHwZ8'
-      };
-      c.mockRespond(new Response(new ResponseOptions({body: response})));
-    });
+  it('should authenticate to backend', () => {
+    const service = TestBed.get(AuthenticationService);
+    const http = TestBed.get(HttpTestingController);
+    let state = false;
+
+    // fake response
+    const response = {
+      'success': true,
+      'token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiZnVsbG5hbWUiOiJGb28gYmFyIiwiZXhwaXJlcyI6MTQ2NjE0MDA2Ni42MzQ5ODYsInR5cGUiOiJKV1QiLCJhbGdvcml0aG0iOiJIUzI1NiJ9.D9EL5A9xD1z3E_HPecXA-Ee7kKlljYvpDtan69KHwZ8'
+    };
+
     service.login();
     service.isAuthenticated.subscribe(authenticated => {
-      expect(authenticated.state).toBe(true);
+      state = authenticated.state;
     });
-  }));
 
-  it('should fail if the authentication response does not match', inject([AuthenticationService, MockBackend], (service, backend) => {
-    backend.connections.subscribe(c => {
-      expect(c.request.url).toBe('http://fake/Plone/@login');
-      let response = {
-        'success': false
-      };
-      c.mockRespond(new Response(new ResponseOptions({body: response})));
-    });
+    http.expectOne('http://fake/Plone/@login').flush(response);
+
+    expect(state).toBe(true);
+  });
+
+  it('should fail if the authentication response does not match', () => {
+    const service = TestBed.get(AuthenticationService);
+    const http = TestBed.get(HttpTestingController);
+    let state = false;
+
+    // fake response
+    const response = {
+      'success': false
+    };
+
     service.login();
     service.isAuthenticated.subscribe(authenticated => {
-      expect(authenticated.state).toBe(false);
+      state = authenticated.state;
     });
-  }));
 
-  it('should return user info', inject([AuthenticationService, MockBackend], (service, backend) => {
-    backend.connections.subscribe(c => {
-      expect(c.request.url).toBe('http://fake/Plone/@login');
-      let response = {
-        'success': true,
-        'token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiZnVsbG5hbWUiOiJGb28gYmFyIiwiZXhwaXJlcyI6MTQ2NjE0MDA2Ni42MzQ5ODYsInR5cGUiOiJKV1QiLCJhbGdvcml0aG0iOiJIUzI1NiJ9.D9EL5A9xD1z3E_HPecXA-Ee7kKlljYvpDtan69KHwZ8'
-      };
-      c.mockRespond(new Response(new ResponseOptions({body: response})));
-    });
+    http.expectOne('http://fake/Plone/@login').flush(response);
+
+    expect(state).toBe(false);
+  });
+
+  it('should return user info', () => {
+    const service = TestBed.get(AuthenticationService);
+    const http = TestBed.get(HttpTestingController);
+    let userinfo = {};
+
+    // fake response
+    const response = {
+      'success': true,
+      'token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiZnVsbG5hbWUiOiJGb28gYmFyIiwiZXhwaXJlcyI6MTQ2NjE0MDA2Ni42MzQ5ODYsInR5cGUiOiJKV1QiLCJhbGdvcml0aG0iOiJIUzI1NiJ9.D9EL5A9xD1z3E_HPecXA-Ee7kKlljYvpDtan69KHwZ8'
+    };
+
     service.login();
     service.isAuthenticated.subscribe(authenticated => {
-      expect(service.getUserInfo()).toEqual({ username: 'admin', fullname: 'Foo bar', expires: 1466140066.634986, type: 'JWT', algorithm: 'HS256' });
+      userinfo = service.getUserInfo();
     });
-  }));
 
-  it('should logout', inject([AuthenticationService, MockBackend], (service, backend) => {
-    backend.connections.subscribe(c => {
-      expect(c.request.url).toMatch('.@login');
-      let response = {
-        'success': true,
-        'token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiZnVsbG5hbWUiOiJGb28gYmFyIiwiZXhwaXJlcyI6MTQ2NjE0MDA2Ni42MzQ5ODYsInR5cGUiOiJKV1QiLCJhbGdvcml0aG0iOiJIUzI1NiJ9.D9EL5A9xD1z3E_HPecXA-Ee7kKlljYvpDtan69KHwZ8'
-      };
-      c.mockRespond(new Response(new ResponseOptions({body: response})));
-    });
-    service.login();
+    http.expectOne('http://fake/Plone/@login').flush(response);
+
+    expect(userinfo).toEqual({ username: 'admin', fullname: 'Foo bar', expires: 1466140066.634986, type: 'JWT', algorithm: 'HS256'});
+  });
+
+  it('should logout', () => {
+    const service = TestBed.get(AuthenticationService);
+
+    // fake login
+    localStorage.setItem('auth', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiZnVsbG5hbWUiOiJGb28gYmFyIiwiZXhwaXJlcyI6MTQ2NjE0MDA2Ni42MzQ5ODYsInR5cGUiOiJKV1QiLCJhbGdvcml0aG0iOiJIUzI1NiJ9.D9EL5A9xD1z3E_HPecXA-Ee7kKlljYvpDtan69KHwZ8');
+    localStorage.setItem('auth_time', (new Date()).toISOString());
+
     service.logout();
-    service.isAuthenticated.subscribe(authenticated => {
-      expect(authenticated.state).toBe(false);
-      expect(service.getUserInfo()).toEqual(null);
-    });
-  }));
+
+    expect(localStorage.getItem('auth')).toEqual(null);
+    expect(localStorage.getItem('auth_time')).toEqual(null);
+  });
 });

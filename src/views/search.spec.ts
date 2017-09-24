@@ -1,15 +1,9 @@
-import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
+import { ComponentFixture, TestBed, inject } from '@angular/core/testing';
 import {
-  BaseRequestOptions,
-  Response,
-  ResponseOptions,
-  Http
-} from '@angular/http';
+  HttpTestingController,
+  HttpClientTestingModule
+} from '@angular/common/http/testing';
 
-import {
-  MockBackend,
-  MockConnection
-} from '@angular/http/testing';
 import { APP_BASE_HREF } from '@angular/common';
 
 import { ConfigurationService } from '../configuration.service';
@@ -28,10 +22,10 @@ describe('SearchView', () => {
   let component: SearchView;
   let fixture: ComponentFixture<SearchView>;
 
-  beforeEach(async(() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [SearchView],
-      imports: [TraversalModule],
+      imports: [HttpClientTestingModule, TraversalModule],
       providers: [
         APIService,
         AuthenticationService,
@@ -54,19 +48,10 @@ describe('SearchView', () => {
         { provide: Marker, useClass: TypeMarker },
         { provide: APP_BASE_HREF, useValue: '/' },
         { provide: Normalizer, useClass: FullPathNormalizer },
-        BaseRequestOptions,
-        MockBackend,
-        {
-          provide: Http,
-          useFactory: (backend: MockBackend, defaultOptions: BaseRequestOptions) => {
-            return new Http(backend, defaultOptions);
-          },
-          deps: [MockBackend, BaseRequestOptions],
-        },
       ]
     })
       .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(SearchView);
@@ -79,34 +64,37 @@ describe('SearchView', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should get search results according querystring params', inject([MockBackend], (backend) => {
-    backend.connections.subscribe(c => {
-      expect(c.request.url).toBe('http://fake/Plone/@search?SearchableText=test');
-      let response = {
-        "@id": "http://fake/Plone/@search?SearchableText=test",
-          "items": [
-            {
-              "@id": "http://fake/Plone/a-folder/test",
-              "@type": "Document",
-              "description": "",
-              "review_state": "published",
-              "title": "test"
-            },
-            {
-              "@id": "http://fake/Plone/a-folder/test-2",
-              "@type": "Document",
-              "description": "",
-              "review_state": "published",
-              "title": "test 3"
-            }
-          ],
-          "items_total": 2
-      };
-      c.mockRespond(new Response(new ResponseOptions({ body: response })));
-    });
+  it('should get search results according to querystring params', () => {
+    const http = TestBed.get(HttpTestingController);
+    let length = 0;
+    const response = {
+      "@id": "http://fake/Plone/@search?SearchableText=test",
+        "items": [
+          {
+            "@id": "http://fake/Plone/a-folder/test",
+            "@type": "Document",
+            "description": "",
+            "review_state": "published",
+            "title": "test"
+          },
+          {
+            "@id": "http://fake/Plone/a-folder/test-2",
+            "@type": "Document",
+            "description": "",
+            "review_state": "published",
+            "title": "test 3"
+          }
+        ],
+        "items_total": 2
+    };
     component.services.traverser.traverse('/@@search?SearchableText=test');
     component.services.traverser.target.subscribe(() => {
-      expect(component.context.items.length).toBe(2);
+      if (Object.keys(component.context).length > 0) {
+        length = component.context.items.length;
+      }
     });
-  }));
+
+    http.expectOne('http://fake/Plone/@search?SearchableText=test').flush(response);
+    expect(length).toBe(2);
+  });
 });

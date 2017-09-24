@@ -51,7 +51,6 @@ export class CacheService {
       if (Object.keys(service.cache).length > service.maxSize) {
         this.revoke.emit();
       }
-
       service.cache[url] = service.api.get(url)
       // create a ReplaySubject that stores and emit last response during delay
         .publishReplay(1, service.refreshDelay)

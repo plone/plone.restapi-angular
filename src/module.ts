@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import {
   SchemaFormModule,
@@ -71,7 +71,7 @@ import { CacheService } from './cache.service';
   imports: [
     FormsModule,
     SchemaFormModule,
-    HttpModule,
+    HttpClientModule,
     CommonModule,
     TraversalModule,
   ],
