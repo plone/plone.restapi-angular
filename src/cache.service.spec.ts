@@ -150,6 +150,8 @@ describe('CacheService', () => {
     });
   });
 
+  // because of timer we do not revoke cache in afterEach, which is executed in same event loop
+
   it('should not use cache if delay is passed', inject([CacheService], (cache) => {
     const http = TestBed.get(HttpTestingController);
     let response = front_page_response;
@@ -162,7 +164,6 @@ describe('CacheService', () => {
     cache.get('http://fake/Plone/').subscribe(() => {});
     http.expectNone('http://fake/Plone/');
 
-    // we actually get content but request has not been sent again
     Observable.timer(2).subscribe(() => {
       cache.get('http://fake/Plone/').subscribe(() => {});
       http.expectOne('http://fake/Plone/').flush(response);
@@ -170,4 +171,48 @@ describe('CacheService', () => {
       cache.revoke.emit()
     })
   }));
-})
+});
+
+describe('CacheService', () => {
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      providers: [
+        APIService,
+        ConfigurationService,
+        AuthenticationService,
+        {
+          provide: 'CONFIGURATION', useValue: {
+          BACKEND_URL: 'http://fake/Plone',
+          CACHE_MAX_SIZE: 2,
+        }
+        },
+        CacheService,
+      ]
+    });
+  });
+
+  afterEach(() => {
+    TestBed.get(CacheService).revoke.emit();
+  });
+
+  it('should refreshed store when cache max size is reached', inject([CacheService], (cache) => {
+    const http = TestBed.get(HttpTestingController);
+    let response = front_page_response;
+    expect(cache.maxSize).toBe(2);
+
+    cache.get('http://fake/Plone/').subscribe(() => {});
+    http.expectOne('http://fake/Plone/').flush(response);
+    expect(cache.cache['http://fake/Plone/']).toBeDefined();
+
+    cache.get('http://fake/Plone/1').subscribe(() => {});
+    http.expectOne('http://fake/Plone/1').flush(response);
+
+    cache.get('http://fake/Plone/2').subscribe(() => {});
+    http.expectOne('http://fake/Plone/2').flush(response);
+    expect(cache.cache['http://fake/Plone/2']).toBeDefined();
+    expect(cache.hits['http://fake/Plone/2']).toBe(1);
+    expect(cache.cache['http://fake/Plone/']).toBeUndefined();
+    expect(cache.hits['http://fake/Plone/']).toBeUndefined();
+  }));
+});

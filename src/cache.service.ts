@@ -47,7 +47,7 @@ export class CacheService {
   public get<T>(url: string): Observable<T> {
     const service = this;
     if (!service.cache.hasOwnProperty(url)) {
-      if (Object.keys(service.cache).length > service.maxSize) {
+      if (Object.keys(service.cache).length >= service.maxSize) {
         // TODO: do not revoke everything
         this.revoke.emit();
       }
