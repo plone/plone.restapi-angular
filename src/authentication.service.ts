@@ -83,12 +83,12 @@ export class AuthenticationService {
 
   getHeaders(): HttpHeaders {
     let headers = new HttpHeaders();
-    headers.append('Accept', 'application/json');
-    headers.append('Content-Type', 'application/json');
+    headers = headers.set('Accept', 'application/json');
+    headers = headers.set('Content-Type', 'application/json');
     if (isPlatformBrowser(this.platformId)) {
-      let auth = localStorage.getItem('auth');
+      const auth = localStorage.getItem('auth');
       if (auth) {
-        headers.append('Authorization', 'Bearer ' + auth);
+        headers = headers.set('Authorization', 'Bearer ' + auth);
       }
     }
     return headers;
