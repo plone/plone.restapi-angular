@@ -10,19 +10,19 @@ export class CommentsService {
     private api: APIService,
   ) { }
 
-  add(path: string, data: any) {
+  add(path: string, data: Object): Observable<any> {
     return this.api.post(path + '/@comments', data);
   }
-  
-  delete(path: string) {
+
+  delete(path: string): Observable<any> {
     return this.api.delete(path);
   }
 
-  get(path: string) {
+  get(path: string): Observable<any> {
     return this.api.get(path + '/@comments');
   }
 
-  update(path: string, data: any) {
+  update(path: string, data: Object): Observable<any> {
     return this.api.patch(path, data);
   }
 }

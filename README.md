@@ -44,6 +44,13 @@ By checking out this [commit](https://github.com/collective/plone-angular-demo/c
 
 If you checkout this [commit](https://github.com/collective/plone-angular-demo/commit/3881c003d1d253208d2db4a14c2bbec6dbe1b484), you will have bootstrap style (you will need to run `npm install` in order to update your node modules) and a custom navigation.
 
+## Run tests
+
+    cd tests
+    npm install
+    cd ..
+    npm test
+
 ## Contribute
 
 - Issue Tracker: https://github.com/plone/plone.restapi-angular/issues

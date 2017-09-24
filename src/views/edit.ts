@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { TraversingComponent } from '../traversing';
 import { Services } from '../services';
@@ -28,7 +28,7 @@ export class EditView extends TraversingComponent {
     };
   }
 
-  onTraverse(target) {
+  onTraverse(target: any) {
     this.actions = {
       save: this.onSave.bind(this),
       cancel: this.onCancel.bind(this)
@@ -55,7 +55,7 @@ export class EditView extends TraversingComponent {
     });
   }
 
-  onSave(schemaForm) {
+  onSave(schemaForm: any) {
     let model = schemaForm.value;
     Object.keys(model).forEach(key => {
       if (model[key]==='' && this.schema.properties[key].widget.id === 'date') {
@@ -71,7 +71,7 @@ export class EditView extends TraversingComponent {
     this.services.traverser.traverse(this.path);
   }
 
-  loginOn401(err) {
+  loginOn401(err: Response) {
     if (err.status === 401) {
       this.services.authentication.logout();
       this.services.traverser.traverse(
@@ -81,7 +81,7 @@ export class EditView extends TraversingComponent {
     }
   }
 
-  onError(err) {
+  onError(err: Response) {
     console.log(err);
   }
 }

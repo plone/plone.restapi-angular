@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Services } from '../services';
 import { TraversingComponent } from '../traversing';
+import { NavLink } from '../interfaces';
+import { Target } from 'angular-traversal';
+
 
 @Component({
   selector: 'plone-global-navigation',
@@ -12,7 +15,7 @@ import { TraversingComponent } from '../traversing';
 })
 export class GlobalNavigation extends TraversingComponent implements OnInit {
 
-  links: any[] = [];
+  links: NavLink[] = [];
 
   constructor(
     public services: Services,
@@ -22,23 +25,14 @@ export class GlobalNavigation extends TraversingComponent implements OnInit {
 
   ngOnInit() {
     super.ngOnInit();
-    this.services.resource.navigation().subscribe(data => {
-      if (data && data[0] && data[0].items) {
-        this.links = data[0].items.filter(item => {
-          return !item.properties || !item.properties.exclude_from_nav;
-        })
-        .map(item => {
-          return {
-            title: item.title,
-            path: this.services.configuration.urlToPath(item.url),
-          };
-        });
-      }
+    this.services.resource.navigation()
+      .subscribe((links: NavLink[]) => {
+        this.links = links;
     });
   }
 
-  onTraverse(target) {
-    this.links.map(link => {
+  onTraverse(target: Target) {
+    this.links.map((link: NavLink) => {
       if (!target.path || target.path === '/') {
         link.active = (!link.path || link.path === '/');
       } else {

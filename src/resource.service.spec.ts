@@ -22,8 +22,8 @@ describe('ResourceService', () => {
         ConfigurationService,
         {
           provide: 'CONFIGURATION', useValue: {
-            BACKEND_URL: 'http://fake/Plone',
-          }
+          BACKEND_URL: 'http://fake/Plone',
+        }
         },
       ]
     });
@@ -95,7 +95,7 @@ describe('ResourceService', () => {
       "items_total": 1
     };
 
-    service.find({SearchableText: 'John', path: {query: '/folder1', depth: 2}}).subscribe(content => {
+    service.find({ SearchableText: 'John', path: { query: '/folder1', depth: 2 } }).subscribe(content => {
       id = content.items[0]['@id'];
     });
 
@@ -194,10 +194,10 @@ describe('ResourceService', () => {
     };
 
     service.create('/folder1', {
-        '@type': 'Document',
-        'id': 'my-document',
-        'title': 'My Document',
-      }).subscribe(content => {
+      '@type': 'Document',
+      'id': 'my-document',
+      'title': 'My Document',
+    }).subscribe(content => {
       id = content.id;
     });
 
@@ -319,8 +319,8 @@ describe('ResourceService', () => {
       }
     ];
 
-    service.navigation().subscribe(content => {
-      url = content[0].items[0].url;
+    service.navigation().subscribe(items => {
+      url = items[0].url;
     });
 
     http.expectOne('http://fake/Plone/@components/navigation').flush(response);
@@ -348,8 +348,8 @@ describe('ResourceService', () => {
       }
     ];
 
-    service.breadcrumbs('/a-folder/test').subscribe(content => {
-      title = content[0].items[0].title;
+    service.breadcrumbs('/a-folder/test').subscribe(items => {
+      title = items[0].title;
     });
 
     http.expectOne('http://fake/Plone/a-folder/test/@components/breadcrumbs').flush(response);

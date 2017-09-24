@@ -1,9 +1,27 @@
-<h1>{{ context.title }}</h1>
-<strong>{{ context.description }}</strong>
-<div [innerHTML]="text"></div>
-<h3>Subjects</h3>
-<ul>
-  <li *ngFor="let subject of context.subjects">
-    {{subject}}
-  </li>
-</ul>
+<button *ngIf="mode !== 'edit'" (click)="mode = 'edit'">Edit</button>
+<ng-container *ngIf="mode === 'view'">
+  <h1>{{ context.title }}</h1>
+
+  <strong>{{ context.description }}</strong>
+  <div [innerHTML]="text"></div>
+
+  <div *ngIf="context.file && context.file.download" >
+    <h3>Download file</h3>
+    <a href="#"
+       (click)="downloadFile($event)">
+      {{ context.file.filename }}
+    </a>
+  </div>
+  <div *ngIf="context.subjects && context.subjects.length">
+    <h3 *ngIf="context.subjects && context.subjects.length > 0">Subjects</h3>
+    <ul>
+      <li *ngFor="let subject of context.subjects">
+        {{subject}}
+      </li>
+    </ul>
+  </div>
+  <plone-comments></plone-comments>
+</ng-container>
+<ng-container *ngIf="mode === 'edit'">
+  <plone-edit></plone-edit>
+</ng-container>

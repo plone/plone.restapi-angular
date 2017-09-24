@@ -1,19 +1,25 @@
-<p>Status:
-  {{ loading }} {{ error }}
-</p>
-<p>
-  <a *ngIf="!logged" traverseTo="@@login">Log in</a>
-</p>
-<div>
-  <h2>Custom global navigation</h2>
-  <custom-navigation></custom-navigation>
+<div class="container">
+  <header>
+    <p>Status:
+      {{ loading }} {{ error }}
+    </p>
+  </header>
+  <nav>
+    <p>
+      <a *ngIf="!logged" traverseTo="@@login">Log in</a>
+    </p>
+    <div>
+      <h2>Custom global navigation</h2>
+      <custom-navigation></custom-navigation>
+    </div>
+    <div>
+      <h2>Local navigation</h2>
+      <plone-navigation [root]="-1" [depth]="2"></plone-navigation>
+    </div>
+  </nav>
+  <main>
+    <h3>Breadcrumbs</h3>
+    <custom-breadcrumbs></custom-breadcrumbs>
+    <traverser-outlet></traverser-outlet>
+  </main>
 </div>
-<div>
-  <h2>Local navigation</h2>
-  <plone-navigation [root]="-1" [depth]="2"></plone-navigation>
-</div>
-<main>
-  <h3>Breadcrumbs</h3>
-  <custom-breadcrumbs></custom-breadcrumbs>
-  <traverser-outlet></traverser-outlet>
-</main>

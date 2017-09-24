@@ -4,6 +4,7 @@ import { URLSearchParams } from '@angular/http';
 
 import { TraversingComponent } from '../traversing';
 import { Services } from '../services';
+import { Target } from 'angular-traversal';
 
 @Component({
   selector: 'plone-add',
@@ -52,7 +53,7 @@ export class AddView extends TraversingComponent implements OnInit {
     };
     this.services.traverser.target
       .takeUntil(this.ngUnsubscribe)
-      .subscribe(target => {
+      .subscribe((target: Target) => {
         this.path = target.contextPath;
       });
     if (isPlatformBrowser(this.platformId)) {
@@ -83,7 +84,7 @@ export class AddView extends TraversingComponent implements OnInit {
     }
   }
 
-  onSave(schemaForm) {
+  onSave(schemaForm: any) {
     let model = schemaForm.value;
     Object.keys(model).forEach(key => {
       if (model[key] === '' && this.schema.properties[key].widget.id === 'date') {
