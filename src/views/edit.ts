@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { TraversingComponent } from '../traversing';
 import { Services } from '../services';
@@ -28,34 +28,30 @@ export class EditView extends TraversingComponent {
     };
   }
 
-  onTraverse() {
+  onTraverse(target: any) {
     this.actions = {
       save: this.onSave.bind(this),
       cancel: this.onCancel.bind(this)
     };
-    this.services.traverser.target
-      .takeUntil(this.ngUnsubscribe)
-      .subscribe(target => {
-      this.path = target.contextPath;
-      let model = target.context;
-      this.services.resource.type(target.context['@type']).subscribe(schema => {
-        schema.buttons = [
-          { id: 'save', label: 'Save' },
-          { id: 'cancel', label: 'Cancel' }
-        ];
-        // FIX THE SCHEMA AND THE MODEL
-        for (let property in schema.properties) {
-          if (property === 'allow_discussion') {
-            schema.properties[property].type = 'boolean';
-          }
-          if (property === 'effective' || property === 'expires') {
-            schema.properties[property].widget = 'date';
-          }
-        };
+    this.path = target.contextPath;
+    let model = target.context;
+    this.services.resource.type(target.context['@type']).subscribe(schema => {
+      schema.buttons = [
+        { id: 'save', label: 'Save' },
+        { id: 'cancel', label: 'Cancel' }
+      ];
+      // FIX THE SCHEMA AND THE MODEL
+      for (let property in schema.properties) {
+        if (property === 'allow_discussion') {
+          schema.properties[property].type = 'boolean';
+        }
+        if (property === 'effective' || property === 'expires') {
+          schema.properties[property].widget = 'date';
+        }
+      };
 
-        this.schema = schema;
-        this.model = model;
-      }, this.loginOn401.bind(this));
+      this.schema = schema;
+      this.model = model;
     });
   }
 

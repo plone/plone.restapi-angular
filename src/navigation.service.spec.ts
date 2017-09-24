@@ -2,16 +2,9 @@
 
 import { TestBed, inject } from '@angular/core/testing';
 import {
-  BaseRequestOptions,
-  Response,
-  ResponseOptions,
-  Http
-} from '@angular/http';
-
-import {
-  MockBackend,
-  MockConnection
-} from '@angular/http/testing';
+  HttpTestingController,
+  HttpClientTestingModule
+} from '@angular/common/http/testing';
 
 import { ConfigurationService } from './configuration.service';
 import { APIService } from './api.service';
@@ -22,6 +15,7 @@ import { NavigationService } from './navigation.service';
 describe('NavigationService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
       providers: [
         ResourceService,
         APIService,
@@ -33,71 +27,70 @@ describe('NavigationService', () => {
             BACKEND_URL: 'http://fake/Plone',
           }
         },
-        BaseRequestOptions,
-        MockBackend,
-        {
-          provide: Http,
-          useFactory: (backend: MockBackend, defaultOptions: BaseRequestOptions) => {
-            return new Http(backend, defaultOptions);
-          },
-          deps: [MockBackend, BaseRequestOptions],
-        },
       ]
     });
   });
 
-  it('should return navigation tree', inject([NavigationService, MockBackend], (service, backend) => {
-    backend.connections.subscribe(c => {
-      expect(c.request.url).toBe('http://fake/Plone/@search?is_default_page=0&path.depth=2&metadata_fields:list=exclude_from_nav&metadata_fields:list=getObjPositionInParent&b_size=1000');
-      let response = {
-        '@id': "http://fake/Plone/@search?is_default_page=0&path.depth=2&metadata_fields:list=exclude_from_nav&metadata_fields:list=getObjPositionInParent&b_size=1000",
-        "items": [
-          {
-            '@id': "http://fake/Plone/a-folder/test",
-            "@type": "Document",
-            "description": "",
-            "exclude_from_nav": false,
-            "getObjPositionInParent": 0,
-            "review_state": "published",
-            "title": "test"
-          },
-          {
-            '@id': "http://fake/Plone/a-folder/test-2",
-            "@type": "Document",
-            "description": "",
-            "exclude_from_nav": false,
-            "getObjPositionInParent": 1,
-            "review_state": "published",
-            "title": "test 3"
-          },
-          {
-            '@id': "http://fake/Plone/a-folder/test4",
-            "@type": "Document",
-            "description": "fdfd",
-            "exclude_from_nav": false,
-            "getObjPositionInParent": 2,
-            "review_state": "published",
-            "title": "test4"
-          },
-          {
-            '@id': "http://fake/Plone/a-folder",
-            "@type": "Folder",
-            "description": "",
-            "exclude_from_nav": false,
-            "getObjPositionInParent": 50,
-            "review_state": "published",
-            "title": "A folder"
-          }
-        ],
-        "items_total": 4
-      };
-      c.mockRespond(new Response(new ResponseOptions({ body: response })));
-    });
+  it('should return navigation tree', () => {
+    const service = TestBed.get(NavigationService);
+    const http = TestBed.get(HttpTestingController);
+    let length = 0;
+    let length0 = 0;
+    let title = '';
+
+    const response = {
+      '@id': "http://fake/Plone/@search?is_default_page=0&path.depth=2&metadata_fields:list=exclude_from_nav&metadata_fields:list=getObjPositionInParent&b_size=1000",
+      "items": [
+        {
+          '@id': "http://fake/Plone/a-folder/test",
+          "@type": "Document",
+          "description": "",
+          "exclude_from_nav": false,
+          "getObjPositionInParent": 0,
+          "review_state": "published",
+          "title": "test"
+        },
+        {
+          '@id': "http://fake/Plone/a-folder/test-2",
+          "@type": "Document",
+          "description": "",
+          "exclude_from_nav": false,
+          "getObjPositionInParent": 1,
+          "review_state": "published",
+          "title": "test 3"
+        },
+        {
+          '@id': "http://fake/Plone/a-folder/test4",
+          "@type": "Document",
+          "description": "fdfd",
+          "exclude_from_nav": false,
+          "getObjPositionInParent": 2,
+          "review_state": "published",
+          "title": "test4"
+        },
+        {
+          '@id': "http://fake/Plone/a-folder",
+          "@type": "Folder",
+          "description": "",
+          "exclude_from_nav": false,
+          "getObjPositionInParent": 50,
+          "review_state": "published",
+          "title": "A folder"
+        }
+      ],
+      "items_total": 4
+    };
     service.getNavigationFor('/a-folder/test', -1, 2).subscribe(tree => {
-      expect(tree.children.length).toBe(1);
-      expect(tree.children[0].children.length).toBe(3);
-      expect(tree.children[0].children[0].properties['title']).toBe('test');
+      length = tree.children.length;
+      length0 = tree.children[0].children.length;
+      title = tree.children[0].children[0].properties['title'];
     });
-  }));
+
+    http.expectOne('http://fake/Plone/@search?is_default_page=0&path.depth=2&metadata_fields:list=exclude_from_nav&metadata_fields:list=getObjPositionInParent&b_size=1000').flush(response);
+
+    expect(length).toBe(1);
+    expect(length0).toBe(3);
+    expect(title).toBe('test');
+  });
 
 });

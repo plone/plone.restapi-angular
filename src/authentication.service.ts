@@ -1,6 +1,6 @@
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { Http, Headers } from '@angular/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs/Rx';
 
 import { ConfigurationService } from './configuration.service';
@@ -22,7 +22,7 @@ export class AuthenticationService {
 
   constructor(
     private config: ConfigurationService,
-    private http: Http,
+    private http: HttpClient,
     @Inject(PLATFORM_ID) private platformId: Object,
   ) {
     if (isPlatformBrowser(this.platformId)) {
@@ -62,10 +62,9 @@ export class AuthenticationService {
       this.http.post(
         this.config.get('BACKEND_URL') + '/@login', body, { headers: headers })
         .subscribe(
-        res => {
-          const data: LoginToken = res.json();
+          (data: LoginToken) => {
           if (data.token) {
-            localStorage.setItem('auth', data.token);
+            localStorage.setItem('auth', data['token']);
             localStorage.setItem('auth_time', (new Date()).toISOString());
             this.isAuthenticated.next({ state: true });
           } else {
@@ -91,14 +90,14 @@ export class AuthenticationService {
     }
   }
 
-  getHeaders(): Headers {
-    let headers = new Headers();
-    headers.append('Accept', 'application/json');
-    headers.append('Content-Type', 'application/json');
+  getHeaders(): HttpHeaders {
+    let headers = new HttpHeaders();
+    headers = headers.set('Accept', 'application/json');
+    headers = headers.set('Content-Type', 'application/json');
     if (isPlatformBrowser(this.platformId)) {
-      let auth = localStorage.getItem('auth');
+      const auth = localStorage.getItem('auth');
       if (auth) {
-        headers.append('Authorization', 'Bearer ' + auth);
+        headers = headers.set('Authorization', 'Bearer ' + auth);
       }
     }
     return headers;
