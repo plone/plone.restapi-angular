@@ -74,8 +74,6 @@ describe('EditView', () => {
 
   it('should get search results according to querystring params', () => {
     const http = TestBed.get(HttpTestingController);
-    let widget = '';
-    let title = '';
     const response_document = {
       "@id": "http://fake/Plone/somepage",
       "@type": "Document",
@@ -280,23 +278,17 @@ describe('EditView', () => {
     };
 
     component.services.traverser.traverse('/somepage/@@edit');
-    component.services.traverser.target.subscribe(() => {
-      if (Object.keys(component.schema.properties).length > 0) {
-        widget = component.schema.properties.text.widget;
-      }
-      expect(title).toBe('New title');
-    }).unsubscribe();
-
     const req_document = http.expectOne('http://fake/Plone/somepage');
-//    const req_type = http.expectOne('http://fake/Plone/@types/Document');
-
-    if (req_document.request._body) {
-      title = req_document.request._body.title;
-    }
-
     req_document.flush(response_document);
-//    req_type.flush(response_type);
-
-//    expect(widget).toBe('richtext');
+    const req_type = http.expectOne('http://fake/Plone/@types/Document');
+    req_type.flush(response_type);
+    component.services.traverser.target.filter(target => {
+      return Object.keys(target.context).length > 0;
+    })
+      .subscribe(target => {
+        expect(component.model.title).toBe('Welcome to Plone');
+        expect(component.schema.title).toBe('Page');
+        expect(component.schema.properties.expires.widget).toBe('date');
+      });
   });
 });

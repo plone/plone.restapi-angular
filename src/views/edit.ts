@@ -35,7 +35,6 @@ export class EditView extends TraversingComponent {
     };
     this.path = target.contextPath;
     let model = target.context;
-    debugger;
     this.services.resource.type(target.context['@type']).subscribe(schema => {
       schema.buttons = [
         { id: 'save', label: 'Save' },
