@@ -55,9 +55,11 @@ export class ResourceService {
     );
   }
 
-  find(query: any,
-       path: string = '/',
-       options: SearchOptions = {}) {
+  find(
+    query: any,
+    path: string = '/',
+    options: SearchOptions = {}
+    ) {
     if (!path.endsWith('/')) {
       path += '/';
     }

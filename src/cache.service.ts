@@ -42,22 +42,29 @@ export class CacheService {
    * gets an observable
    * that broadcasts a ReplaySubject
    * which emits the response of a get request
-   * during environment.dataRefreshDelay ms without sending a new http request
+   * during service.refreshDelay ms without sending a new http request
    */
   public get<T>(url: string): Observable<T> {
     const service = this;
     if (!service.cache.hasOwnProperty(url)) {
-      // TODO: do not revoke everything
       if (Object.keys(service.cache).length > service.maxSize) {
+        // TODO: do not revoke everything
         this.revoke.emit();
       }
       service.cache[url] = service.api.get(url)
-      // create a ReplaySubject that stores and emit last response during delay
+        // set hits to 0 each time request is actually sent
+        .map((observable: Observable<T>) => {
+          const hits = this.hits[url];
+          service.hits[url] = 0;
+          return observable;
+        })
+        // create a ReplaySubject that stores and emit last response during delay
         .publishReplay(1, service.refreshDelay)
         // broadcast ReplaySubject
         .refCount()
         // complete each observer after response has been emitted
         .take(1)
+        // increment hits each time request is subscribed
         .map((observable: Observable<T>) => {
           const hits = this.hits[url];
           service.hits[url] = hits ? hits + 1 : 1;

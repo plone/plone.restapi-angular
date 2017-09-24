@@ -65,7 +65,6 @@ describe('Breadcrumbs', () => {
         CacheService,
         CommentsService,
         NavigationService,
-        ResourceService,
         TypeMarker,
         RESTAPIResolver,
         PloneViews,

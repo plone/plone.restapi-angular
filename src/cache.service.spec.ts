@@ -3,13 +3,6 @@
 import { TestBed, inject } from '@angular/core/testing';
 
 import {
-  BaseRequestOptions,
-  Response,
-  ResponseOptions,
-  Http
-} from '@angular/http';
-
-import {
   HttpTestingController,
   HttpClientTestingModule
 } from '@angular/common/http/testing';
@@ -62,12 +55,17 @@ describe('CacheService', () => {
         AuthenticationService,
         {
           provide: 'CONFIGURATION', useValue: {
-          BACKEND_URL: 'http://fake/Plone'
+          BACKEND_URL: 'http://fake/Plone',
+          CACHE_REFRESH_DELAY: 1000,
         }
         },
         CacheService,
       ]
     });
+  });
+
+  afterEach(() => {
+    TestBed.get(CacheService).revoke.emit();
   });
 
   it('should cache and then get cached content', inject([CacheService], (cache) => {
@@ -132,3 +130,44 @@ describe('CacheService', () => {
     expect(cache.cache['http://fake/Plone/']).toBeUndefined();
   }));
 });
+
+describe('CacheService', () => {
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      providers: [
+        APIService,
+        ConfigurationService,
+        AuthenticationService,
+        {
+          provide: 'CONFIGURATION', useValue: {
+          BACKEND_URL: 'http://fake/Plone',
+          CACHE_REFRESH_DELAY: 5
+        }
+        },
+        CacheService,
+      ]
+    });
+  });
+
+  it('should not use cache if delay is passed', inject([CacheService], (cache) => {
+    const http = TestBed.get(HttpTestingController);
+    let response = front_page_response;
+    expect(cache.refreshDelay).toBe(5);
+    expect(cache.cache['http://fake/Plone/']).toBeUndefined();
+
+    cache.get('http://fake/Plone/').subscribe(() => {});
+    http.expectOne('http://fake/Plone/').flush(response);
+
+    cache.get('http://fake/Plone/').subscribe(() => {});
+    http.expectNone('http://fake/Plone/');
+
+    // we actually get content but request has not been sent again
+    Observable.timer(2).subscribe(() => {
+      cache.get('http://fake/Plone/').subscribe(() => {});
+      http.expectOne('http://fake/Plone/').flush(response);
+      expect(cache.hits['http://fake/Plone/']).toBe(1);
+      cache.revoke.emit()
+    })
+  }));
+})
