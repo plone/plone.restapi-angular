@@ -5,14 +5,13 @@
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {
-    "start": "npm run test:updateLib && cd tests && npm install && npm start",
+    "start": "yarn test:updateLib && cd tests && yarn install && yarn start",
     "clean": "rimraf dist/",
     "build:aot": "ngc -p tsconfig.json",
     "build:jit": "tsc -p tsconfig.json",
-    "build": "npm run clean && npm run build:aot",
+    "build": "yarn run clean && yarn build:aot",
     "test:updateLib": "cd tests/src/app && rm -rf ./lib && cp -r ../../../src/ ./lib && cd -",
-    "test":
-      "npm run test:updateLib && cd tests && ng test --single-run --code-coverage"
+    "test": "yarn test:updateLib && cd tests && ng test --single-run --code-coverage"
   },
   "repository": {
     "type": "git",
@@ -24,17 +23,7 @@
     "url": "https://github.com/plone/plone.restapi-angular/issues"
   },
   "homepage": "https://github.com/plone/plone.restapi-angular#readme",
-  "peerDependencies": {
-    "@angular/common": "^4.4.3",
-    "@angular/compiler": "^4.4.3",
-    "@angular/core": "^4.4.3",
-    "@angular/forms": "^4.4.3",
-    "@angular/http": "^4.4.3",
-    "@angular/platform-browser": "^4.4.3",
-    "core-js": "^2.4.1",
-    "rxjs": "^5.0.1",
-    "zone.js": "^0.8.12"
-  },
+  "peerDependencies": {},
   "devDependencies": {
     "@angular/compiler-cli": "^4.4.3",
     "@angular/platform-server": "^4.4.3",
@@ -44,8 +33,16 @@
     "typescript": "2.5.2"
   },
   "dependencies": {
+    "@angular/common": "^4.4.3",
     "@angular/compiler": "^4.4.3",
+    "@angular/core": "^4.4.3",
+    "@angular/forms": "^4.4.3",
+    "@angular/http": "^4.4.3",
+    "@angular/platform-browser": "^4.4.3",
     "angular-traversal": "^1.0.3",
-    "angular2-schema-form": "^1.0.0-beta.12"
+    "angular2-schema-form": "^1.0.0-beta.12",
+    "core-js": "^2.4.1",
+    "rxjs": "^5.0.1",
+    "zone.js": "^0.8.12"
   }
 }
