@@ -22,6 +22,7 @@ import { AuthenticationService } from '../authentication.service';
 import { ResourceService } from '../resource.service';
 import { Services } from '../services';
 import { Breadcrumbs } from './breadcrumbs';
+import { CacheService } from '../cache.service';
 
 @Injectable()
 class MockResourceService {
@@ -61,9 +62,9 @@ describe('Breadcrumbs', () => {
             BACKEND_URL: 'http://fake/Plone',
           }
         },
+        CacheService,
         CommentsService,
         NavigationService,
-        ResourceService,
         TypeMarker,
         RESTAPIResolver,
         PloneViews,

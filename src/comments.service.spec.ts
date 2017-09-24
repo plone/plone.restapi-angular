@@ -14,6 +14,7 @@ import { APIService } from './api.service';
 import { AuthenticationService } from './authentication.service';
 import { ConfigurationService } from './configuration.service';
 import { CommentsService } from './comments.service';
+import { CacheService } from './cache.service';
 
 describe('CommentsService', () => {
   beforeEach(() => {
@@ -24,6 +25,7 @@ describe('CommentsService', () => {
       providers: [
         CommentsService,
         APIService,
+        CacheService,
         AuthenticationService,
         ConfigurationService,
         {

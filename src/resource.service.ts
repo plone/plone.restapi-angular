@@ -1,9 +1,10 @@
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import { Injectable, EventEmitter } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 
-import {APIService} from './api.service';
-import {ConfigurationService} from './configuration.service';
-import {NavLink} from './interfaces';
+import { APIService } from './api.service';
+import { ConfigurationService } from './configuration.service';
+import { NavLink, SearchOptions } from './interfaces';
+import { CacheService } from './cache.service';
 
 
 interface NavigationItem {
@@ -21,34 +22,47 @@ interface NavigationItems {
 @Injectable()
 export class ResourceService {
 
-  public defaultExpand: any = {};
+  defaultExpand: any = {};
+  public resourceModified: EventEmitter<{ id: string, context: any } | null> = new EventEmitter();
 
-  constructor(
-    private api: APIService,
-    private configuration: ConfigurationService) {
+  constructor(private api: APIService,
+              private cache: CacheService,
+              private configuration: ConfigurationService) {
+    this.resourceModified.subscribe(() => {
+      cache.revoke.emit();
+    });
   }
 
   copy(sourcePath: string, targetPath: string) {
-    return this.api.post(
-      targetPath + '/@copy',
-      { source: this.api.getFullPath(sourcePath) }
+    const path = targetPath + '/@copy';
+    return this.emittingModified(
+      this.api.post(
+        targetPath + '/@copy',
+        { source: this.api.getFullPath(sourcePath) }
+      ), path
     );
   }
 
   create(path: string, model: any) {
-    return this.api.post(path, model);
+    return this.emittingModified(
+      this.api.post(path, model), path
+    )
   }
 
   delete(path: string) {
-    return this.api.delete(path);
+    return this.emittingModified(
+      this.api.delete(path), path
+    );
   }
 
   find(
     query: any,
     path: string = '/',
-    options: any = {},
-  ) {
-    if (!path.endsWith('/')) path += '/';
+    options: SearchOptions = {}
+    ) {
+    if (!path.endsWith('/')) {
+      path += '/';
+    }
     let params: string[] = [];
     Object.keys(query).map(index => {
       let criteria = query[index];
@@ -86,9 +100,7 @@ export class ResourceService {
     if (options.fullobjects) {
       params.push('fullobjects');
     }
-    return this.api.get(
-      path + '@search' + '?' + params.join('&')
-    );
+    return this.cache.get(path + '@search' + '?' + params.join('&'));
   }
 
   get(path: string, expand?: string[]) {
@@ -96,26 +108,31 @@ export class ResourceService {
     if (expand.length > 0) {
       path = path + '?expand=' + expand.join(',');
     }
-    return this.api.get(path);
+    return this.cache.get(path);
   }
 
   move(sourcePath: string, targetPath: string) {
-    return this.api.post(
-      targetPath + '/@move',
-      { source: this.api.getFullPath(sourcePath) }
+    const path = targetPath + '/@move';
+    return this.emittingModified(
+      this.api.post(path, { source: this.api.getFullPath(sourcePath) }),
+      path
     );
   }
 
-  transition(path: string, transition: string) {
-    return this.api.post(path + '/@workflow/' + transition, {});
+  transition(contextPath: string, transition: string) {
+    return this.emittingModified(
+      this.api.post(contextPath + '/@workflow/' + transition, {}), contextPath
+    );
   }
 
-  update(path: string, model: any) {
-    return this.api.patch(path, model);
+  update(path: string, model: any): Observable<any> {
+    return this.emittingModified(
+      this.api.patch(path, model), path
+    );
   }
 
   navigation(): Observable<NavLink[]> {
-    return this.api.get('/@components/navigation')
+    return this.cache.get('/@components/navigation')
       .map((data: NavigationItems[]) => {
         if (data && data[0]) {
           return data[0].items.filter(item => {
@@ -128,7 +145,7 @@ export class ResourceService {
   }
 
   breadcrumbs(path: string): Observable<NavLink[]> {
-    return this.api.get(path + '/@components/breadcrumbs')
+    return this.cache.get(path + '/@components/breadcrumbs')
       .map((data: NavigationItems[]) => {
         if (data && data[0]) {
           return data[0].items.map(this.linkFromItem.bind(this))
@@ -139,7 +156,18 @@ export class ResourceService {
   }
 
   type(typeId: string): Observable<any> {
-    return this.api.get('/@types/' + typeId);
+    return this.cache.get('/@types/' + typeId);
+  }
+
+  /*
+   Make the observable emit resourceModified event when it emits
+   */
+  public emittingModified<T>(observable: Observable<T>, path: string): Observable<T> {
+    const service = this;
+    return observable.map((val: T): T => {
+      service.resourceModified.emit({ id: path, context: val });
+      return val;
+    });
   }
 
   private linkFromItem(item: NavigationItem): NavLink {

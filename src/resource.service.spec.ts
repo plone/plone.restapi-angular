@@ -1,6 +1,6 @@
 /* tslint:disable:no-unused-variable */
 
-import { TestBed, inject } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import {
   HttpTestingController,
   HttpClientTestingModule
@@ -10,6 +10,7 @@ import { APIService } from './api.service';
 import { ConfigurationService } from './configuration.service';
 import { AuthenticationService } from './authentication.service';
 import { ResourceService } from './resource.service';
+import { CacheService } from './cache.service';
 
 describe('ResourceService', () => {
   beforeEach(() => {
@@ -19,6 +20,7 @@ describe('ResourceService', () => {
         ResourceService,
         APIService,
         AuthenticationService,
+        CacheService,
         ConfigurationService,
         {
           provide: 'CONFIGURATION', useValue: {

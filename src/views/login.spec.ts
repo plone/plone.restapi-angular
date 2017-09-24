@@ -13,6 +13,7 @@ import { AuthenticationService } from '../authentication.service';
 import { ResourceService } from '../resource.service';
 import { CommentsService } from '../comments.service';
 import { NavigationService } from '../navigation.service';
+import { CacheService } from '../cache.service';
 import { Services } from '../services';
 import { Traverser, TraversalModule, Resolver, Marker, Normalizer } from 'angular-traversal';
 import { TypeMarker, RESTAPIResolver, PloneViews, FullPathNormalizer } from '../traversal';
@@ -30,6 +31,7 @@ describe('LoginView', () => {
       providers: [
         APIService,
         AuthenticationService,
+        CacheService,
         ConfigurationService,
         {
           provide: 'CONFIGURATION', useValue: {

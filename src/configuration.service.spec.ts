@@ -20,5 +20,6 @@ describe('ConfigurationService', () => {
 
   it('should return stored values', inject([ConfigurationService], (service: ConfigurationService) => {
     expect(service.get('BACKEND_URL')).toBe('http://fake/Plone');
+    expect(service.get('YO', 'LO')).toBe('LO');
   }));
 });

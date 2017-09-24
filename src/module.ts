@@ -42,6 +42,7 @@ import { Comments, Comment, CommentAdd } from './components/comments';
 import { GlobalNavigation } from './components/global.navigation';
 import { Navigation } from './components/navigation';
 import { NavigationLevel } from './components/navigation.level';
+import { CacheService } from './cache.service';
 
 @NgModule({
   declarations: [
@@ -77,6 +78,7 @@ import { NavigationLevel } from './components/navigation.level';
   providers: [
     APIService,
     AuthenticationService,
+    CacheService,
     CommentsService,
     ConfigurationService,
     NavigationService,
