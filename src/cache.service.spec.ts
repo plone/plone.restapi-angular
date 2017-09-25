@@ -164,7 +164,7 @@ describe('CacheService', () => {
     cache.get('http://fake/Plone/').subscribe(() => {});
     http.expectNone('http://fake/Plone/');
 
-    Observable.timer(2).subscribe(() => {
+    Observable.timer(5).subscribe(() => {
       cache.get('http://fake/Plone/').subscribe(() => {});
       http.expectOne('http://fake/Plone/').flush(response);
       expect(cache.hits['http://fake/Plone/']).toBe(1);
