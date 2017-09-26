@@ -35,4 +35,9 @@ export class AppComponent {
       this.error = status.error ? status.error.message : '';
     });
   }
+
+  logout(event: Event) {
+    event.preventDefault();
+    this.services.authentication.logout();
+  }
 }

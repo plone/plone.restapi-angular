@@ -7,6 +7,7 @@
   <nav>
     <p>
       <a *ngIf="!logged" traverseTo="@@login">Log in</a>
+      <a *ngIf="logged" href="#" (click)="logout($event)">Log out</a>
     </p>
     <div>
       <h2>Custom global navigation</h2>
