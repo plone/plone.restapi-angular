@@ -12,6 +12,8 @@ import { SearchView } from './views/search';
 import { SitemapView } from './views/sitemap';
 import { ViewView } from './views/view';
 import { CacheService } from './cache.service';
+import { PasswordResetView } from './views/password-reset';
+import { RequestPasswordResetView } from './views/request-password-reset';
 
 @Injectable()
 export class InterfaceMarker extends Marker {
@@ -32,7 +34,6 @@ export class RESTAPIResolver extends Resolver {
 
   constructor(
     private api: APIService,
-    private cache: CacheService,
     private resource: ResourceService
   ) {
     super();
@@ -57,6 +58,8 @@ export class PloneViews {
         this.traverser.addView('add', '*', AddView);
         this.traverser.addView('edit', '*', EditView);
         this.traverser.addView('login', '*', LoginView);
+        this.traverser.addView('request-password-reset', '*', RequestPasswordResetView);
+        this.traverser.addView('password-reset', '*', PasswordResetView);
         this.traverser.addView('search', '*', SearchView);
         this.traverser.addView('sitemap', '*', SitemapView);
         this.traverser.addView('view', '*', ViewView);

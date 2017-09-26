@@ -1,11 +1,11 @@
 import { TestBed, inject } from '@angular/core/testing';
 import {
   HttpTestingController,
-  HttpClientTestingModule
+  HttpClientTestingModule, TestRequest
 } from '@angular/common/http/testing';
 
 import { ConfigurationService } from './configuration.service';
-import { AuthenticationService } from './authentication.service';
+import { AuthenticationService, PasswordReset } from './authentication.service';
 
 describe('AuthenticationService', () => {
   beforeEach(() => {
@@ -82,7 +82,7 @@ describe('AuthenticationService', () => {
 
     http.expectOne('http://fake/Plone/@login').flush(response);
 
-    expect(userinfo).toEqual({ username: 'admin', fullname: 'Foo bar', expires: 1466140066.634986, type: 'JWT', algorithm: 'HS256'});
+    expect(userinfo).toEqual({ username: 'admin', fullname: 'Foo bar', expires: 1466140066.634986, type: 'JWT', algorithm: 'HS256' });
   });
 
   it('should logout', () => {
@@ -96,5 +96,41 @@ describe('AuthenticationService', () => {
 
     expect(localStorage.getItem('auth')).toEqual(null);
     expect(localStorage.getItem('auth_time')).toEqual(null);
+  });
+
+  it('should request password reset', () => {
+    const service = TestBed.get(AuthenticationService);
+    const http = TestBed.get(HttpTestingController);
+    service.requestPasswordReset('graeber').subscribe(() => {
+    });
+    const req = http.expectOne('http://fake/Plone/@users/graeber/reset-password');
+    expect(req.request.body).toEqual({});
+    expect(req.request.method).toEqual('POST');
+    req.flush(null);
+  });
+
+  it('should reset password by token', () => {
+    const service = TestBed.get(AuthenticationService);
+    const http = TestBed.get(HttpTestingController);
+    service.passwordReset(<PasswordReset>{ token: '123456789abc', login: 'graeber', newPassword: 'secret' })
+      .subscribe(() => {});
+    const req = http.expectOne('http://fake/Plone/@users/graeber/reset-password');
+    expect(req.request.body).toEqual({
+      new_password: 'secret',
+      reset_token: '123456789abc'
+    });
+    expect(req.request.method).toEqual('POST');
+    req.flush(null);
+  });
+
+  it('should reset password of authenticated user', () => {
+    const service = TestBed.get(AuthenticationService);
+    const http = TestBed.get(HttpTestingController);
+    service.passwordReset(<PasswordReset>{ oldPassword: 'secret', login: 'graeber', newPassword: 'secret!' })
+      .subscribe(() => {});
+    const req = http.expectOne('http://fake/Plone/@users/graeber/reset-password');
+    expect(req.request.body).toEqual({ old_password: 'secret', new_password: 'secret!' });
+    expect(req.request.method).toEqual('POST');
+    req.flush(null);
   });
 });

@@ -5,10 +5,11 @@
     </p>
   </header>
   <nav>
-    <p>
-      <a *ngIf="!logged" traverseTo="@@login">Log in</a>
-      <a *ngIf="logged" href="#" (click)="logout($event)">Log out</a>
-    </p>
+    <ul>
+      <li *ngIf="!logged"><a traverseTo="@@login">Log in</a></li>
+      <li *ngIf="logged"><a href="#" (click)="logout($event)">Log out</a></li>
+      <li><a traverseTo="@@request-password-reset">Request password reset</a></li>
+    </ul>
     <div>
       <h2>Custom global navigation</h2>
       <custom-navigation></custom-navigation>

@@ -5,6 +5,7 @@ import { BehaviorSubject } from 'rxjs/Rx';
 
 import { ConfigurationService } from './configuration.service';
 import { Error } from './api.service';
+import { Observable } from 'rxjs/Observable';
 
 export interface Authenticated {
   state: boolean;
@@ -15,16 +16,28 @@ export interface LoginToken {
   token: string;
 }
 
+export interface PasswordReset {
+  oldPassword?: string,
+  newPassword: string,
+  login: string,
+  token?: string
+}
+
+export interface UserInfo {
+  sub: string;
+  exp: number;
+  fullname: string;
+}
+
+
 @Injectable()
 export class AuthenticationService {
 
   public isAuthenticated: BehaviorSubject<Authenticated> = new BehaviorSubject({ state: false });
 
-  constructor(
-    private config: ConfigurationService,
-    private http: HttpClient,
-    @Inject(PLATFORM_ID) private platformId: Object,
-  ) {
+  constructor(private config: ConfigurationService,
+              private http: HttpClient,
+              @Inject(PLATFORM_ID) private platformId: Object) {
     if (isPlatformBrowser(this.platformId)) {
       let token = localStorage.getItem('auth');
       let lastLogin = localStorage.getItem('auth_time');
@@ -40,12 +53,12 @@ export class AuthenticationService {
     }
   }
 
-  getUserInfo() {
+  getUserInfo(): UserInfo | null {
     if (isPlatformBrowser(this.platformId)) {
       let token = localStorage.getItem('auth');
       if (token) {
         let tokenParts = token.split('.');
-        return JSON.parse(atob(tokenParts[1]));
+        return <UserInfo>JSON.parse(atob(tokenParts[1]));
       } else {
         return null;
       }
@@ -63,22 +76,22 @@ export class AuthenticationService {
         this.config.get('BACKEND_URL') + '/@login', body, { headers: headers })
         .subscribe(
           (data: LoginToken) => {
-          if (data.token) {
-            localStorage.setItem('auth', data['token']);
-            localStorage.setItem('auth_time', (new Date()).toISOString());
-            this.isAuthenticated.next({ state: true });
-          } else {
+            if (data.token) {
+              localStorage.setItem('auth', data['token']);
+              localStorage.setItem('auth_time', (new Date()).toISOString());
+              this.isAuthenticated.next({ state: true });
+            } else {
+              localStorage.removeItem('auth');
+              localStorage.removeItem('auth_time');
+              this.isAuthenticated.next({ state: false });
+            }
+          },
+          err => {
             localStorage.removeItem('auth');
             localStorage.removeItem('auth_time');
-            this.isAuthenticated.next({ state: false });
+            this.isAuthenticated.next({ state: false, error: ((<Error>err).message) });
           }
-        },
-        err => {
-          localStorage.removeItem('auth');
-          localStorage.removeItem('auth_time');
-          this.isAuthenticated.next({ state: false, error: ((<Error>err).message) });
-        }
-      );
+        );
     }
   }
 
@@ -88,6 +101,27 @@ export class AuthenticationService {
       localStorage.removeItem('auth_time');
       this.isAuthenticated.next({ state: false });
     }
+  }
+
+  requestPasswordReset(login: string): Observable<any> {
+    const headers = this.getHeaders();
+    const url = this.config.get('BACKEND_URL') + `/@users/${login}/reset-password`;
+    return this.http.post(url, {}, { headers: headers });
+  }
+
+  passwordReset(resetInfo: PasswordReset): Observable<any> {
+    const headers = this.getHeaders();
+    const data = {
+      new_password: resetInfo.newPassword
+    };
+    if (resetInfo.oldPassword) {
+      data['old_password'] = resetInfo.oldPassword;
+    }
+    if (resetInfo.token) {
+      data['reset_token'] = resetInfo.token;
+    }
+    const url = this.config.get('BACKEND_URL') + `/@users/${resetInfo.login}/reset-password`;
+    return this.http.post(url, data, { headers: headers });
   }
 
   getHeaders(): HttpHeaders {

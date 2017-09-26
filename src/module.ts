@@ -43,12 +43,16 @@ import { GlobalNavigation } from './components/global.navigation';
 import { Navigation } from './components/navigation';
 import { NavigationLevel } from './components/navigation.level';
 import { CacheService } from './cache.service';
+import { RequestPasswordResetView } from './views/request-password-reset';
+import { PasswordResetView } from './views/password-reset';
 
 @NgModule({
   declarations: [
     AddView,
     EditView,
     LoginView,
+    RequestPasswordResetView,
+    PasswordResetView,
     SearchView,
     SitemapView,
     ViewView,
@@ -64,6 +68,8 @@ import { CacheService } from './cache.service';
     AddView,
     EditView,
     LoginView,
+    RequestPasswordResetView,
+    PasswordResetView,
     SearchView,
     SitemapView,
     ViewView,
@@ -93,6 +99,8 @@ import { CacheService } from './cache.service';
   exports: [
     EditView,
     LoginView,
+    RequestPasswordResetView,
+    PasswordResetView,
     SearchView,
     ViewView,
     Breadcrumbs,
