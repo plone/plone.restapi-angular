@@ -76,7 +76,7 @@ export class AuthenticationService {
         err => {
           localStorage.removeItem('auth');
           localStorage.removeItem('auth_time');
-          this.isAuthenticated.next({ state: false, error: ((<Error>err.json()).message) });
+          this.isAuthenticated.next({ state: false, error: ((<Error>err).message) });
         }
       );
     }
