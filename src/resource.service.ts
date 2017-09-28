@@ -3,7 +3,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { APIService } from './api.service';
 import { ConfigurationService } from './configuration.service';
-import { NavLink, SearchOptions } from './interfaces';
+import { NavLink, SearchOptions, SearchResults } from './interfaces';
 import { CacheService } from './cache.service';
 
 
@@ -59,7 +59,7 @@ export class ResourceService {
     query: any,
     path: string = '/',
     options: SearchOptions = {}
-    ) {
+    ): Observable<SearchResults> {
     if (!path.endsWith('/')) {
       path += '/';
     }
