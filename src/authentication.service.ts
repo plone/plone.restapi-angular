@@ -62,6 +62,8 @@ export class AuthenticationService {
       } else {
         return null;
       }
+    } else {
+      return null;
     }
   }
 
@@ -111,7 +113,7 @@ export class AuthenticationService {
 
   passwordReset(resetInfo: PasswordReset): Observable<any> {
     const headers = this.getHeaders();
-    const data = {
+    const data: { [key: string]: string } = {
       new_password: resetInfo.newPassword
     };
     if (resetInfo.oldPassword) {
