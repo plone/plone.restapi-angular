@@ -3,7 +3,7 @@ import {
   HttpTestingController,
   HttpClientTestingModule
 } from '@angular/common/http/testing';
-import { Injectable, Directive, Input } from '@angular/core';
+import { Injectable, Directive, Input, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { APP_BASE_HREF } from '@angular/common';
 import { Traverser, TraversalModule, Resolver, Marker, Normalizer, Target } from 'angular-traversal';
@@ -26,6 +26,8 @@ import { CacheService } from '../cache.service';
 
 @Injectable()
 class MockResourceService {
+
+  resourceModified = new EventEmitter();
   breadcrumbs(path: string) {
     return Observable.of([
       {

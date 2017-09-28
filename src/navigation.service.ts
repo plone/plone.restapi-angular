@@ -1,10 +1,11 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import 'rxjs/add/observable/of';
 import { Observable } from 'rxjs/Observable';
 import { ConfigurationService } from './configuration.service';
 import { NavTree } from './interfaces';
 
 import { ResourceService } from './resource.service';
+import { AuthenticationService } from './authentication.service';
 
 interface UnorderedContentTree {
   children: { [key: string]: UnorderedContentTree };
@@ -14,8 +15,16 @@ interface UnorderedContentTree {
 @Injectable()
 export class NavigationService {
 
-  constructor(private resource: ResourceService,
+  public refreshNavigation: EventEmitter<null> = new EventEmitter();
+
+  constructor(auth: AuthenticationService,
+              private resource: ResourceService,
               private config: ConfigurationService) {
+    resource.resourceModified
+      .merge(auth.isAuthenticated)
+      .subscribe(() => {
+        this.refreshNavigation.emit()
+      })
   }
 
   getNavigationFor(currentPath: string, root: string | number, depth: number): Observable<NavTree> {
