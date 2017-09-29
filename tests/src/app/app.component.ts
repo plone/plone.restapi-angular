@@ -3,7 +3,8 @@ import { Traverser } from 'angular-traversal';
 import { PloneViews, Services } from './lib';
 
 import { CustomViewView } from './custom';
-import {Status} from './lib/api.service';
+import { Status } from './lib/api.service';
+import { Authenticated } from '../../../src/authentication.service';
 
 @Component({
   selector: 'app-root',
@@ -27,13 +28,15 @@ export class AppComponent {
   }
 
   ngOnInit() {
-    this.services.authentication.isAuthenticated.subscribe(auth => {
-      this.logged = auth.state;
-    });
-    this.services.api.status.subscribe((status: Status) => {
-      this.loading = status.loading ? 'Loading...' : 'OK';
-      this.error = status.error ? status.error.message : '';
-    });
+    this.services.authentication.isAuthenticated
+      .subscribe((auth: Authenticated) => {
+        this.logged = auth.state;
+      });
+    this.services.api.status
+      .subscribe((status: Status) => {
+        this.loading = status.loading ? 'Loading...' : 'OK';
+        this.error = status.error ? status.error.message : '';
+      });
   }
 
   logout(event: Event) {
