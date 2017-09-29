@@ -23,7 +23,7 @@
     "url": "https://github.com/plone/plone.restapi-angular/issues"
   },
   "homepage": "https://github.com/plone/plone.restapi-angular#readme",
-  "peerDependencies": {},
+  "dependencies": {},
   "devDependencies": {
     "@angular/compiler-cli": "^4.4.3",
     "@angular/platform-server": "^4.4.3",
@@ -32,7 +32,7 @@
     "rimraf": "^2.5.4",
     "typescript": "2.5.2"
   },
-  "dependencies": {
+  "peerDependencies": {
     "@angular/common": "^4.4.3",
     "@angular/compiler": "^4.4.3",
     "@angular/core": "^4.4.3",
