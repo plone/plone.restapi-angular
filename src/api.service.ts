@@ -75,7 +75,7 @@ export class APIService {
     .catch(this.error.bind(this));
   }
 
-  download(path: string): Observable<any> {
+  download(path: string): Observable<Blob> {
     let url = this.getFullPath(path);
     let headers: HttpHeaders = this.authentication.getHeaders();
     headers.set('Content-Type', 'application/x-www-form-urlencoded');
@@ -83,6 +83,9 @@ export class APIService {
     return this.http.get(url, {
       responseType: 'blob',
       headers: headers
+    }).map((blob: Blob) => {
+      this.status.next({ loading: false });
+      return blob
     })
     .catch(this.error.bind(this));
   }
