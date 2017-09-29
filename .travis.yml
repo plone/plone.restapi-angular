@@ -20,6 +20,7 @@ before_install:
   - npm install -g yarn
 install:
   - yarn install
+  - yarn add @angular/compiler
   - cd ./tests && yarn install && npm install coveralls mocha-lcov-reporter && cd ..
 script:
   - yarn test
