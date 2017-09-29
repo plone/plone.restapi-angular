@@ -1,3 +1,9 @@
+# 1.2.1 (2017-09-29)
+
+## Bug fixes
+
+- restore peerDependencies instead of dependencies to avoid compilation issues
+
 # 1.2.0 (2017-09-29)
 
 ## New features
