@@ -101,6 +101,6 @@ export class APIService {
   private error(err: HttpErrorResponse) {
     const error: Error = JSON.parse(err.error);
     this.status.next({ loading: false, error: error });
-    return Observable.throw(err);
+    return Observable.throw(error);
   }
 }
