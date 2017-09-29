@@ -1,6 +1,6 @@
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs/Rx';
 
 import { ConfigurationService } from './configuration.service';
@@ -88,10 +88,11 @@ export class AuthenticationService {
               this.isAuthenticated.next({ state: false });
             }
           },
-          err => {
+          (httpErrorResponse: HttpErrorResponse) => {
             localStorage.removeItem('auth');
             localStorage.removeItem('auth_time');
-            this.isAuthenticated.next({ state: false, error: ((<Error>err).message) });
+            const error: Error = JSON.parse(httpErrorResponse.error)['error'];
+            this.isAuthenticated.next({ state: false, error: error.message });
           }
         );
     }

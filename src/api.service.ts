@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/Rx';
 import 'rxjs/add/operator/catch';
@@ -98,8 +98,9 @@ export class APIService {
     }
   }
 
-  private error(err: any) {
-    this.status.next({ loading: false, error: err });
+  private error(err: HttpErrorResponse) {
+    const error: Error = JSON.parse(err.error);
+    this.status.next({ loading: false, error: error });
     return Observable.throw(err);
   }
 }

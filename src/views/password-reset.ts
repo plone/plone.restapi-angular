@@ -43,6 +43,10 @@ export class PasswordResetView implements OnInit, OnDestroy {
   }
 
   onSubmit(formInfo: any) {
+    if (formInfo.newPasswordRepeat !== formInfo.newPassword) {
+      this.error = 'Passwords does not match';
+      return;
+    }
     this.services.authentication.passwordReset(<PasswordReset>{
         login: this.login || formInfo.login,
         token: this.token,
@@ -57,7 +61,7 @@ export class PasswordResetView implements OnInit, OnDestroy {
         this.error = 'This user does not exist';
       }
       else if (err.status < 500) {
-        this.error = err.message;
+        this.error = JSON.parse(err.error).error.message;
       }
     })
   }
