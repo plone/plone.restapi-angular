@@ -1,4 +1,3 @@
-
 export interface NavLink {
   title: string;
   path: string;
@@ -36,4 +35,19 @@ export interface SearchOptions {
   start?: number;
   size?: number;
   fullobjects?: boolean;
+}
+
+export interface Batching {
+  '@id': string;
+  first: string;
+  last: string;
+  next: string;
+  prev: string;
+}
+
+export interface SearchResults {
+  '@id': string;
+  items_total: number;
+  items: any[];
+  batching: Batching;
 }
