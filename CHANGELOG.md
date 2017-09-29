@@ -1,3 +1,9 @@
+# 1.2.2 (2017-09-29)
+
+## Bug fixes
+
+- fix error handling 
+
 # 1.2.1 (2017-09-29)
 
 ## Bug fixes
