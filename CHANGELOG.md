@@ -1,3 +1,13 @@
+# 1.2.0 (2017-09-29)
+
+## New features
+
+- Proper interfaces instead of any types [Thomas Desvenain]
+- Password reset feature [Thomas Desvenain]
+- Make local and global nav reactive [Thomas Desvenain]
+- Migrate to @angular/common/http [Fulvio Casali]
+- Cache management [Thomas Desvenain]
+
 # 1.1.0 (2017-09-12)
 
 ## New features
