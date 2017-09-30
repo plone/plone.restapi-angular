@@ -75,7 +75,7 @@ export class APIService {
     .catch(this.error.bind(this));
   }
 
-  download(path: string): Observable<Blob> {
+  download(path: string): Observable<Blob | {}> {
     let url = this.getFullPath(path);
     let headers: HttpHeaders = this.authentication.getHeaders();
     headers.set('Content-Type', 'application/x-www-form-urlencoded');
