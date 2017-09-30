@@ -5,6 +5,7 @@
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {
+    "install:peerDependencies": "install-self-peers",
     "start": "yarn test:updateLib && cd tests && yarn install && yarn start",
     "clean": "rimraf dist/",
     "build:aot": "ngc -p tsconfig.json",
@@ -23,10 +24,14 @@
     "url": "https://github.com/plone/plone.restapi-angular/issues"
   },
   "homepage": "https://github.com/plone/plone.restapi-angular#readme",
-  "dependencies": {},
+  "dependencies": {
+    "angular-traversal": "^1.0.3",
+    "angular2-schema-form": "^1.0.0-beta.12"
+  },
   "devDependencies": {
     "@angular/compiler-cli": "^4.4.3",
     "@angular/platform-server": "^4.4.3",
+    "@team-griffin/install-self-peers": "^1.1.1",
     "@types/jasmine": "2.5.38",
     "@types/node": "^6.0.42",
     "rimraf": "^2.5.4",
@@ -39,8 +44,6 @@
     "@angular/forms": "^4.4.3",
     "@angular/http": "^4.4.3",
     "@angular/platform-browser": "^4.4.3",
-    "angular-traversal": "^1.0.3",
-    "angular2-schema-form": "^1.0.0-beta.12",
     "core-js": "^2.4.1",
     "rxjs": "^5.0.1",
     "zone.js": "^0.8.12"
