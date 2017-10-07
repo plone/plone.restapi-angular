@@ -1,11 +1,12 @@
-import { TestBed, inject } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import {
   HttpTestingController,
-  HttpClientTestingModule, TestRequest
+  HttpClientTestingModule
 } from '@angular/common/http/testing';
 
 import { ConfigurationService } from './configuration.service';
-import { AuthenticationService, PasswordReset } from './authentication.service';
+import { AuthenticationService } from './authentication.service';
+import { PasswordResetInfo } from './interfaces';
 
 describe('AuthenticationService', () => {
   beforeEach(() => {
@@ -76,7 +77,7 @@ describe('AuthenticationService', () => {
     };
 
     service.login();
-    service.isAuthenticated.subscribe(authenticated => {
+    service.isAuthenticated.subscribe(() => {
       userinfo = service.getUserInfo();
     });
 
@@ -112,7 +113,7 @@ describe('AuthenticationService', () => {
   it('should reset password by token', () => {
     const service = TestBed.get(AuthenticationService);
     const http = TestBed.get(HttpTestingController);
-    service.passwordReset(<PasswordReset>{ token: '123456789abc', login: 'graeber', newPassword: 'secret' })
+    service.passwordReset(<PasswordResetInfo>{ token: '123456789abc', login: 'graeber', newPassword: 'secret' })
       .subscribe(() => {});
     const req = http.expectOne('http://fake/Plone/@users/graeber/reset-password');
     expect(req.request.body).toEqual({
@@ -126,7 +127,7 @@ describe('AuthenticationService', () => {
   it('should reset password of authenticated user', () => {
     const service = TestBed.get(AuthenticationService);
     const http = TestBed.get(HttpTestingController);
-    service.passwordReset(<PasswordReset>{ oldPassword: 'secret', login: 'graeber', newPassword: 'secret!' })
+    service.passwordReset(<PasswordResetInfo>{ oldPassword: 'secret', login: 'graeber', newPassword: 'secret!' })
       .subscribe(() => {});
     const req = http.expectOne('http://fake/Plone/@users/graeber/reset-password');
     expect(req.request.body).toEqual({ old_password: 'secret', new_password: 'secret!' });

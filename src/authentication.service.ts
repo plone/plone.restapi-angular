@@ -4,36 +4,19 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { BehaviorSubject } from 'rxjs/Rx';
 
 import { ConfigurationService } from './configuration.service';
-import { Error } from './api.service';
+import { AuthenticatedStatus, Error, PasswordResetInfo, UserInfo } from './interfaces';
 import { Observable } from 'rxjs/Observable';
 
-export interface Authenticated {
-  state: boolean;
-  error?: string
-}
 
-export interface LoginToken {
+interface LoginToken {
   token: string;
-}
-
-export interface PasswordReset {
-  oldPassword?: string,
-  newPassword: string,
-  login: string,
-  token?: string
-}
-
-export interface UserInfo {
-  sub: string;
-  exp: number;
-  fullname: string;
 }
 
 
 @Injectable()
 export class AuthenticationService {
 
-  public isAuthenticated: BehaviorSubject<Authenticated> = new BehaviorSubject({ state: false });
+  public isAuthenticated: BehaviorSubject<AuthenticatedStatus> = new BehaviorSubject({ state: false });
 
   constructor(private config: ConfigurationService,
               private http: HttpClient,
@@ -112,7 +95,7 @@ export class AuthenticationService {
     return this.http.post(url, {}, { headers: headers });
   }
 
-  passwordReset(resetInfo: PasswordReset): Observable<any> {
+  passwordReset(resetInfo: PasswordResetInfo): Observable<any> {
     const headers = this.getHeaders();
     const data: { [key: string]: string } = {
       new_password: resetInfo.newPassword

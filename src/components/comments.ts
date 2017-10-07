@@ -9,7 +9,6 @@ import { NgForm } from '@angular/forms';
 import { Services } from '../services';
 import { TraversingComponent } from '../traversing';
 import { Target } from 'angular-traversal';
-import { Error } from '../api.service';
 import { Comment as CommentItem, TextValue } from '../interfaces';
 
 @Component({

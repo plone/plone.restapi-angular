@@ -1,3 +1,27 @@
+/*
+ * Status
+ */
+
+export interface LoadingStatus {
+  loading?: boolean;
+  error?: Error;
+}
+
+export interface Error {
+  type: string;
+  message: string;
+  traceback:string[];
+}
+
+
+/*
+ * NAVIGATION
+ */
+
+
+/*
+ * Navigation element of breadcrumbs and global nav
+ */
 export interface NavLink {
   title: string;
   path: string;
@@ -5,12 +29,21 @@ export interface NavLink {
   properties?: any;
 }
 
+/*
+ * Navigation tree
+ */
 export interface NavTree {
   children: NavTree[];
   inPath?: boolean;
   active?: boolean;
   properties?: any;
 }
+
+
+/*
+ * COMMENTS
+ *
+ */
 
 export interface TextValue {
   data: string;
@@ -27,6 +60,12 @@ export interface Comment {
   text: TextValue;
   user_notification: boolean | null;
 }
+
+
+/*
+ * SEARCH
+ *
+ */
 
 export interface SearchOptions {
   sort_on?: string;
@@ -50,4 +89,34 @@ export interface SearchResults {
   items_total: number;
   items: any[];
   batching: Batching;
+}
+
+/*
+ * AUTHENTICATION
+ *
+ */
+
+/* Authentication status */
+export interface AuthenticatedStatus {
+  state: boolean;
+  error?: string
+}
+
+export interface LoginInfo {
+  login: string;
+  password: string;
+}
+
+export interface PasswordResetInfo {
+  oldPassword?: string,
+  newPassword: string,
+  login: string,
+  token?: string
+}
+
+/* User information */
+export interface UserInfo {
+  sub: string;
+  exp: number;
+  fullname: string;
 }

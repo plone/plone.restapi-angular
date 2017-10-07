@@ -1,11 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Services } from '../services';
-import { Authenticated } from '../authentication.service';
+import { AuthenticatedStatus, LoginInfo } from '../interfaces';
 
-export interface LoginInfo {
-  login: string;
-  password: string;
-}
 
 @Component({
   selector: 'plone-login',
@@ -26,7 +22,7 @@ export class LoginView implements OnInit {
 
   ngOnInit() {
     this.services.authentication.isAuthenticated
-      .subscribe((auth: Authenticated) => {
+      .subscribe((auth: AuthenticatedStatus) => {
         if (auth.state) {
           this.services.traverser.traverse(
             this.services.traverser.target.getValue().contextPath);

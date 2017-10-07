@@ -6,22 +6,12 @@ import 'rxjs/add/operator/catch';
 
 import { AuthenticationService } from './authentication.service';
 import { ConfigurationService } from './configuration.service';
-
-export interface Status {
-  loading?: boolean;
-  error?: Error;
-}
-
-export interface Error {
-  type: string;
-  message: string;
-  traceback:string[];
-}
+import { Error, LoadingStatus } from './interfaces';
 
 @Injectable()
 export class APIService {
 
-  public status: BehaviorSubject<Status> = new BehaviorSubject(
+  public status: BehaviorSubject<LoadingStatus> = new BehaviorSubject(
     { loading: false }
   );
 
