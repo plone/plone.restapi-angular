@@ -45,6 +45,7 @@ import { NavigationLevel } from './components/navigation.level';
 import { CacheService } from './cache.service';
 import { RequestPasswordResetView } from './views/request-password-reset';
 import { PasswordResetView } from './views/password-reset';
+import { DownloadDirective } from './directives/download.directive';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { PasswordResetView } from './views/password-reset';
     SearchView,
     SitemapView,
     ViewView,
+    DownloadDirective,
     Breadcrumbs,
     Comments,
     Comment,
@@ -103,6 +105,7 @@ import { PasswordResetView } from './views/password-reset';
     PasswordResetView,
     SearchView,
     ViewView,
+    DownloadDirective,
     Breadcrumbs,
     Comments,
     Comment,

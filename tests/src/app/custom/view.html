@@ -5,12 +5,12 @@
   <strong>{{ context.description }}</strong>
   <div [innerHTML]="text"></div>
 
-  <div *ngIf="context.file && context.file.download" >
+  <div *ngIf="context.file && context.file.download">
     <h3>Download file</h3>
-    <a href="#"
-       (click)="downloadFile($event)">
+    <a href="#" [download]="context.file" (onDownloaded)="downloaded=true">
       {{ context.file.filename }}
     </a>
+    <span *ngIf="downloaded">Download done</span>
   </div>
   <div *ngIf="context.subjects && context.subjects.length">
     <h3 *ngIf="context.subjects && context.subjects.length > 0">Subjects</h3>

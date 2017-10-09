@@ -1,3 +1,10 @@
+# 1.2.4 (Unreleased)
+
+## New features
+
+- new download directive attribute
+
+
 # 1.2.3 (2017-09-29)
 
 ## Bug fixes
