@@ -4,6 +4,10 @@
 
 - new download directive attribute
 
+## Bug fixes
+
+- Fix missing active links in global navigation, bug introduced in 1.2.0 [Sune Brøndum Wøller]
+
 
 # 1.2.3 (2017-09-29)
 

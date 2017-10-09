@@ -19,7 +19,6 @@ import { Observable } from 'rxjs/Observable';
 })
 export class GlobalNavigation extends TraversingComponent implements OnInit, OnDestroy {
 
-  target: Target | null = null;
   links: NavLink[] = [];
   navigationRefresh: Subscription;
 
@@ -36,14 +35,13 @@ export class GlobalNavigation extends TraversingComponent implements OnInit, OnD
       .mergeMap(() => component.services.resource.navigation())
       .subscribe((links: NavLink[]) => {
           component.links = links;
-          component.setActiveLinks();
         }
       )
 
   }
 
   onTraverse(target: Target) {
-    this.setActiveLinks();
+    this.setActiveLinks(target);
   }
 
   ngOnDestroy() {
@@ -52,8 +50,7 @@ export class GlobalNavigation extends TraversingComponent implements OnInit, OnD
     }
   }
 
-  private setActiveLinks() {
-    const target = this.target;
+  private setActiveLinks(target: Target) {
     if (!target) {
       return;
     }
