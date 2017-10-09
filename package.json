@@ -11,7 +11,7 @@
     "build:aot": "ngc -p tsconfig.json",
     "build:jit": "tsc -p tsconfig.json",
     "build": "yarn run clean && yarn build:aot",
-    "test:updateLib": "cd tests/src/app && rm -rf ./lib && cp -r ../../../src/ ./lib && cd -",
+    "test:updateLib": "cd tests/src && rm -rf ./lib && mkdir -p lib/@plone/ && cp -r ../../src/ lib/@plone/restapi-angular/ && cd -",
     "test": "yarn test:updateLib && cd tests && ng test --single-run --code-coverage"
   },
   "repository": {

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
-import { GlobalNavigation, Breadcrumbs } from '../lib';
-import { ViewView } from '../lib';
+import { GlobalNavigation, Breadcrumbs } from '@plone/restapi-angular';
+import { ViewView } from '@plone/restapi-angular';
 
 @Component({
   selector: 'custom-breadcrumbs',

@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { PloneViews, Services } from './lib';
+import { PloneViews, Services } from '@plone/restapi-angular';
 
 import { CustomViewView } from './custom';
-import { AuthenticatedStatus, LoadingStatus } from './lib/interfaces';
+import { AuthenticatedStatus, LoadingStatus } from '@plone/restapi-angular';
 
 @Component({
   selector: 'app-root',

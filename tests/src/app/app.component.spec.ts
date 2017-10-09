@@ -6,7 +6,7 @@ import {
 import { Component } from '@angular/core';
 import { BrowserDynamicTestingModule, platformBrowserDynamicTesting } from '@angular/platform-browser-dynamic/testing';
 import { APP_BASE_HREF } from '@angular/common';
-import { RESTAPIModule } from './lib';
+import { RESTAPIModule } from '@plone/restapi-angular';
 
 import { AppComponent } from './app.component';
 import { CustomViewView } from './custom';
