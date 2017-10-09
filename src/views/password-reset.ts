@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { PasswordReset } from '../authentication.service';
 import { Services } from '../services';
 import { Subscription } from 'rxjs/Subscription';
 import { HttpErrorResponse } from '@angular/common/http';
+import { PasswordResetInfo } from '../interfaces';
 
 @Component({
   selector: 'plone-password-reset',
@@ -47,7 +47,7 @@ export class PasswordResetView implements OnInit, OnDestroy {
       this.error = 'Passwords does not match';
       return;
     }
-    this.services.authentication.passwordReset(<PasswordReset>{
+    this.services.authentication.passwordReset(<PasswordResetInfo>{
         login: this.login || formInfo.login,
         token: this.token,
         newPassword: formInfo.newPassword,
