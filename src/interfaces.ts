@@ -22,6 +22,7 @@ export interface Error {
 /*
  * Navigation element of breadcrumbs and global nav
  */
+
 export interface NavLink {
   title: string;
   path: string;
@@ -119,4 +120,27 @@ export interface UserInfo {
   sub: string;
   exp: number;
   fullname: string;
+}
+
+/* File download */
+
+export interface NamedFile {
+  download: string,  // download path
+  filename: string
+  'mime-type': string,
+}
+
+export interface DownloadStartedEvent {
+  namedFile: NamedFile,
+  originalEvent: Event,
+}
+
+export interface DownloadSucceededEvent {
+  blob: Blob,
+  namedFile: NamedFile,
+}
+
+export interface DownloadFailedEvent {
+  error: Error
+  namedFile: NamedFile,
 }
