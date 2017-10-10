@@ -20,7 +20,8 @@ module.exports = function (config) {
       fixWebpackSourcePaths: true
     },
     angularCli: {
-      environment: 'dev'
+      environment: 'dev',
+      sourcemap: true
     },
     reporters: ['progress', 'kjhtml'],
     port: 9876,
@@ -28,6 +29,9 @@ module.exports = function (config) {
     logLevel: config.LOG_INFO,
     autoWatch: true,
     browsers: ['Chrome'],
-    singleRun: false
+    singleRun: false,
+    files: [
+        './src/*.ts'
+    ],
   });
 };
