@@ -7,7 +7,7 @@ export class ConfigurationService {
     @Inject('CONFIGURATION') private config: any,
   ) {}
 
-  get(key: string, defaultValue? :any): any {
+  get(key: string, defaultValue?: any): any {
     if (defaultValue !== undefined && !(this.config.hasOwnProperty(key))) {
       return defaultValue;
     } else {
@@ -16,7 +16,7 @@ export class ConfigurationService {
   }
 
   urlToPath(url: string): string {
-    let base: string = this.get('BACKEND_URL');
+    const base: string = this.get('BACKEND_URL');
     return url.split(base)[1] || '/';
   }
 }

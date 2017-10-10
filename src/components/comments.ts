@@ -27,7 +27,7 @@ export class Comment {
     if (!text) {
       return '';
     }
-    if (text['mime-type'] == 'text/plain') {
+    if (text['mime-type'] === 'text/plain') {
       return text.data.replace(/\n/g, '<br>');
     } else {
       return text.data;

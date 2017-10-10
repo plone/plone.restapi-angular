@@ -59,16 +59,15 @@ export class PasswordResetView implements OnInit, OnDestroy {
     }, (err: HttpErrorResponse) => {
       if (err.status === 404) {
         this.error = 'This user does not exist';
-      }
-      else if (err.status < 500) {
+      } else if (err.status < 500) {
         this.error = JSON.parse(err.error).error.message;
       }
-    })
+    });
   }
 
   ngOnDestroy() {
     if (this.isAuthenticatedSub) {
-      this.isAuthenticatedSub.unsubscribe()
+      this.isAuthenticatedSub.unsubscribe();
     }
   }
 

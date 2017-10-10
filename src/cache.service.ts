@@ -30,12 +30,12 @@ export class CacheService {
     service.revoke.subscribe((revoked: string | null) => {
       if (!revoked) {
         service.cache = {};
-        service.hits = {}
+        service.hits = {};
       } else if (typeof revoked === 'string') {
         delete service.cache[revoked];
         delete service.hits[revoked];
       }
-    })
+    });
   }
 
   /*

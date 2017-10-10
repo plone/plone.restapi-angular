@@ -2,7 +2,7 @@ import { Component, Input, OnDestroy } from '@angular/core';
 import { Services } from '../services';
 import { TraversingComponent } from '../traversing';
 import { NavTree } from '../interfaces';
-import { Target } from 'angular-traversal'
+import { Target } from 'angular-traversal';
 import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
 
@@ -19,7 +19,7 @@ export class Navigation extends TraversingComponent implements OnDestroy {
   links: NavTree[];
   refreshNavigation: Subscription;
 
-  constructor(public services: Services,) {
+  constructor(public services: Services) {
     super(services);
   }
 
@@ -41,7 +41,7 @@ export class Navigation extends TraversingComponent implements OnDestroy {
 
   private removeSubscriptions() {
     if (this.refreshNavigation) {
-      this.refreshNavigation.unsubscribe()
+      this.refreshNavigation.unsubscribe();
     }
   }
 }

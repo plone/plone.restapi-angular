@@ -48,7 +48,7 @@ export class EditView extends TraversingComponent {
         if (property === 'effective' || property === 'expires') {
           schema.properties[property].widget = 'date';
         }
-      };
+      }
 
       this.schema = schema;
       this.model = model;
@@ -58,7 +58,7 @@ export class EditView extends TraversingComponent {
   onSave(schemaForm: any) {
     let model = schemaForm.value;
     Object.keys(model).forEach(key => {
-      if (model[key]==='' && this.schema.properties[key].widget.id === 'date') {
+      if (model[key] === '' && this.schema.properties[key].widget.id === 'date') {
         model[key] = null;
       }
     });

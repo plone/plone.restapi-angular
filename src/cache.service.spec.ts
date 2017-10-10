@@ -173,8 +173,8 @@ describe('CacheService', () => {
       cache.get('http://fake/Plone/').subscribe(() => {});
       http.expectOne('http://fake/Plone/').flush(response);
       expect(cache.hits['http://fake/Plone/']).toBe(1);
-      cache.revoke.emit()
-    })
+      cache.revoke.emit();
+    });
   });
 });
 

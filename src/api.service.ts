@@ -27,7 +27,7 @@ export class APIService {
     this.status.next({ loading: true });
     return this.http.get(url, { headers: headers }).map(res => {
       this.status.next({ loading: false });
-      return res
+      return res;
     })
     .catch(this.error.bind(this));
   }
@@ -38,7 +38,7 @@ export class APIService {
     this.status.next({ loading: true });
     return this.http.post(url, data, { headers: headers }).map(res => {
       this.status.next({ loading: false });
-      return res
+      return res;
     })
     .catch(this.error.bind(this));
   }
@@ -49,7 +49,7 @@ export class APIService {
     this.status.next({ loading: true });
     return this.http.patch(url, data, { headers: headers }).map(res => {
       this.status.next({ loading: false });
-      return res
+      return res;
     })
     .catch(this.error.bind(this));
   }
@@ -60,7 +60,7 @@ export class APIService {
     this.status.next({ loading: true });
     return this.http.delete(url, { headers: headers }).map(res => {
       this.status.next({ loading: false });
-      return res
+      return res;
     })
     .catch(this.error.bind(this));
   }
@@ -75,7 +75,7 @@ export class APIService {
       headers: headers
     }).map((blob: Blob) => {
       this.status.next({ loading: false });
-      return blob
+      return blob;
     })
     .catch(this.error.bind(this));
   }

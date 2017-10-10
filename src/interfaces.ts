@@ -10,7 +10,7 @@ export interface LoadingStatus {
 export interface Error {
   type: string;
   message: string;
-  traceback:string[];
+  traceback: string[];
 }
 
 
@@ -100,7 +100,7 @@ export interface SearchResults {
 /* Authentication status */
 export interface AuthenticatedStatus {
   state: boolean;
-  error?: string
+  error?: string;
 }
 
 export interface LoginInfo {
@@ -109,10 +109,10 @@ export interface LoginInfo {
 }
 
 export interface PasswordResetInfo {
-  oldPassword?: string,
-  newPassword: string,
-  login: string,
-  token?: string
+  oldPassword?: string;
+  newPassword: string;
+  login: string;
+  token?: string;
 }
 
 /* User information */
@@ -125,22 +125,22 @@ export interface UserInfo {
 /* File download */
 
 export interface NamedFile {
-  download: string,  // download path
-  filename: string
-  'mime-type': string,
+  download: string;  // download path
+  filename: string;
+  'mime-type': string;
 }
 
 export interface DownloadStartedEvent {
-  namedFile: NamedFile,
-  originalEvent: Event,
+  namedFile: NamedFile;
+  originalEvent: Event;
 }
 
 export interface DownloadSucceededEvent {
-  blob: Blob,
-  namedFile: NamedFile,
+  blob: Blob;
+  namedFile: NamedFile;
 }
 
 export interface DownloadFailedEvent {
-  error: Error
-  namedFile: NamedFile,
+  error: Error;
+  namedFile: NamedFile;
 }

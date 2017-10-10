@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { URLSearchParams } from '@angular/http';
+import 'rxjs/add/operator/takeUntil';
 
 import { TraversingComponent } from '../traversing';
 import { Services } from '../services';
@@ -77,7 +78,7 @@ export class AddView extends TraversingComponent implements OnInit {
           if (property === 'effective' || property === 'expires') {
             schema.properties[property].widget = 'date';
           }
-        };
+        }
 
         this.schema = schema;
       });

@@ -31,6 +31,6 @@ export class CommentsService {
   update(path: string, data: Object): Observable<any> {
     return this.cache.revoking(
       this.api.patch(path, data), path
-    )
+    );
   }
 }

@@ -9,7 +9,7 @@ import { CacheService } from './cache.service';
 
 interface NavigationItem {
   title: string;
-  url: string
+  url: string;
   properties?: any;
 }
 
@@ -46,7 +46,7 @@ export class ResourceService {
   create(path: string, model: any) {
     return this.emittingModified(
       this.api.post(path, model), path
-    )
+    );
   }
 
   delete(path: string) {
@@ -137,7 +137,7 @@ export class ResourceService {
         if (data && data[0]) {
           return data[0].items.filter(item => {
             return !item.properties || !item.properties.exclude_from_nav;
-          }).map(this.linkFromItem.bind(this))
+          }).map(this.linkFromItem.bind(this));
         } else {
           return [];
         }
@@ -148,9 +148,9 @@ export class ResourceService {
     return this.cache.get(path + '/@components/breadcrumbs')
       .map((data: NavigationItems[]) => {
         if (data && data[0]) {
-          return data[0].items.map(this.linkFromItem.bind(this))
+          return data[0].items.map(this.linkFromItem.bind(this));
         } else {
-          return []
+          return [];
         }
       });
   }
@@ -174,6 +174,6 @@ export class ResourceService {
     return <NavLink>Object.assign({
       active: false,
       path: this.configuration.urlToPath(item.url)
-    }, item)
+    }, item);
   }
 }

@@ -23,8 +23,8 @@ export class NavigationService {
     resource.resourceModified
       .merge(auth.isAuthenticated)
       .subscribe(() => {
-        this.refreshNavigation.emit()
-      })
+        this.refreshNavigation.emit();
+      });
   }
 
   getNavigationFor(currentPath: string, root: string | number, depth: number): Observable<NavTree> {
