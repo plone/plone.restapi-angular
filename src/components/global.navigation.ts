@@ -20,7 +20,7 @@ import { Observable } from 'rxjs/Observable';
 export class GlobalNavigation extends TraversingComponent implements OnInit, OnDestroy {
 
   links: NavLink[] = [];
-  navigationRefresh: Subscription;
+  refreshNavigation: Subscription;
 
   constructor(public services: Services,) {
     super(services);
@@ -30,7 +30,7 @@ export class GlobalNavigation extends TraversingComponent implements OnInit, OnD
     super.ngOnInit();
     const component = this;
 
-    component.navigationRefresh = Observable.of(null)
+    component.refreshNavigation = Observable.of(null)
       .merge(component.services.navigation.refreshNavigation)
       .mergeMap(() => component.services.resource.navigation())
       .subscribe((links: NavLink[]) => {
@@ -45,8 +45,8 @@ export class GlobalNavigation extends TraversingComponent implements OnInit, OnD
   }
 
   ngOnDestroy() {
-    if (this.navigationRefresh.unsubscribe) {
-      this.navigationRefresh.unsubscribe();
+    if (this.refreshNavigation.unsubscribe) {
+      this.refreshNavigation.unsubscribe();
     }
   }
 
