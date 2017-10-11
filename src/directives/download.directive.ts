@@ -39,8 +39,8 @@ export class DownloadDirective {
         this.onDownloadFailed.emit(<DownloadFailedEvent>{
           error: error,
           namedFile: namedFile
-        })
-      })
+        });
+      });
   }
 
   private static saveDownloaded(namedFile: NamedFile, blob: Blob) {

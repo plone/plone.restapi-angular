@@ -22,7 +22,7 @@ export class GlobalNavigation extends TraversingComponent implements OnInit, OnD
   links: NavLink[] = [];
   refreshNavigation: Subscription;
 
-  constructor(public services: Services,) {
+  constructor(public services: Services) {
     super(services);
   }
 
@@ -36,7 +36,7 @@ export class GlobalNavigation extends TraversingComponent implements OnInit, OnD
       .subscribe((links: NavLink[]) => {
           component.links = links;
         }
-      )
+      );
 
   }
 

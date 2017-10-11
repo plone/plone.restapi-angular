@@ -25,7 +25,7 @@ export class Breadcrumbs extends TraversingComponent {
   }
 
   onTraverse(target: Target) {
-    const components = target.context['@components']  // breadcrumbs we got with expansion;
+    const components = target.context['@components'];  // breadcrumbs we got with expansion;
     if (components && components.breadcrumbs.items) {
       this.links = components.breadcrumbs.items;
     } else {

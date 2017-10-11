@@ -31,7 +31,7 @@ export class RequestPasswordResetView implements OnInit {
         } else if (err.status < 500) {
           this.error = JSON.parse(err.error).error.message;
         }
-      })
+      });
   }
 
 }
