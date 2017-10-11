@@ -1,13 +1,13 @@
-# 1.2.4 (Unreleased)
+# 1.2.4 (2017-10-11)
 
 ## New features
 
-- new download directive attribute
+- New download directive attribute [Thomas Desvenain]
 
 ## Bug fixes
 
 - Fix missing active links in global navigation, bug introduced in 1.2.0 [Sune Brøndum Wøller]
-
+- Improve test project set up [Sune Brøndum Wøller]
 
 # 1.2.3 (2017-09-29)
 
