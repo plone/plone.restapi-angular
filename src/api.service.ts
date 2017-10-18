@@ -28,7 +28,7 @@ export class APIService {
   get(path: string): Observable<any> {
     let url = this.getFullPath(path);
     let headers = this.authentication.getHeaders();
-    this.loading.start(`get-${path}`);
+    this.loading.begin(`get-${path}`);
     return this.http.get(url, { headers: headers }).map(res => {
       this.loading.finish(`get-${path}`);
       return res;
@@ -40,7 +40,7 @@ export class APIService {
     let url = this.getFullPath(path);
     let headers = this.authentication.getHeaders();
     this.status.next({ loading: true });
-    this.loading.start(`post-${path}`);
+    this.loading.begin(`post-${path}`);
     return this.http.post(url, data, { headers: headers }).map(res => {
       this.loading.finish(`post-${path}`);
       return res;
@@ -52,7 +52,7 @@ export class APIService {
     let url = this.getFullPath(path);
     let headers = this.authentication.getHeaders();
     this.status.next({ loading: true });
-    this.loading.start(`patch-${path}`);
+    this.loading.begin(`patch-${path}`);
     return this.http.patch(url, data, { headers: headers }).map(res => {
       this.loading.finish(`patch-${path}`);
       return res;
@@ -64,7 +64,7 @@ export class APIService {
     let url = this.getFullPath(path);
     let headers = this.authentication.getHeaders();
     this.status.next({ loading: true });
-    this.loading.start(`delete-${path}`);
+    this.loading.begin(`delete-${path}`);
     return this.http.delete(url, { headers: headers }).map(res => {
       this.loading.finish(`delete-${path}`);
       return res;
@@ -75,7 +75,7 @@ export class APIService {
   download(path: string): Observable<Blob | {}> {
     let url = this.getFullPath(path);
     let headers: HttpHeaders = this.authentication.getHeaders();
-    headers.set('Content-Type', 'application/x-www-form-urlencoded');
+    headers = headers.set('Content-Type', 'application/x-www-form-urlencoded');
     return this.http.get(url, {
       responseType: 'blob',
       headers: headers

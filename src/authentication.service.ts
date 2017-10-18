@@ -59,7 +59,7 @@ export class AuthenticationService {
         login: login,
         password: password
       });
-      this.loading.start('@login');
+      this.loading.begin('@login');
       this.http.post(
         this.config.get('BACKEND_URL') + '/@login', body, { headers: headers })
         .subscribe(
@@ -97,7 +97,7 @@ export class AuthenticationService {
   requestPasswordReset(login: string): Observable<any> {
     const headers = this.getHeaders();
     const url = this.config.get('BACKEND_URL') + `/@users/${login}/reset-password`;
-    this.loading.start('request-password-reset');
+    this.loading.begin('request-password-reset');
     return this.http.post(url, {}, { headers: headers }).map(res => {
       this.loading.finish('request-password-reset');
       return res;
@@ -117,7 +117,7 @@ export class AuthenticationService {
       data['reset_token'] = resetInfo.token;
     }
     const url = this.config.get('BACKEND_URL') + `/@users/${resetInfo.login}/reset-password`;
-    this.loading.start('reset-password');
+    this.loading.begin('reset-password');
     return this.http.post(url, data, { headers: headers }).map(res => {
       this.loading.finish('reset-password');
       return res;

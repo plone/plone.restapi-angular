@@ -163,13 +163,13 @@ Cache service is massively used by `resource` and `comments` service. All get re
 Loading service
 ---------------
 
-Loading service stores ids for what is currently loading. You declare here which loadings has started and finished.
+Loading service stores ids for what is currently loading. You declare here which loadings have begun and finished.
 
 The service provides observables that emits when loading status changes. This is useful when you want to display a reactive loader.
 
-You give an id each 'thing' you mark as loaded using `start` method. You mark loading as finished using `finish` method.
+You give an id to each 'thing' you mark as loaded using the `begin` method. You mark loading as finished using the `finish` method.
 
-`status` behavior subject changes when there is nothing loading left or if there is at least one thing loading.
+`status` behavior subject changes when there is nothing left to load or if there is at least one thing loading.
 
 `isLoading` method provides an observable that emits the loading status for a specific id.
 
@@ -184,7 +184,7 @@ You give an id each 'thing' you mark as loaded using `start` method. You mark lo
             this.dataIsLoading = isLoading;
         });
 
-        loading.start('the-data')  // mark 'the-data' as loading
+        loading.begin('the-data')  // mark 'the-data' as loading
         dataService.getData().subscribe((data: string[]) => {
             loading.finish('the-data');
             this.data = data;

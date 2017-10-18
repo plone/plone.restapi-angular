@@ -19,7 +19,7 @@ export class LoadingService {
     });
   }
 
-  start(id: string): void {
+  begin(id: string): void {
     const ids = this.loadingIds.getValue();
     ids.push(id);
     this.loadingIds.next(ids);
@@ -40,12 +40,7 @@ export class LoadingService {
 
   isLoading(id: string): Observable<boolean> {
     return this.loadingIds.map((loadingIds: string[]) => {
-      for (let loadingId of loadingIds) {
-        if (loadingId === id) {
-          return true
-        }
-      }
-      return false;
+      return loadingIds.indexOf(id) >= 0;
     })
   }
 
