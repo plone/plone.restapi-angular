@@ -3,6 +3,7 @@ import { Services } from '../services';
 import { Subscription } from 'rxjs/Subscription';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PasswordResetInfo } from '../interfaces';
+import { URLSearchParams } from '@angular/http';
 
 @Component({
   selector: 'plone-password-reset',

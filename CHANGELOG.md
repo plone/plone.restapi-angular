@@ -1,3 +1,9 @@
+# 1.2.5 (Unreleased)
+
+## Bug fixes
+
+- Fixed password reset for browsers that does not have UrlSearchParams.
+
 # 1.2.4 (2017-10-11)
 
 ## New features
