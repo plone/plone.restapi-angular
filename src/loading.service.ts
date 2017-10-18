@@ -1,3 +1,4 @@
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
@@ -44,4 +45,24 @@ export class LoadingService {
     })
   }
 
+}
+
+@Injectable()
+export class LoadingInterceptor implements HttpInterceptor {
+  constructor(private loading: LoadingService) {}
+
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    const loadingId = `${req.method}-${req.urlWithParams}`;
+    this.loading.begin(loadingId);
+    return next
+      .handle(req)
+      .do((event: HttpEvent<any>) => {
+        if (event instanceof HttpResponse) {
+          this.loading.finish(loadingId);
+        }
+      }).catch((error: any) => {
+        this.loading.finish(loadingId);
+        return Observable.throw(error);
+      });
+  }
 }

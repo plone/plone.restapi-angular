@@ -19,8 +19,8 @@ export class APIService {
   constructor(private authentication: AuthenticationService,
               private config: ConfigurationService,
               private http: HttpClient,
-              private loading: LoadingService) {
-    this.loading.status.subscribe((isLoading) => {
+              loading: LoadingService) {
+    loading.status.subscribe((isLoading) => {
       this.status.next({ loading: isLoading })
     })
   }
@@ -28,9 +28,7 @@ export class APIService {
   get(path: string): Observable<any> {
     let url = this.getFullPath(path);
     let headers = this.authentication.getHeaders();
-    this.loading.begin(`get-${path}`);
     return this.http.get(url, { headers: headers }).map(res => {
-      this.loading.finish(`get-${path}`);
       return res;
     })
       .catch(this.error.bind(this));
@@ -40,9 +38,7 @@ export class APIService {
     let url = this.getFullPath(path);
     let headers = this.authentication.getHeaders();
     this.status.next({ loading: true });
-    this.loading.begin(`post-${path}`);
     return this.http.post(url, data, { headers: headers }).map(res => {
-      this.loading.finish(`post-${path}`);
       return res;
     })
       .catch(this.error.bind(this));
@@ -52,9 +48,7 @@ export class APIService {
     let url = this.getFullPath(path);
     let headers = this.authentication.getHeaders();
     this.status.next({ loading: true });
-    this.loading.begin(`patch-${path}`);
     return this.http.patch(url, data, { headers: headers }).map(res => {
-      this.loading.finish(`patch-${path}`);
       return res;
     })
       .catch(this.error.bind(this));
@@ -64,9 +58,7 @@ export class APIService {
     let url = this.getFullPath(path);
     let headers = this.authentication.getHeaders();
     this.status.next({ loading: true });
-    this.loading.begin(`delete-${path}`);
     return this.http.delete(url, { headers: headers }).map(res => {
-      this.loading.finish(`delete-${path}`);
       return res;
     })
       .catch(this.error.bind(this));
@@ -98,7 +90,6 @@ export class APIService {
 
   private error(err: HttpErrorResponse) {
     const error: Error = JSON.parse(err.error);
-    this.loading.finish();
     return Observable.throw(error);
   }
 }

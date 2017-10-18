@@ -195,4 +195,4 @@ You give an id to each 'thing' you mark as loaded using the `begin` method. You 
         });
 
 
-This service is used by AuthenticationService and ResourceService to mark a loading status when any http request is done.
+This service is used by LoadingInterceptor http interceptor that marks a loading status when any http request is done.
