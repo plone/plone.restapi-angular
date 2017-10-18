@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, inject } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   HttpTestingController,
   HttpClientTestingModule
@@ -16,6 +16,8 @@ import { Traverser, TraversalModule, Resolver, Marker, Normalizer } from 'angula
 import { TypeMarker, RESTAPIResolver, PloneViews, FullPathNormalizer } from '../traversal';
 import { ViewView } from './view';
 import { CacheService } from '../cache.service';
+import { LoadingService } from '../loading.service';
+
 
 describe('ViewView', () => {
   let component: ViewView;
@@ -37,6 +39,7 @@ describe('ViewView', () => {
         CacheService,
         CommentsService,
         NavigationService,
+        LoadingService,
         ResourceService,
         TypeMarker,
         RESTAPIResolver,

@@ -12,6 +12,7 @@ import { AuthenticationService } from './authentication.service';
 import { ResourceService } from './resource.service';
 import { NavigationService } from './navigation.service';
 import { CacheService } from './cache.service';
+import { LoadingService } from './loading.service';
 
 describe('NavigationService', () => {
   beforeEach(() => {
@@ -23,6 +24,7 @@ describe('NavigationService', () => {
         AuthenticationService,
         ConfigurationService,
         CacheService,
+        LoadingService,
         NavigationService,
         {
           provide: 'CONFIGURATION', useValue: {

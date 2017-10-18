@@ -46,6 +46,7 @@ import { CacheService } from './cache.service';
 import { RequestPasswordResetView } from './views/request-password-reset';
 import { PasswordResetView } from './views/password-reset';
 import { DownloadDirective } from './directives/download.directive';
+import { LoadingService } from './loading.service';
 
 @NgModule({
   declarations: [
@@ -89,9 +90,10 @@ import { DownloadDirective } from './directives/download.directive';
     CacheService,
     CommentsService,
     ConfigurationService,
+    LoadingService,
     NavigationService,
-    ResourceService,
     PloneViews,
+    ResourceService,
     Services,
     { provide: Resolver, useClass: RESTAPIResolver },
     { provide: Marker, useClass: TypeMarker },

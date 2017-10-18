@@ -15,6 +15,7 @@ import { AuthenticationService } from './authentication.service';
 import { ConfigurationService } from './configuration.service';
 import { CommentsService } from './comments.service';
 import { CacheService } from './cache.service';
+import { LoadingService } from './loading.service';
 
 describe('CommentsService', () => {
   beforeEach(() => {
@@ -23,11 +24,12 @@ describe('CommentsService', () => {
         HttpClientTestingModule,
       ],
       providers: [
-        CommentsService,
         APIService,
-        CacheService,
         AuthenticationService,
+        CacheService,
+        CommentsService,
         ConfigurationService,
+        LoadingService,
         {
           provide: 'CONFIGURATION', useValue: {
             BACKEND_URL: 'http://fake/Plone',

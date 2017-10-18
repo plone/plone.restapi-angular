@@ -23,6 +23,7 @@ import { ResourceService } from '../resource.service';
 import { Services } from '../services';
 import { Breadcrumbs } from './breadcrumbs';
 import { CacheService } from '../cache.service';
+import { LoadingService } from '../loading.service';
 
 @Injectable()
 class MockResourceService {
@@ -66,6 +67,7 @@ describe('Breadcrumbs', () => {
         },
         CacheService,
         CommentsService,
+        LoadingService,
         NavigationService,
         TypeMarker,
         RESTAPIResolver,

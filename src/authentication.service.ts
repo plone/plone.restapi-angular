@@ -1,11 +1,12 @@
-import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/Rx';
 
 import { ConfigurationService } from './configuration.service';
 import { AuthenticatedStatus, Error, PasswordResetInfo, UserInfo } from './interfaces';
-import { Observable } from 'rxjs/Observable';
+import { LoadingService } from './loading.service';
 
 
 interface LoginToken {
@@ -19,6 +20,7 @@ export class AuthenticationService {
   public isAuthenticated: BehaviorSubject<AuthenticatedStatus> = new BehaviorSubject({ state: false });
 
   constructor(private config: ConfigurationService,
+              private loading: LoadingService,
               private http: HttpClient,
               @Inject(PLATFORM_ID) private platformId: Object) {
     if (isPlatformBrowser(this.platformId)) {
@@ -57,10 +59,12 @@ export class AuthenticationService {
         login: login,
         password: password
       });
+      this.loading.start('@login');
       this.http.post(
         this.config.get('BACKEND_URL') + '/@login', body, { headers: headers })
         .subscribe(
           (data: LoginToken) => {
+            this.loading.finish('@login');
             if (data.token) {
               localStorage.setItem('auth', data['token']);
               localStorage.setItem('auth_time', (new Date()).toISOString());
@@ -72,6 +76,7 @@ export class AuthenticationService {
             }
           },
           (httpErrorResponse: HttpErrorResponse) => {
+            this.loading.finish('@login');
             localStorage.removeItem('auth');
             localStorage.removeItem('auth_time');
             const error: Error = JSON.parse(httpErrorResponse.error)['error'];
@@ -92,7 +97,12 @@ export class AuthenticationService {
   requestPasswordReset(login: string): Observable<any> {
     const headers = this.getHeaders();
     const url = this.config.get('BACKEND_URL') + `/@users/${login}/reset-password`;
-    return this.http.post(url, {}, { headers: headers });
+    this.loading.start('request-password-reset');
+    return this.http.post(url, {}, { headers: headers }).map(res => {
+      this.loading.finish('request-password-reset');
+      return res;
+    })
+      .catch(this.error.bind(this));
   }
 
   passwordReset(resetInfo: PasswordResetInfo): Observable<any> {
@@ -107,7 +117,13 @@ export class AuthenticationService {
       data['reset_token'] = resetInfo.token;
     }
     const url = this.config.get('BACKEND_URL') + `/@users/${resetInfo.login}/reset-password`;
-    return this.http.post(url, data, { headers: headers });
+    this.loading.start('reset-password');
+    return this.http.post(url, data, { headers: headers }).map(res => {
+      this.loading.finish('reset-password');
+      return res;
+    })
+      .catch(this.error.bind(this));
+    ;
   }
 
   getHeaders(): HttpHeaders {
@@ -121,5 +137,11 @@ export class AuthenticationService {
       }
     }
     return headers;
+  }
+
+  private error(err: HttpErrorResponse) {
+    const error: Error = JSON.parse(err.error);
+    this.loading.finish();
+    return Observable.throw(error);
   }
 }

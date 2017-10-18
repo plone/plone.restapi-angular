@@ -26,6 +26,7 @@ import { Traverser, TraversalModule, Resolver, Marker, Normalizer } from 'angula
 import { TypeMarker, RESTAPIResolver, PloneViews, FullPathNormalizer } from '../traversal';
 import { EditView } from './edit';
 import { CacheService } from '../cache.service';
+import { LoadingService } from '../loading.service';
 
 describe('EditView', () => {
   let component: EditView;
@@ -46,6 +47,7 @@ describe('EditView', () => {
           }
         },
         CommentsService,
+        LoadingService,
         NavigationService,
         ResourceService,
         TypeMarker,

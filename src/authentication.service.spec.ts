@@ -7,6 +7,7 @@ import {
 import { ConfigurationService } from './configuration.service';
 import { AuthenticationService } from './authentication.service';
 import { PasswordResetInfo } from './interfaces';
+import { LoadingService } from './loading.service';
 
 describe('AuthenticationService', () => {
   beforeEach(() => {
@@ -15,6 +16,7 @@ describe('AuthenticationService', () => {
       providers: [
         AuthenticationService,
         ConfigurationService,
+        LoadingService,
         {
           provide: 'CONFIGURATION', useValue: {
             BACKEND_URL: 'http://fake/Plone',

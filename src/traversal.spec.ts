@@ -16,6 +16,7 @@ import { Traverser, TraversalModule, Resolver, Marker, Normalizer } from 'angula
 import { InterfaceMarker, RESTAPIResolver, PloneViews, FullPathNormalizer } from './traversal';
 import { ViewView } from '.';
 import { CacheService } from './cache.service';
+import { LoadingService } from './loading.service';
 
 describe('Traversal', () => {
   beforeEach(() => {
@@ -31,6 +32,7 @@ describe('Traversal', () => {
             BACKEND_URL: 'http://fake/Plone',
           }
         },
+        LoadingService,
         ResourceService,
         InterfaceMarker,
         RESTAPIResolver,

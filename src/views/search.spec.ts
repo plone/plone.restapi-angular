@@ -17,6 +17,7 @@ import { Services } from '../services';
 import { Traverser, TraversalModule, Resolver, Marker, Normalizer } from 'angular-traversal';
 import { TypeMarker, RESTAPIResolver, PloneViews, FullPathNormalizer } from '../traversal';
 import { SearchView } from './search';
+import { LoadingService } from '../loading.service';
 
 describe('SearchView', () => {
   let component: SearchView;
@@ -37,6 +38,7 @@ describe('SearchView', () => {
           }
         },
         CommentsService,
+        LoadingService,
         NavigationService,
         ResourceService,
         TypeMarker,
