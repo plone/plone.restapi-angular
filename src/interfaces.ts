@@ -71,6 +71,7 @@ export interface Comment {
 export interface SearchOptions {
   sort_on?: string;
   sort_order?: string;
+  review_state?: string;
   metadata_fields?: string[];
   start?: number;
   size?: number;

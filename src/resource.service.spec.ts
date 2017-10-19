@@ -161,6 +161,32 @@ describe('ResourceService', () => {
     expect(id).toBe('http://fake/Plone/folder1/page1');
   });
 
+  it('should filter by review state', () => {
+    const service = TestBed.get(ResourceService);
+    const http = TestBed.get(HttpTestingController);
+    let id = '';
+    const response = {
+      "@id": "http://fake/Plone/@search",
+      "items": [
+        {
+          "@id": "http://fake/Plone/folder1/page1",
+          "@type": "Document",
+          "description": "Congratulations! You have successfully installed Plone.",
+          "review_state": "private",
+          "title": "Welcome to Plone"
+        }
+      ],
+      "items_total": 1
+    };
+    service.find({ SearchableText: 'John' }, '', { review_state: 'private' }).subscribe(content => {
+      id = content.items[0]['@id'];
+    });
+
+    http.expectOne('http://fake/Plone/@search?SearchableText=John&review_state=private').flush(response);
+
+    expect(id).toBe('http://fake/Plone/folder1/page1');
+  });
+
   it('should add metadata to search results', () => {
     const service = TestBed.get(ResourceService);
     const http = TestBed.get(HttpTestingController);

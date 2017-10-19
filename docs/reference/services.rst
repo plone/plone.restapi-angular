@@ -83,6 +83,7 @@ Methods:
   The `options` parameter can contain the following attributes:
 
   - sort_on: string, name of the index used to sort the result.
+  - review_state: string, name of the review state to filter by
   - metadata_fields: string[], list of extra metadata fields to retrieve
   - start: number, rank of the first item (used for batching, default is 0),
   - size: number, length of the batching (default is 20)
