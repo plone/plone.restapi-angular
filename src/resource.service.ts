@@ -86,6 +86,9 @@ export class ResourceService {
     if (options.sort_order) {
       params.push('sort_order=' + options.sort_order);
     }
+    if (options.review_state) {
+      params.push('review_state=' + options.review_state);
+    }
     if (options.metadata_fields) {
       options.metadata_fields.map((field: any) => {
         params.push('metadata_fields:list=' + field);
