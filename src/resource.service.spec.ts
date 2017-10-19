@@ -11,6 +11,7 @@ import { ConfigurationService } from './configuration.service';
 import { AuthenticationService } from './authentication.service';
 import { ResourceService } from './resource.service';
 import { CacheService } from './cache.service';
+import { LoadingService } from './loading.service';
 
 describe('ResourceService', () => {
   beforeEach(() => {
@@ -22,6 +23,7 @@ describe('ResourceService', () => {
         AuthenticationService,
         CacheService,
         ConfigurationService,
+        LoadingService,
         {
           provide: 'CONFIGURATION', useValue: {
           BACKEND_URL: 'http://fake/Plone',

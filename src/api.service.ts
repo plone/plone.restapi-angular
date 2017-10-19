@@ -7,6 +7,7 @@ import 'rxjs/add/operator/catch';
 import { AuthenticationService } from './authentication.service';
 import { ConfigurationService } from './configuration.service';
 import { Error, LoadingStatus } from './interfaces';
+import { LoadingService } from './loading.service';
 
 @Injectable()
 export class APIService {
@@ -15,21 +16,22 @@ export class APIService {
     { loading: false }
   );
 
-  constructor(
-    private authentication: AuthenticationService,
-    private config: ConfigurationService,
-    private http: HttpClient,
-  ) { }
+  constructor(private authentication: AuthenticationService,
+              private config: ConfigurationService,
+              private http: HttpClient,
+              loading: LoadingService) {
+    loading.status.subscribe((isLoading) => {
+      this.status.next({ loading: isLoading })
+    })
+  }
 
   get(path: string): Observable<any> {
     let url = this.getFullPath(path);
     let headers = this.authentication.getHeaders();
-    this.status.next({ loading: true });
     return this.http.get(url, { headers: headers }).map(res => {
-      this.status.next({ loading: false });
       return res;
     })
-    .catch(this.error.bind(this));
+      .catch(this.error.bind(this));
   }
 
   post(path: string, data: Object): Observable<any> {
@@ -37,10 +39,9 @@ export class APIService {
     let headers = this.authentication.getHeaders();
     this.status.next({ loading: true });
     return this.http.post(url, data, { headers: headers }).map(res => {
-      this.status.next({ loading: false });
       return res;
     })
-    .catch(this.error.bind(this));
+      .catch(this.error.bind(this));
   }
 
   patch(path: string, data: Object): Observable<any> {
@@ -48,10 +49,9 @@ export class APIService {
     let headers = this.authentication.getHeaders();
     this.status.next({ loading: true });
     return this.http.patch(url, data, { headers: headers }).map(res => {
-      this.status.next({ loading: false });
       return res;
     })
-    .catch(this.error.bind(this));
+      .catch(this.error.bind(this));
   }
 
   delete(path: string): Observable<any> {
@@ -59,25 +59,22 @@ export class APIService {
     let headers = this.authentication.getHeaders();
     this.status.next({ loading: true });
     return this.http.delete(url, { headers: headers }).map(res => {
-      this.status.next({ loading: false });
       return res;
     })
-    .catch(this.error.bind(this));
+      .catch(this.error.bind(this));
   }
 
   download(path: string): Observable<Blob | {}> {
     let url = this.getFullPath(path);
     let headers: HttpHeaders = this.authentication.getHeaders();
-    headers.set('Content-Type', 'application/x-www-form-urlencoded');
-    this.status.next({ loading: true });
+    headers = headers.set('Content-Type', 'application/x-www-form-urlencoded');
     return this.http.get(url, {
       responseType: 'blob',
       headers: headers
     }).map((blob: Blob) => {
-      this.status.next({ loading: false });
       return blob;
     })
-    .catch(this.error.bind(this));
+      .catch(this.error.bind(this));
   }
 
   getFullPath(path: string): string {
@@ -93,7 +90,6 @@ export class APIService {
 
   private error(err: HttpErrorResponse) {
     const error: Error = JSON.parse(err.error);
-    this.status.next({ loading: false, error: error });
     return Observable.throw(error);
   }
 }

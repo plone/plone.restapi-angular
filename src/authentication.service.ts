@@ -1,11 +1,12 @@
-import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/Rx';
 
 import { ConfigurationService } from './configuration.service';
 import { AuthenticatedStatus, Error, PasswordResetInfo, UserInfo } from './interfaces';
-import { Observable } from 'rxjs/Observable';
+import { LoadingService } from './loading.service';
 
 
 interface LoginToken {
@@ -92,7 +93,10 @@ export class AuthenticationService {
   requestPasswordReset(login: string): Observable<any> {
     const headers = this.getHeaders();
     const url = this.config.get('BACKEND_URL') + `/@users/${login}/reset-password`;
-    return this.http.post(url, {}, { headers: headers });
+    return this.http.post(url, {}, { headers: headers }).map(res => {
+      return res;
+    })
+      .catch(this.error.bind(this));
   }
 
   passwordReset(resetInfo: PasswordResetInfo): Observable<any> {
@@ -107,7 +111,10 @@ export class AuthenticationService {
       data['reset_token'] = resetInfo.token;
     }
     const url = this.config.get('BACKEND_URL') + `/@users/${resetInfo.login}/reset-password`;
-    return this.http.post(url, data, { headers: headers });
+    return this.http.post(url, data, { headers: headers }).map(res => {
+      return res;
+    })
+      .catch(this.error.bind(this));
   }
 
   getHeaders(): HttpHeaders {
@@ -121,5 +128,10 @@ export class AuthenticationService {
       }
     }
     return headers;
+  }
+
+  private error(err: HttpErrorResponse) {
+    const error: Error = JSON.parse(err.error);
+    return Observable.throw(error);
   }
 }

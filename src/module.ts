@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import {
   SchemaFormModule,
@@ -46,6 +47,7 @@ import { CacheService } from './cache.service';
 import { RequestPasswordResetView } from './views/request-password-reset';
 import { PasswordResetView } from './views/password-reset';
 import { DownloadDirective } from './directives/download.directive';
+import { LoadingService, LoadingInterceptor } from './loading.service';
 
 @NgModule({
   declarations: [
@@ -89,14 +91,16 @@ import { DownloadDirective } from './directives/download.directive';
     CacheService,
     CommentsService,
     ConfigurationService,
+    LoadingService,
     NavigationService,
-    ResourceService,
     PloneViews,
+    ResourceService,
     Services,
+    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
     { provide: Resolver, useClass: RESTAPIResolver },
     { provide: Marker, useClass: TypeMarker },
     { provide: Normalizer, useClass: FullPathNormalizer },
-    { provide: WidgetRegistry, useClass: DefaultWidgetRegistry },
+    { provide: WidgetRegistry, useClass: DefaultWidgetRegistry }
   ],
   exports: [
     EditView,

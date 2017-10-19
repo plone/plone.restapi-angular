@@ -12,6 +12,7 @@ import { ConfigurationService } from './configuration.service';
 import { AuthenticationService } from './authentication.service';
 import { CacheService } from './cache.service';
 import { Observable } from 'rxjs/Observable';
+import { LoadingService } from './loading.service';
 
 const front_page_response = {
       "@id": "http://fake/Plone/",
@@ -51,8 +52,9 @@ describe('CacheService', () => {
       imports: [HttpClientTestingModule],
       providers: [
         APIService,
-        ConfigurationService,
         AuthenticationService,
+        ConfigurationService,
+        LoadingService,
         {
           provide: 'CONFIGURATION', useValue: {
           BACKEND_URL: 'http://fake/Plone',
@@ -141,8 +143,9 @@ describe('CacheService', () => {
       imports: [HttpClientTestingModule],
       providers: [
         APIService,
-        ConfigurationService,
         AuthenticationService,
+        ConfigurationService,
+        LoadingService,
         {
           provide: 'CONFIGURATION', useValue: {
           BACKEND_URL: 'http://fake/Plone',
@@ -184,8 +187,9 @@ describe('CacheService', () => {
       imports: [HttpClientTestingModule],
       providers: [
         APIService,
-        ConfigurationService,
         AuthenticationService,
+        ConfigurationService,
+        LoadingService,
         {
           provide: 'CONFIGURATION', useValue: {
           BACKEND_URL: 'http://fake/Plone',

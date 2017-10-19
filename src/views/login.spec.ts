@@ -19,6 +19,7 @@ import { Traverser, TraversalModule, Resolver, Marker, Normalizer } from 'angula
 import { TypeMarker, RESTAPIResolver, PloneViews, FullPathNormalizer } from '../traversal';
 import { LoginView } from './login';
 import { ViewView } from './view';
+import { LoadingService } from '../loading.service';
 
 describe('LoginView', () => {
   let component: LoginView;
@@ -39,6 +40,7 @@ describe('LoginView', () => {
           }
         },
         CommentsService,
+        LoadingService,
         NavigationService,
         ResourceService,
         TypeMarker,
