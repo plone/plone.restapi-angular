@@ -87,7 +87,7 @@ We will start with ``./src/app/custom-navigation/custom-navigation.component.ts`
     selector: 'custom-navigation',
     template: `<custom-navigation-level [links]="links"></custom-navigation-level>`
   })
-  export class CustomNavigation extends Navigation {}
+  export class CustomNavigationComponent extends Navigation {}
 
 - We add an ``import`` for the default ``Navigation``.
 - Rename the ``selector``.
