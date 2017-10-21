@@ -23,6 +23,7 @@ import { ResourceService } from '../resource.service';
 import { Services } from '../services';
 import { GlobalNavigation } from './global.navigation';
 import { CacheService } from '../cache.service';
+import { LoadingService } from '../loading.service';
 
 @Injectable()
 class MockResourceService {
@@ -72,6 +73,7 @@ describe('GlobalNavigation', () => {
         },
         CacheService,
         CommentsService,
+        LoadingService,
         NavigationService,
         TypeMarker,
         RESTAPIResolver,
