@@ -1,24 +1,38 @@
-import { TestBed } from '@angular/core/testing';
-import { LoadingService } from './loading.service';
+import { HttpClient } from '@angular/common/http';
+import { TestBed, inject } from '@angular/core/testing';
+import {
+  HttpTestingController,
+  HttpClientTestingModule
+} from '@angular/common/http/testing';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { LoadingService, LoadingInterceptor } from './loading.service';
 
 describe('LoadingService', () => {
+
   let service: LoadingService;
+
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [LoadingService]
+      imports: [HttpClientTestingModule],
+      providers: [
+        LoadingService,
+        { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true }
+      ]
     });
-    service = TestBed.get(LoadingService)
+
+    service = TestBed.get(LoadingService);
+
   });
 
   it('should be in loading state during loading', () => {
     service.begin('test-1');
-    expect(service.status.getValue()).toBe(true)
+    expect(service.status.getValue()).toBe(true);
   });
 
   it('should be in loading state loading stopped', () => {
     service.begin('test-1');
     service.finish('test-1');
-    expect(service.status.getValue()).toBe(false)
+    expect(service.status.getValue()).toBe(false);
   });
 
   it('should be robust on multiple loading starts', () => {
@@ -55,11 +69,39 @@ describe('LoadingService', () => {
     service.begin('test-2');
     service.finish('test-1');
     service.isLoading('test-1').subscribe((isLoading) => {
-      expect(isLoading).toBe(false)
+      expect(isLoading).toBe(false);
     });
     service.isLoading('test-2').subscribe((isLoading) => {
-      expect(isLoading).toBe(true)
+      expect(isLoading).toBe(true);
     });
   });
+
+  it('should handle the setting of loading status (begin and finish) in the http interceptor',
+     inject([HttpClient, HttpTestingController],
+     (http: HttpClient, httpMock: HttpTestingController) => {
+
+    // fake response
+    const response = {
+      'dummykey': 'dummyvalue',
+    };
+
+    http
+      .get('/data')
+      .subscribe(data => expect(data['dummykey']).toEqual('dummyvalue'));
+
+    // At this point, the request is pending, and no response has been
+    // sent.
+    expect(service.status.getValue()).toBe(true);
+
+    const req = httpMock.expectOne('/data');
+    expect(req.request.method).toEqual('GET');
+
+    // Next, fulfill the request by transmitting a response.
+    req.flush(response);
+    httpMock.verify();
+
+    expect(service.status.getValue()).toBe(false);
+
+  }));
 
 });
