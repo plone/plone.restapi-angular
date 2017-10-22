@@ -37,7 +37,6 @@ export class APIService {
   post(path: string, data: Object): Observable<any> {
     let url = this.getFullPath(path);
     let headers = this.authentication.getHeaders();
-    this.status.next({ loading: true });
     return this.http.post(url, data, { headers: headers }).map(res => {
       return res;
     })
@@ -47,7 +46,6 @@ export class APIService {
   patch(path: string, data: Object): Observable<any> {
     let url = this.getFullPath(path);
     let headers = this.authentication.getHeaders();
-    this.status.next({ loading: true });
     return this.http.patch(url, data, { headers: headers }).map(res => {
       return res;
     })
@@ -57,7 +55,6 @@ export class APIService {
   delete(path: string): Observable<any> {
     let url = this.getFullPath(path);
     let headers = this.authentication.getHeaders();
-    this.status.next({ loading: true });
     return this.http.delete(url, { headers: headers }).map(res => {
       return res;
     })
