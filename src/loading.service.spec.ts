@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { TestBed, inject } from '@angular/core/testing';
+import { TestBed, inject, async, fakeAsync, tick } from '@angular/core/testing';
 import {
   HttpTestingController,
   HttpClientTestingModule
@@ -77,7 +77,7 @@ describe('LoadingService', () => {
   });
 
   it('should handle the setting of loading status (begin and finish) in the http interceptor',
-     inject([HttpClient, HttpTestingController],
+     fakeAsync(inject([HttpClient, HttpTestingController],
      (http: HttpClient, httpMock: HttpTestingController) => {
 
     // fake response
@@ -90,8 +90,13 @@ describe('LoadingService', () => {
       .subscribe(data => expect(data['dummykey']).toEqual('dummyvalue'));
 
     // At this point, the request is pending, and no response has been
-    // sent.
+    // received.
     expect(service.status.getValue()).toBe(true);
+    let subscriber1 = service.isLoading('GET-/data').subscribe((isLoading) => {
+      expect(isLoading).toBe(true);
+    });
+    tick(); // wait for async to complete before unsubscribing
+    subscriber1.unsubscribe();
 
     const req = httpMock.expectOne('/data');
     expect(req.request.method).toEqual('GET');
@@ -101,7 +106,12 @@ describe('LoadingService', () => {
     httpMock.verify();
 
     expect(service.status.getValue()).toBe(false);
+    let subscriber2 = service.isLoading('GET-/data').subscribe((isLoading) => {
+      expect(isLoading).toBe(false);
+    });
+    tick(); // wait for async to complete before unsubscribing
+    subscriber2.unsubscribe();
 
-  }));
+  })));
 
 });
