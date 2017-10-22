@@ -93,16 +93,21 @@ export class APIService {
         });
       })
       .do(() => this.setBackendAvailability(true))
-      .catch((err: HttpErrorResponse) => {
-        const error: Error = JSON.parse(err.error);
+      .catch((errorResponse: HttpErrorResponse) => {
+        let error: Error;
+        try {
+          error = JSON.parse(errorResponse.error);
+        } catch (SyntaxError) {
+          error = { type: '', message: errorResponse.message, traceback: [] }
+        }
         return Observable.throw(error);
       })
   }
 
-    /* Emits only if it has changed */
-    protected setBackendAvailability(availability: boolean): void {
-        if (this.backendAvailable.getValue() !== availability) {
-            this.backendAvailable.next(availability);
-        }
+  /* Emits only if it has changed */
+  protected setBackendAvailability(availability: boolean): void {
+    if (this.backendAvailable.getValue() !== availability) {
+      this.backendAvailable.next(availability);
     }
+  }
 }
