@@ -74,10 +74,13 @@ export class APIService {
   }
 
   private wrapRequest(request: Observable<any>): Observable<any> {
-    return request.catch((err: HttpErrorResponse) => {
-      const error: Error = JSON.parse(err.error);
-      return Observable.throw(error);
-    })
+    const timeout = this.config.get('CLIENT_TIMEOUT', 15000)
+    return request
+      .timeout(timeout)
+      .catch((err: HttpErrorResponse) => {
+        const error: Error = JSON.parse(err.error);
+        return Observable.throw(error);
+      })
   }
 
 }
