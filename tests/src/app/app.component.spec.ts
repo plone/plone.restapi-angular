@@ -1,10 +1,9 @@
-import { TestBed, inject } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import {
-  HttpTestingController,
   HttpClientTestingModule
 } from '@angular/common/http/testing';
 import { Component } from '@angular/core';
-import { BrowserDynamicTestingModule, platformBrowserDynamicTesting } from '@angular/platform-browser-dynamic/testing';
+import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { APP_BASE_HREF } from '@angular/common';
 import { RESTAPIModule } from '@plone/restapi-angular';
 

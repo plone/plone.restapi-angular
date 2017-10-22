@@ -6,7 +6,7 @@ import 'rxjs/add/operator/catch';
 
 import { AuthenticationService } from './authentication.service';
 import { ConfigurationService } from './configuration.service';
-import { Error, LoadingStatus } from './interfaces';
+import { Error, LoadingStatus } from '../interfaces';
 import { LoadingService } from './loading.service';
 
 @Injectable()

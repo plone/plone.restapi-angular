@@ -1,5 +1,5 @@
 import { Directive, EventEmitter, HostListener, Input, Output } from '@angular/core';
-import { APIService } from '../api.service';
+import { APIService } from '../services/api.service';
 import { DownloadFailedEvent, DownloadStartedEvent, DownloadSucceededEvent, NamedFile, Error } from '../interfaces';
 
 

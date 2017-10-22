@@ -1,9 +1,8 @@
-import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import {
-  HttpTestingController,
   HttpClientTestingModule
 } from '@angular/common/http/testing';
-import { Injectable, Directive, Input, EventEmitter } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { APP_BASE_HREF } from '@angular/common';
 import { Traverser, TraversalModule, Resolver, Marker, Normalizer, Target } from 'angular-traversal';
@@ -14,16 +13,16 @@ import {
   FullPathNormalizer,
 } from '../traversal';
 
-import { ConfigurationService } from '../configuration.service';
-import { APIService } from '../api.service';
-import { CommentsService } from '../comments.service';
-import { NavigationService } from '../navigation.service';
-import { AuthenticationService } from '../authentication.service';
-import { ResourceService } from '../resource.service';
+import { ConfigurationService } from '../services/configuration.service';
+import { APIService } from '../services/api.service';
+import { CommentsService } from '../services/comments.service';
+import { NavigationService } from '../services/navigation.service';
+import { AuthenticationService } from '../services/authentication.service';
+import { ResourceService } from '../services/resource.service';
 import { Services } from '../services';
 import { GlobalNavigation } from './global.navigation';
-import { CacheService } from '../cache.service';
-import { LoadingService } from '../loading.service';
+import { CacheService } from '../services/cache.service';
+import { LoadingService } from '../services/loading.service';
 
 @Injectable()
 class MockResourceService {

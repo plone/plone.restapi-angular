@@ -17,13 +17,14 @@ import {
   Normalizer,
 } from 'angular-traversal';
 
-import { APIService } from './api.service';
-import { AuthenticationService } from './authentication.service';
-import { ConfigurationService } from './configuration.service';
-import { CommentsService } from './comments.service';
-import { NavigationService } from './navigation.service';
-import { ResourceService } from './resource.service';
-import { Services } from './services';
+import { APIService } from './services/api.service';
+import { AuthenticationService } from './services/authentication.service';
+import { CacheService } from './services/cache.service';
+import { ConfigurationService } from './services/configuration.service';
+import { CommentsService } from './services/comments.service';
+import { NavigationService } from './services/navigation.service';
+import { ResourceService } from './services/resource.service';
+import { Services } from './services/services';
 import {
   TypeMarker,
   PloneViews,
@@ -43,11 +44,10 @@ import { Comments, Comment, CommentAdd } from './components/comments';
 import { GlobalNavigation } from './components/global.navigation';
 import { Navigation } from './components/navigation';
 import { NavigationLevel } from './components/navigation.level';
-import { CacheService } from './cache.service';
 import { RequestPasswordResetView } from './views/request-password-reset';
 import { PasswordResetView } from './views/password-reset';
 import { DownloadDirective } from './directives/download.directive';
-import { LoadingService, LoadingInterceptor } from './loading.service';
+import { LoadingService, LoadingInterceptor } from './services/loading.service';
 
 @NgModule({
   declarations: [

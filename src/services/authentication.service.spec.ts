@@ -6,7 +6,7 @@ import {
 
 import { ConfigurationService } from './configuration.service';
 import { AuthenticationService } from './authentication.service';
-import { PasswordResetInfo } from './interfaces';
+import { PasswordResetInfo } from '../interfaces';
 import { LoadingService } from './loading.service';
 
 describe('AuthenticationService', () => {

@@ -65,7 +65,7 @@ export class AddView extends TraversingComponent implements OnInit {
       }
     }
     if (this.type) {
-      this.services.resource.type(this.type).subscribe(schema => {
+      this.services.resource.type(this.type).subscribe((schema: any) => {
         schema.buttons = [
           { id: 'save', label: 'Save' },
           { id: 'cancel', label: 'Cancel' }
@@ -93,7 +93,7 @@ export class AddView extends TraversingComponent implements OnInit {
       }
     });
     model['@type'] = this.type;
-    this.services.resource.create(this.path, model).subscribe(res => {
+    this.services.resource.create(this.path, model).subscribe((res: any) => {
       this.services.traverser.traverse(res['@id']);
     });
   }
