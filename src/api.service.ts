@@ -28,42 +28,38 @@ export class APIService {
   get(path: string): Observable<any> {
     let url = this.getFullPath(path);
     let headers = this.authentication.getHeaders();
-    return this.http.get(url, { headers: headers })
-      .catch(this.error.bind(this));
+    return this.wrapRequest(this.http.get(url, { headers: headers }));
   }
 
   post(path: string, data: Object): Observable<any> {
     let url = this.getFullPath(path);
     let headers = this.authentication.getHeaders();
-    return this.http.post(url, data, { headers: headers })
-      .catch(this.error.bind(this));
+    return this.wrapRequest(this.http.post(url, data, { headers: headers }));
   }
 
   patch(path: string, data: Object): Observable<any> {
     let url = this.getFullPath(path);
     let headers = this.authentication.getHeaders();
-    return this.http.patch(url, data, { headers: headers })
-      .catch(this.error.bind(this));
+    return this.wrapRequest(this.http.patch(url, data, { headers: headers }));
   }
 
   delete(path: string): Observable<any> {
     let url = this.getFullPath(path);
     let headers = this.authentication.getHeaders();
-    return this.http.delete(url, { headers: headers })
-      .catch(this.error.bind(this));
+    return this.wrapRequest(this.http.delete(url, { headers: headers }));
   }
 
   download(path: string): Observable<Blob | {}> {
     let url = this.getFullPath(path);
     let headers: HttpHeaders = this.authentication.getHeaders();
     headers = headers.set('Content-Type', 'application/x-www-form-urlencoded');
-    return this.http.get(url, {
-      responseType: 'blob',
-      headers: headers
-    }).map((blob: Blob) => {
-      return blob;
-    })
-      .catch(this.error.bind(this));
+    return this.wrapRequest(this.http.get(url, {
+        responseType: 'blob',
+        headers: headers
+      }).map((blob: Blob) => {
+        return blob;
+      })
+    );
   }
 
   getFullPath(path: string): string {
@@ -77,8 +73,11 @@ export class APIService {
     }
   }
 
-  private error(err: HttpErrorResponse) {
-    const error: Error = JSON.parse(err.error);
-    return Observable.throw(error);
+  private wrapRequest(request: Observable<any>): Observable<any> {
+    return request.catch((err: HttpErrorResponse) => {
+      const error: Error = JSON.parse(err.error);
+      return Observable.throw(error);
+    })
   }
+
 }
