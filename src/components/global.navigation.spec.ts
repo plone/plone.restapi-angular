@@ -118,3 +118,6 @@ describe('GlobalNavigation', () => {
   });
 
 });
+
+
+// TODO: foo/bar and /foo/ba
