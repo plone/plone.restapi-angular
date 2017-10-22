@@ -124,8 +124,9 @@ export class AuthenticationService {
     return headers;
   }
 
-  private error(err: HttpErrorResponse) {
-    const error: Error = err.error;
+  private error(errorResponse: HttpErrorResponse) {
+    const error: Error = errorResponse.error;
+    error.response = errorResponse;
     return Observable.throw(error);
   }
 }

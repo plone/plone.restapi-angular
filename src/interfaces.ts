@@ -1,6 +1,7 @@
 /*
  * Status
  */
+import { HttpErrorResponse } from '@angular/common/http';
 
 export interface LoadingStatus {
   loading?: boolean;
@@ -10,7 +11,8 @@ export interface LoadingStatus {
 export interface Error {
   type: string;
   message: string;
-  traceback: string[];
+  traceback?: string[];
+  response?: HttpErrorResponse;
 }
 
 

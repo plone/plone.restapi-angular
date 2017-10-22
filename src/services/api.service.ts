@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/Rx';
@@ -100,6 +100,7 @@ export class APIService {
         } catch (SyntaxError) {
           error = { type: '', message: errorResponse.message, traceback: [] }
         }
+        error.response = errorResponse;
         return Observable.throw(error);
       })
   }
