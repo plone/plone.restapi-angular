@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import {
   HttpTestingController,
   HttpClientTestingModule
@@ -32,17 +33,12 @@ class MockResourceService {
   breadcrumbs(path: string) {
     return Observable.of([
       {
-        "@id": "http://fake/Plone/a-folder/test/@components/breadcrumbs",
-        "items": [
-          {
-            "title": "A folder",
-            "url": "http://fake/Plone/a-folder"
-          },
-          {
-            "title": "test",
-            "url": "http://fake/Plone/a-folder/test"
-          }
-        ]
+        "title": "A folder",
+        "url": "http://fake/Plone/a-folder"
+      },
+      {
+        "title": "test",
+        "url": "http://fake/Plone/a-folder/test"
       }
     ]);
   }
@@ -95,8 +91,15 @@ describe('Breadcrumbs', () => {
   });
 
   it('should provide links', () => {
-    component.onTraverse(<Target>{ contextPath: '/', context: {}});
+    component.onTraverse(<Target>{ contextPath: '/', context: {} });
     expect(component.links.length).toBeTruthy(2);
   });
 
+  it('should have active class on last link', () => {
+    let activeLink: HTMLElement;
+    component.onTraverse(<Target>{ contextPath: '/a-folder/test', path: '/a-folder/test', context: {} });
+    fixture.detectChanges();
+    activeLink = fixture.debugElement.query(By.css('.active')).nativeElement;
+    expect(activeLink.innerText).toEqual('test');
+  });
 });
