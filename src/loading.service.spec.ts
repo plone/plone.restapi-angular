@@ -1,9 +1,12 @@
-import { HttpClient } from '@angular/common/http';
+/* tslint:disable:no-unused-variable */
+
 import { TestBed, inject, async, fakeAsync, tick } from '@angular/core/testing';
 import {
   HttpTestingController,
   HttpClientTestingModule
 } from '@angular/common/http/testing';
+
+import { HttpClient } from '@angular/common/http';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoadingService, LoadingInterceptor } from './loading.service';
 
@@ -84,6 +87,15 @@ describe('LoadingService', () => {
     const response = {
       'dummykey': 'dummyvalue',
     };
+
+    // General loading status is initially false
+    expect(service.status.getValue()).toBe(false);
+    // There is no specific loading status for our method
+    let subscriber0 = service.isLoading('GET-/data').subscribe((isLoading) => {
+      expect(isLoading).toBe(false);
+    });
+    tick(); // wait for async to complete before unsubscribing
+    subscriber0.unsubscribe();
 
     http
       .get('/data')
