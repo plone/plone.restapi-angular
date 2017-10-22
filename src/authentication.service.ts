@@ -93,9 +93,7 @@ export class AuthenticationService {
   requestPasswordReset(login: string): Observable<any> {
     const headers = this.getHeaders();
     const url = this.config.get('BACKEND_URL') + `/@users/${login}/reset-password`;
-    return this.http.post(url, {}, { headers: headers }).map(res => {
-      return res;
-    })
+    return this.http.post(url, {}, { headers: headers })
       .catch(this.error.bind(this));
   }
 
@@ -111,9 +109,7 @@ export class AuthenticationService {
       data['reset_token'] = resetInfo.token;
     }
     const url = this.config.get('BACKEND_URL') + `/@users/${resetInfo.login}/reset-password`;
-    return this.http.post(url, data, { headers: headers }).map(res => {
-      return res;
-    })
+    return this.http.post(url, data, { headers: headers })
       .catch(this.error.bind(this));
   }
 

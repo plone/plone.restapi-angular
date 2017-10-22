@@ -28,36 +28,28 @@ export class APIService {
   get(path: string): Observable<any> {
     let url = this.getFullPath(path);
     let headers = this.authentication.getHeaders();
-    return this.http.get(url, { headers: headers }).map(res => {
-      return res;
-    })
+    return this.http.get(url, { headers: headers })
       .catch(this.error.bind(this));
   }
 
   post(path: string, data: Object): Observable<any> {
     let url = this.getFullPath(path);
     let headers = this.authentication.getHeaders();
-    return this.http.post(url, data, { headers: headers }).map(res => {
-      return res;
-    })
+    return this.http.post(url, data, { headers: headers })
       .catch(this.error.bind(this));
   }
 
   patch(path: string, data: Object): Observable<any> {
     let url = this.getFullPath(path);
     let headers = this.authentication.getHeaders();
-    return this.http.patch(url, data, { headers: headers }).map(res => {
-      return res;
-    })
+    return this.http.patch(url, data, { headers: headers })
       .catch(this.error.bind(this));
   }
 
   delete(path: string): Observable<any> {
     let url = this.getFullPath(path);
     let headers = this.authentication.getHeaders();
-    return this.http.delete(url, { headers: headers }).map(res => {
-      return res;
-    })
+    return this.http.delete(url, { headers: headers })
       .catch(this.error.bind(this));
   }
 
