@@ -58,7 +58,15 @@ export class GlobalNavigation extends TraversingComponent implements OnInit, OnD
       if (!target.path || target.path === '/') {
         link.active = (!link.path || link.path === '/');
       } else {
-        link.active = link.path.startsWith(target.path);
+        let targetList: Array<String> = target.path.split('/');
+        let linkList: Array<String> = link.path.split('/');
+        let isSubpath = true;   // you could just use link.active
+        for (const {item, index} of linkList.map((item, index) => ({ item, index }))) {
+          if (item !== targetList[index]) {
+            isSubpath = false;
+          }
+        }
+        link.active = isSubpath;
       }
     });
   }
