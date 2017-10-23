@@ -15,6 +15,7 @@ export class APIService {
   public status: BehaviorSubject<LoadingStatus> = new BehaviorSubject(
     { loading: false }
   );
+  public backendAvailable: BehaviorSubject<boolean> = new BehaviorSubject(true);
 
   constructor(private authentication: AuthenticationService,
               private config: ConfigurationService,
@@ -74,13 +75,34 @@ export class APIService {
   }
 
   private wrapRequest(request: Observable<any>): Observable<any> {
-    const timeout = this.config.get('CLIENT_TIMEOUT', 15000)
+    const timeout = this.config.get('CLIENT_TIMEOUT', 15000);
+    let attempts = 0;
     return request
       .timeout(timeout)
+      .retryWhen((errors) => {
+        /* retry when backend unavailable errors */
+        return errors.delayWhen((response: Response) => {
+          if ([0, 502, 503, 504].indexOf(response.status) >= 0) {
+            if (attempts < 3) {
+              attempts += 1;
+              return Observable.timer(2000);
+            }
+            this.setBackendAvailability(false);
+          }
+          return Observable.throw(response);
+        });
+      })
+      .do(() => this.setBackendAvailability(true))
       .catch((err: HttpErrorResponse) => {
         const error: Error = JSON.parse(err.error);
         return Observable.throw(error);
       })
   }
 
+    /* Emits only if it has changed */
+    protected setBackendAvailability(availability: boolean): void {
+        if (this.backendAvailable.getValue() !== availability) {
+            this.backendAvailable.next(availability);
+        }
+    }
 }

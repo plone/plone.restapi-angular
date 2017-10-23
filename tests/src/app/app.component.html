@@ -3,6 +3,8 @@
     <p>Status:
       {{ loading }} {{ error }}
     </p>
+    <p *ngIf="!(backendAvailable | async)">
+      Ooops ! Looks like Plone backend is not available, check your connectivity or retry within a moment.</p>
   </header>
   <nav>
     <ul>
