@@ -3,7 +3,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { APIService } from './api.service';
 import { ConfigurationService } from './configuration.service';
-import { NavLink, SearchOptions, SearchResults } from './interfaces';
+import { NavLink, SearchOptions, SearchResults } from '../interfaces';
 import { CacheService } from './cache.service';
 
 

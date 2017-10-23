@@ -3,6 +3,7 @@ import { PloneViews, Services } from '@plone/restapi-angular';
 
 import { CustomViewView } from './custom';
 import { AuthenticatedStatus, LoadingStatus } from '@plone/restapi-angular';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Component({
   selector: 'app-root',
@@ -14,6 +15,7 @@ export class AppComponent {
   loading = 'OK';
   error = '';
   logged = false;
+  public backendAvailable: BehaviorSubject<boolean>;
 
   constructor(
     private views: PloneViews,
@@ -23,6 +25,7 @@ export class AppComponent {
     this.services.traverser.addView('view', '*', CustomViewView);
     this.services.resource.defaultExpand.breadcrumbs = true;
     this.services.resource.defaultExpand.navigation = true;
+    this.backendAvailable = this.services.api.backendAvailable;
   }
 
   ngOnInit() {

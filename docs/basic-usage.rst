@@ -19,6 +19,7 @@ In ``src/app.module.ts``, load the module and set the backend URL:
       {
         provide: 'CONFIGURATION', useValue: {
           BACKEND_URL: 'http://localhost:8080/Plone',
+          CLIENT_TIMEOUT: 5000,
         }
       },
     ],

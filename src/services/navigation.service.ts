@@ -2,7 +2,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 import 'rxjs/add/observable/of';
 import { Observable } from 'rxjs/Observable';
 import { ConfigurationService } from './configuration.service';
-import { NavTree } from './interfaces';
+import { NavTree } from '../interfaces';
 
 import { ResourceService } from './resource.service';
 import { AuthenticationService } from './authentication.service';

@@ -10,6 +10,10 @@
 
 - Fixed password reset for browsers that does not have UrlSearchParams.
 
+## Refactoring
+
+- All services are moved to a services subfolder.
+
 # 1.2.4 (2017-10-11)
 
 ## New features

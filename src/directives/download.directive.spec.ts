@@ -1,5 +1,5 @@
 import { DownloadDirective } from './download.directive';
-import { APIService } from '../api.service';
+import { APIService } from '../services/api.service';
 
 class FakeApi {
   constructor() {

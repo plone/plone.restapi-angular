@@ -5,8 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/Rx';
 
 import { ConfigurationService } from './configuration.service';
-import { AuthenticatedStatus, Error, PasswordResetInfo, UserInfo } from './interfaces';
-import { LoadingService } from './loading.service';
+import { AuthenticatedStatus, Error, PasswordResetInfo, UserInfo } from '../interfaces';
 
 
 interface LoginToken {

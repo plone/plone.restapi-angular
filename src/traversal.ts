@@ -1,19 +1,18 @@
 import { Injectable } from '@angular/core';
-import { Marker, Resolver, Traverser, Normalizer } from 'angular-traversal';
+import { Marker, Normalizer, Resolver, Traverser } from 'angular-traversal';
 import { Observable } from 'rxjs/Observable';
+import { APIService } from './services/api.service';
+import { ConfigurationService } from './services/configuration.service';
 
-import { ResourceService } from './resource.service';
-import { APIService } from './api.service';
-import { ConfigurationService } from './configuration.service';
+import { ResourceService } from './services/resource.service';
 import { AddView } from './views/add';
 import { EditView } from './views/edit';
 import { LoginView } from './views/login';
+import { PasswordResetView } from './views/password-reset';
+import { RequestPasswordResetView } from './views/request-password-reset';
 import { SearchView } from './views/search';
 import { SitemapView } from './views/sitemap';
 import { ViewView } from './views/view';
-import { CacheService } from './cache.service';
-import { PasswordResetView } from './views/password-reset';
-import { RequestPasswordResetView } from './views/request-password-reset';
 
 @Injectable()
 export class InterfaceMarker extends Marker {

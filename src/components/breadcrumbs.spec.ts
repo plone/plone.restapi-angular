@@ -1,7 +1,6 @@
-import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import {
-  HttpTestingController,
   HttpClientTestingModule
 } from '@angular/common/http/testing';
 import { Injectable, Directive, Input, EventEmitter } from '@angular/core';
@@ -15,16 +14,16 @@ import {
   FullPathNormalizer,
 } from '../traversal';
 
-import { ConfigurationService } from '../configuration.service';
-import { APIService } from '../api.service';
-import { CommentsService } from '../comments.service';
-import { NavigationService } from '../navigation.service';
-import { AuthenticationService } from '../authentication.service';
-import { ResourceService } from '../resource.service';
+import { ConfigurationService } from '../services/configuration.service';
+import { APIService } from '../services/api.service';
+import { CommentsService } from '../services/comments.service';
+import { NavigationService } from '../services/navigation.service';
+import { AuthenticationService } from '../services/authentication.service';
+import { ResourceService } from '../services/resource.service';
 import { Services } from '../services';
 import { Breadcrumbs } from './breadcrumbs';
-import { CacheService } from '../cache.service';
-import { LoadingService } from '../loading.service';
+import { LoadingService } from '../services/loading.service';
+import { CacheService } from '../services/cache.service';
 
 @Injectable()
 class MockResourceService {

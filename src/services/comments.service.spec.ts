@@ -1,14 +1,10 @@
 /* tslint:disable:no-unused-variable */
 
-import { TestBed, inject } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import {
   HttpTestingController,
   HttpClientTestingModule
 } from '@angular/common/http/testing';
-import {
-  MockBackend,
-  MockConnection
-} from '@angular/http/testing';
 
 import { APIService } from './api.service';
 import { AuthenticationService } from './authentication.service';

@@ -1,6 +1,6 @@
 /* tslint:disable:no-unused-variable */
 
-import { TestBed, inject } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import {
   HttpTestingController,
   HttpClientTestingModule
@@ -8,15 +8,15 @@ import {
 
 import { APP_BASE_HREF } from '@angular/common';
 
-import { ConfigurationService } from './configuration.service';
-import { APIService } from './api.service';
-import { AuthenticationService } from './authentication.service';
-import { ResourceService } from './resource.service';
+import { ConfigurationService } from './services/configuration.service';
+import { APIService } from './services/api.service';
+import { AuthenticationService } from './services/authentication.service';
+import { ResourceService } from './services/resource.service';
 import { Traverser, TraversalModule, Resolver, Marker, Normalizer } from 'angular-traversal';
 import { InterfaceMarker, RESTAPIResolver, PloneViews, FullPathNormalizer } from './traversal';
 import { ViewView } from '.';
-import { CacheService } from './cache.service';
-import { LoadingService } from './loading.service';
+import { CacheService } from './services/cache.service';
+import { LoadingService } from './services/loading.service';
 
 describe('Traversal', () => {
   beforeEach(() => {
