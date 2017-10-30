@@ -174,14 +174,15 @@ This will create a new folder: ``./src/app/custom-view``.
 Edit ``./src/app/custom-view/custom-view.component.ts``:
 
 .. code-block:: javascript
-import { Component } from '@angular/core';
-import { ViewView } from '@plone/restapi-angular';
 
-@Component({
-  selector: 'custom-view',
-  template: `<h2>{{ context.title }}</h2><h4>{{ context.description }}</h4>`,
-})
-export class CustomViewView extends ViewView {}
+  import { Component } from '@angular/core';
+  import { ViewView } from '@plone/restapi-angular';
+
+  @Component({
+    selector: 'custom-view',
+    template: `<h2>{{ context.title }}</h2><h4>{{ context.description }}</h4>`,
+  })
+  export class CustomViewView extends ViewView {}
 
 You can see in the inline template that we added the ``context.description``.
 
