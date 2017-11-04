@@ -12,7 +12,6 @@
         "sourceMap": false,
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
-        "preserveSymlinks": true,
         "outDir": "./dist",
         "rootDir": "./src",
         "skipLibCheck": true,
