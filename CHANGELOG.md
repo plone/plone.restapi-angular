@@ -1,10 +1,12 @@
-# 1.2.5 (Unreleased)
+# 1.3.0 (2017-11-04)
 
 ## New features
 
 - New LoadingService to manage loading status.
   Global loading status is now robust on parallel requests.
   [Thomas Desvenain]
+
+- Angular 5 compliancy [Eric Bréhault]
 
 ## Bug fixes
 
