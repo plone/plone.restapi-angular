@@ -1,3 +1,9 @@
+# 1.3.1 (unreleased)
+
+## Bug fixes
+
+- Fix authentication service error parsing [Eric Bréhault]
+
 # 1.3.0 (2017-11-04)
 
 ## New features

@@ -74,8 +74,7 @@ export class AuthenticationService {
           (httpErrorResponse: HttpErrorResponse) => {
             localStorage.removeItem('auth');
             localStorage.removeItem('auth_time');
-            const error: Error = JSON.parse(httpErrorResponse.error)['error'];
-            this.isAuthenticated.next({ state: false, error: error.message });
+            this.isAuthenticated.next({ state: false, error: httpErrorResponse.error.message });
           }
         );
     }
@@ -126,7 +125,7 @@ export class AuthenticationService {
   }
 
   private error(err: HttpErrorResponse) {
-    const error: Error = JSON.parse(err.error);
+    const error: Error = err.error;
     return Observable.throw(error);
   }
 }
