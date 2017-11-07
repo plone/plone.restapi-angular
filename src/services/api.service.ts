@@ -98,7 +98,8 @@ export class APIService {
         try {
           error = JSON.parse(errorResponse.error);
         } catch (SyntaxError) {
-          error = { type: '', message: errorResponse.message, traceback: [] }
+          const message = errorResponse.error.message ? errorResponse.error.message : errorResponse.message;
+          error = { type: '', message: message, traceback: [] }
         }
         error.response = errorResponse;
         return Observable.throw(error);
