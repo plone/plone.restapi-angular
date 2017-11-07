@@ -21,7 +21,7 @@ export class APIService {
               private config: ConfigurationService,
               private http: HttpClient,
               loading: LoadingService) {
-    loading.status.subscribe((isLoading) => {
+    loading.status.subscribe((isLoading: boolean) => {
       this.status.next({ loading: isLoading })
     })
   }
@@ -79,7 +79,7 @@ export class APIService {
     let attempts = 0;
     return request
       .timeout(timeout)
-      .retryWhen((errors) => {
+      .retryWhen((errors: Observable<Response>) => {
         /* retry when backend unavailable errors */
         return errors.delayWhen((response: Response) => {
           if ([0, 502, 503, 504].indexOf(response.status) >= 0) {
