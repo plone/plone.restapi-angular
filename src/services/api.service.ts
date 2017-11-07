@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/Rx';
@@ -21,7 +21,7 @@ export class APIService {
               private config: ConfigurationService,
               private http: HttpClient,
               loading: LoadingService) {
-    loading.status.subscribe((isLoading) => {
+    loading.status.subscribe((isLoading: boolean) => {
       this.status.next({ loading: isLoading })
     })
   }
@@ -79,7 +79,7 @@ export class APIService {
     let attempts = 0;
     return request
       .timeout(timeout)
-      .retryWhen((errors) => {
+      .retryWhen((errors: Observable<Response>) => {
         /* retry when backend unavailable errors */
         return errors.delayWhen((response: Response) => {
           if ([0, 502, 503, 504].indexOf(response.status) >= 0) {
@@ -93,16 +93,23 @@ export class APIService {
         });
       })
       .do(() => this.setBackendAvailability(true))
-      .catch((err: HttpErrorResponse) => {
-        const error: Error = JSON.parse(err.error);
+      .catch((errorResponse: HttpErrorResponse) => {
+        let error: Error;
+        try {
+          error = JSON.parse(errorResponse.error);
+        } catch (SyntaxError) {
+          const message = errorResponse.error.message ? errorResponse.error.message : errorResponse.message;
+          error = { type: '', message: message, traceback: [] }
+        }
+        error.response = errorResponse;
         return Observable.throw(error);
       })
   }
 
-    /* Emits only if it has changed */
-    protected setBackendAvailability(availability: boolean): void {
-        if (this.backendAvailable.getValue() !== availability) {
-            this.backendAvailable.next(availability);
-        }
+  /* Emits only if it has changed */
+  protected setBackendAvailability(availability: boolean): void {
+    if (this.backendAvailable.getValue() !== availability) {
+      this.backendAvailable.next(availability);
     }
+  }
 }

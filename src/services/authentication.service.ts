@@ -71,10 +71,17 @@ export class AuthenticationService {
               this.isAuthenticated.next({ state: false });
             }
           },
-          (httpErrorResponse: HttpErrorResponse) => {
+          (errorResponse: HttpErrorResponse) => {
             localStorage.removeItem('auth');
             localStorage.removeItem('auth_time');
-            this.isAuthenticated.next({ state: false, error: httpErrorResponse.error.message });
+
+            let message: string;
+            try {
+              message = JSON.parse(errorResponse.error).error.message;
+            } catch (SyntaxError) {
+              message = errorResponse.error ? errorResponse.error : errorResponse;
+            }
+            this.isAuthenticated.next({ state: false, error: message });
           }
         );
     }
@@ -124,8 +131,15 @@ export class AuthenticationService {
     return headers;
   }
 
-  private error(err: HttpErrorResponse) {
-    const error: Error = err.error;
+  private error(errorResponse: HttpErrorResponse) {
+    let error: Error;
+    try {
+      error = JSON.parse(errorResponse.error);
+    } catch (SyntaxError) {
+      const message = errorResponse.error.message ? errorResponse.error.message : errorResponse.message;
+      error = { type: '', message: message, traceback: [] }
+    }
+    error.response = errorResponse;
     return Observable.throw(error);
   }
 }
