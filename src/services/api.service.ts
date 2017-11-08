@@ -1,7 +1,7 @@
-import { Injectable, EventEmitter } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/Rx';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import 'rxjs/add/operator/catch';
 
 import { AuthenticationService } from './authentication.service';
@@ -22,36 +22,36 @@ export class APIService {
               private http: HttpClient,
               loading: LoadingService) {
     loading.status.subscribe((isLoading: boolean) => {
-      this.status.next({ loading: isLoading })
-    })
+      this.status.next({ loading: isLoading });
+    });
   }
 
   get(path: string): Observable<any> {
-    let url = this.getFullPath(path);
-    let headers = this.authentication.getHeaders();
+    const url = this.getFullPath(path);
+    const headers = this.authentication.getHeaders();
     return this.wrapRequest(this.http.get(url, { headers: headers }));
   }
 
   post(path: string, data: Object): Observable<any> {
-    let url = this.getFullPath(path);
-    let headers = this.authentication.getHeaders();
+    const url = this.getFullPath(path);
+    const headers = this.authentication.getHeaders();
     return this.wrapRequest(this.http.post(url, data, { headers: headers }));
   }
 
   patch(path: string, data: Object): Observable<any> {
-    let url = this.getFullPath(path);
-    let headers = this.authentication.getHeaders();
+    const url = this.getFullPath(path);
+    const headers = this.authentication.getHeaders();
     return this.wrapRequest(this.http.patch(url, data, { headers: headers }));
   }
 
   delete(path: string): Observable<any> {
-    let url = this.getFullPath(path);
-    let headers = this.authentication.getHeaders();
+    const url = this.getFullPath(path);
+    const headers = this.authentication.getHeaders();
     return this.wrapRequest(this.http.delete(url, { headers: headers }));
   }
 
   download(path: string): Observable<Blob | {}> {
-    let url = this.getFullPath(path);
+    const url = this.getFullPath(path);
     let headers: HttpHeaders = this.authentication.getHeaders();
     headers = headers.set('Content-Type', 'application/x-www-form-urlencoded');
     return this.wrapRequest(this.http.get(url, {
@@ -99,11 +99,11 @@ export class APIService {
           error = JSON.parse(errorResponse.error);
         } catch (SyntaxError) {
           const message = errorResponse.error.message ? errorResponse.error.message : errorResponse.message;
-          error = { type: '', message: message, traceback: [] }
+          error = { type: '', message: message, traceback: [] };
         }
         error.response = errorResponse;
         return Observable.throw(error);
-      })
+      });
   }
 
   /* Emits only if it has changed */
