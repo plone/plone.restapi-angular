@@ -135,10 +135,10 @@ export class ResourceService {
   }
 
   navigation(): Observable<NavLink[]> {
-    return this.cache.get('/@components/navigation')
-      .map((data: NavigationItems[]) => {
-        if (data && data[0]) {
-          return data[0].items.filter(item => {
+    return this.cache.get('/@navigation')
+      .map((data: NavigationItems) => {
+        if (data) {
+          return data.items.filter(item => {
             return !item.properties || !item.properties.exclude_from_nav;
           }).map(this.linkFromItem.bind(this));
         } else {
@@ -148,10 +148,10 @@ export class ResourceService {
   }
 
   breadcrumbs(path: string): Observable<NavLink[]> {
-    return this.cache.get(path + '/@components/breadcrumbs')
-      .map((data: NavigationItems[]) => {
-        if (data && data[0]) {
-          return data[0].items.map(this.linkFromItem.bind(this));
+    return this.cache.get(path + '/@breadcrumbs')
+      .map((data: NavigationItems) => {
+        if (data) {
+          return data.items.map(this.linkFromItem.bind(this));
         } else {
           return [];
         }

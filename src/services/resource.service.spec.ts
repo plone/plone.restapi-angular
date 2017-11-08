@@ -333,9 +333,8 @@ describe('ResourceService', () => {
     const service = TestBed.get(ResourceService);
     const http = TestBed.get(HttpTestingController);
     let url = 'invalid';
-    const response = [
-      {
-        "@id": "http://fake/Plone/front-page/@components/navigation",
+    const response = {
+        "@id": "http://fake/Plone/front-page/@navigation",
         "items": [
           {
             "title": "Home",
@@ -346,14 +345,13 @@ describe('ResourceService', () => {
             "url": "http://fake/Plone/front-page"
           }
         ]
-      }
-    ];
+    };
 
     service.navigation().subscribe(items => {
       url = items[0].url;
     });
 
-    http.expectOne('http://fake/Plone/@components/navigation').flush(response);
+    http.expectOne('http://fake/Plone/@navigation').flush(response);
 
     expect(url).toBe('http://fake/Plone');
   });
@@ -362,9 +360,8 @@ describe('ResourceService', () => {
     const service = TestBed.get(ResourceService);
     const http = TestBed.get(HttpTestingController);
     let title = 'invalid';
-    let response = [
-      {
-        "@id": "http://fake/Plone/a-folder/test/@components/breadcrumbs",
+    let response ={
+        "@id": "http://fake/Plone/a-folder/test/@breadcrumbs",
         "items": [
           {
             "title": "A folder",
@@ -375,14 +372,14 @@ describe('ResourceService', () => {
             "url": "http://fake/Plone/a-folder/test"
           }
         ]
-      }
-    ];
+    };
+
 
     service.breadcrumbs('/a-folder/test').subscribe(items => {
       title = items[0].title;
     });
 
-    http.expectOne('http://fake/Plone/a-folder/test/@components/breadcrumbs').flush(response);
+    http.expectOne('http://fake/Plone/a-folder/test/@breadcrumbs').flush(response);
 
     expect(title).toBe('A folder');
   });
