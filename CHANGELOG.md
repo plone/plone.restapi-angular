@@ -1,8 +1,7 @@
-# 1.3.1 (unreleased)
+# 1.3.1 (2017-11-08)
 
 ## Bug fixes
 
-- Fix authentication service error parsing [Eric Bréhault]
 - Move from @components plone.restapi endpoint to @navigation and @breadcrumbs [Sune Brøndum Wøller]
 - More robust error handling [Thomas Desvenain]
 
