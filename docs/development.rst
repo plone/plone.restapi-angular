@@ -70,6 +70,16 @@ Add the paths mapping to the ``compilerOptions`` in the ``tsconfig.app.json`` of
       "angular-traversal": ["packages/angular-traversal"]
     }
 
+With some IDEs, like IntelliJ, you will have to put those settings into root ``tsconfig.json``. Note that the baseUrl will be ``./src`` there.
+
+.. code-block:: javascript
+
+    "baseUrl": "./src",
+    "paths": {
+      "@plone/restapi-angular": ["packages/@plone/restapi-angular"],
+      "angular-traversal": ["packages/angular-traversal"]
+    },
+
 4: Add the following to the ``defaults`` section of your ``.angular-cli.json``::
 
   "defaults": {
