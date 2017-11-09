@@ -24,7 +24,7 @@ export class AuthenticationService {
               @Inject(PLATFORM_ID) private platformId: Object) {
     if (isPlatformBrowser(this.platformId)) {
       let token = localStorage.getItem('auth');
-      let lastLogin = localStorage.getItem('auth_time');
+      const lastLogin = localStorage.getItem('auth_time');
       // token expires after 12 hours
       const expire = 12 * 60 * 60 * 1000;
       if (!lastLogin || (Date.now() - Date.parse(lastLogin) > expire)) {
@@ -39,9 +39,9 @@ export class AuthenticationService {
 
   getUserInfo(): UserInfo | null {
     if (isPlatformBrowser(this.platformId)) {
-      let token = localStorage.getItem('auth');
+      const token = localStorage.getItem('auth');
       if (token) {
-        let tokenParts = token.split('.');
+        const tokenParts = token.split('.');
         return <UserInfo>JSON.parse(atob(tokenParts[1]));
       } else {
         return null;

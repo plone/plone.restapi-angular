@@ -74,7 +74,7 @@ export class APIService {
     }
   }
 
-  private wrapRequest(request: Observable<any>): Observable<any> {
+  private wrapRequest<T>(request: Observable<T>): Observable<T> {
     const timeout = this.config.get('CLIENT_TIMEOUT', 15000);
     let attempts = 0;
     return request
