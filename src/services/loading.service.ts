@@ -57,7 +57,6 @@ export class LoadingInterceptor implements HttpInterceptor {
     return next
       .handle(req)
       .do((event: HttpEvent<any>) => {
-//        debugger;
         if (event instanceof HttpResponse) {
           this.loading.finish(loadingId);
         }

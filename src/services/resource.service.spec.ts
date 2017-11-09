@@ -12,6 +12,7 @@ import { AuthenticationService } from './authentication.service';
 import { ResourceService } from './resource.service';
 import { CacheService } from './cache.service';
 import { LoadingService } from './loading.service';
+import { Vocabulary } from '../vocabularies';
 
 describe('ResourceService', () => {
   beforeEach(() => {
@@ -383,4 +384,70 @@ describe('ResourceService', () => {
 
     expect(title).toBe('A folder');
   });
+
+  it('should get vocabulary', () => {
+    const service = TestBed.get(ResourceService);
+    const http = TestBed.get(HttpTestingController);
+    let vocabulary: Vocabulary<string> = new Vocabulary([]);
+    const response = {
+      '@id': 'http://fake/Plone/@vocabularies/plone.app.vocabularies.ReallyUserFriendlyTypes',
+      'terms': [
+        {
+          '@id': 'http://fake/Plone/@vocabularies/plone.app.vocabularies.ReallyUserFriendlyTypes/Collection',
+          'title': 'Collection',
+          'token': 'Collection'
+        },
+        {
+          '@id': 'http://fake/Plone/@vocabularies/plone.app.vocabularies.ReallyUserFriendlyTypes/Discussion Item',
+          'title': 'Comment',
+          'token': 'Discussion Item'
+        },
+        {
+          '@id': 'http://fake/Plone/@vocabularies/plone.app.vocabularies.ReallyUserFriendlyTypes/Event',
+          'title': 'Event',
+          'token': 'Event'
+        },
+        {
+          '@id': 'http://fake/Plone/@vocabularies/plone.app.vocabularies.ReallyUserFriendlyTypes/File',
+          'title': 'File',
+          'token': 'File'
+        },
+        {
+          '@id': 'http://fake/Plone/@vocabularies/plone.app.vocabularies.ReallyUserFriendlyTypes/Folder',
+          'title': 'Folder',
+          'token': 'Folder'
+        },
+        {
+          '@id': 'http://fake/Plone/@vocabularies/plone.app.vocabularies.ReallyUserFriendlyTypes/Image',
+          'title': 'Image',
+          'token': 'Image'
+        },
+        {
+          '@id': 'http://fake/Plone/@vocabularies/plone.app.vocabularies.ReallyUserFriendlyTypes/Link',
+          'title': 'Link',
+          'token': 'Link'
+        },
+        {
+          '@id': 'http://fake/Plone/@vocabularies/plone.app.vocabularies.ReallyUserFriendlyTypes/News Item',
+          'title': 'News Item',
+          'token': 'News Item'
+        },
+        {
+          '@id': 'http://fake/Plone/@vocabularies/plone.app.vocabularies.ReallyUserFriendlyTypes/Document',
+          'title': 'Page',
+          'token': 'Document'
+        }
+      ]
+    };
+
+    service.vocabulary('plone.app.vocabularies.ReallyUserFriendlyTypes').subscribe((ruftVocabulary: Vocabulary<string>) => {
+      vocabulary = ruftVocabulary;
+    });
+
+    http.expectOne('http://fake/Plone/@vocabularies/plone.app.vocabularies.ReallyUserFriendlyTypes').flush(response);
+
+    expect(vocabulary.terms().length).toBe(9);
+    expect(vocabulary.byToken('Document').title).toBe('Page');
+  });
+
 });

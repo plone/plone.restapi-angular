@@ -102,6 +102,8 @@ Methods:
 
 `type(typeId)`: return the JSON schema of the specified resource type.
 
+`vocabulary(vocabularyId)`: return the specified vocabulary object. Returns an observable.
+
 API service
 -----------
 

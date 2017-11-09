@@ -5,6 +5,7 @@ import { APIService } from './api.service';
 import { ConfigurationService } from './configuration.service';
 import { NavLink, SearchOptions, SearchResults } from '../interfaces';
 import { CacheService } from './cache.service';
+import { Vocabulary } from '../vocabularies';
 
 
 interface NavigationItem {
@@ -56,7 +57,7 @@ export class ResourceService {
   }
 
   find(
-    query: any,
+    query: {[key: string]: any},
     path: string = '/',
     options: SearchOptions = {}
     ): Observable<SearchResults> {
@@ -65,7 +66,7 @@ export class ResourceService {
     }
     let params: string[] = [];
     Object.keys(query).map(index => {
-      let criteria = query[index];
+      const criteria = query[index];
       if (typeof criteria === 'boolean') {
         params.push(index + '=' + (criteria ? '1' : '0'));
       } else if (typeof criteria === 'string') {
@@ -160,6 +161,11 @@ export class ResourceService {
 
   type(typeId: string): Observable<any> {
     return this.cache.get('/@types/' + typeId);
+  }
+
+  vocabulary(vocabularyId: string): Observable<Vocabulary<string | number>> {
+    return this.cache.get('/@vocabularies/' + vocabularyId)
+      .map((jsonObject: any): Vocabulary<string | number> => new Vocabulary(jsonObject.terms));
   }
 
   /*

@@ -21,3 +21,4 @@ export { Comments, Comment, CommentAdd } from './components/comments';
 export { GlobalNavigation } from './components/global.navigation';
 export { Navigation } from './components/navigation';
 export { NavigationLevel } from './components/navigation.level';
+export { Term, Vocabulary } from './vocabularies';
