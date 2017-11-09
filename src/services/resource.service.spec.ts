@@ -40,37 +40,37 @@ describe('ResourceService', () => {
     let id = '';
 
     const response = {
-      "@id": "http://fake/Plone/",
-      "@type": "Plone Site",
-      "id": "Plone",
-      "items": [
+      '@id': 'http://fake/Plone/',
+      '@type': 'Plone Site',
+      'id': 'Plone',
+      'items': [
         {
-          "@id": "http://fake/Plone/front-page",
-          "@type": "Document",
-          "description": "Congratulations! You have successfully installed Plone.",
-          "title": "Welcome to Plone"
+          '@id': 'http://fake/Plone/front-page',
+          '@type': 'Document',
+          'description': 'Congratulations! You have successfully installed Plone.',
+          'title': 'Welcome to Plone'
         },
         {
-          "@id": "http://fake/Plone/news",
-          "@type": "Folder",
-          "description": "Site News",
-          "title": "News"
+          '@id': 'http://fake/Plone/news',
+          '@type': 'Folder',
+          'description': 'Site News',
+          'title': 'News'
         },
         {
-          "@id": "http://fake/Plone/events",
-          "@type": "Folder",
-          "description": "Site Events",
-          "title": "Events"
+          '@id': 'http://fake/Plone/events',
+          '@type': 'Folder',
+          'description': 'Site Events',
+          'title': 'Events'
         },
         {
-          "@id": "http://fake/Plone/Members",
-          "@type": "Folder",
-          "description": "Site Users",
-          "title": "Users"
+          '@id': 'http://fake/Plone/Members',
+          '@type': 'Folder',
+          'description': 'Site Users',
+          'title': 'Users'
         }
       ],
-      "items_total": 5,
-      "parent": {}
+      'items_total': 5,
+      'parent': {}
     };
 
     service.get('/').subscribe(content => {
@@ -87,17 +87,17 @@ describe('ResourceService', () => {
     const http = TestBed.get(HttpTestingController);
     let id = '';
     const response = {
-      "@id": "http://fake/Plone/@search",
-      "items": [
+      '@id': 'http://fake/Plone/@search',
+      'items': [
         {
-          "@id": "http://fake/Plone/folder1/page1",
-          "@type": "Document",
-          "description": "Congratulations! You have successfully installed Plone.",
-          "review_state": "private",
-          "title": "Welcome to Plone"
+          '@id': 'http://fake/Plone/folder1/page1',
+          '@type': 'Document',
+          'description': 'Congratulations! You have successfully installed Plone.',
+          'review_state': 'private',
+          'title': 'Welcome to Plone'
         }
       ],
-      "items_total": 1
+      'items_total': 1
     };
 
     service.find({ SearchableText: 'John', path: { query: '/folder1', depth: 2 } }).subscribe(content => {
@@ -114,17 +114,17 @@ describe('ResourceService', () => {
     const http = TestBed.get(HttpTestingController);
     let id = '';
     const response = {
-      "@id": "http://fake/Plone/folder1/@search",
-      "items": [
+      '@id': 'http://fake/Plone/folder1/@search',
+      'items': [
         {
-          "@id": "http://fake/Plone/folder1/page1",
-          "@type": "Document",
-          "description": "Congratulations! You have successfully installed Plone.",
-          "review_state": "private",
-          "title": "Welcome to Plone"
+          '@id': 'http://fake/Plone/folder1/page1',
+          '@type': 'Document',
+          'description': 'Congratulations! You have successfully installed Plone.',
+          'review_state': 'private',
+          'title': 'Welcome to Plone'
         }
       ],
-      "items_total": 1
+      'items_total': 1
     };
 
     service.find({ SearchableText: 'John' }, '/folder1').subscribe(content => {
@@ -141,17 +141,17 @@ describe('ResourceService', () => {
     const http = TestBed.get(HttpTestingController);
     let id = '';
     const response = {
-      "@id": "http://fake/Plone/@search",
-      "items": [
+      '@id': 'http://fake/Plone/@search',
+      'items': [
         {
-          "@id": "http://fake/Plone/folder1/page1",
-          "@type": "Document",
-          "description": "Congratulations! You have successfully installed Plone.",
-          "review_state": "private",
-          "title": "Welcome to Plone"
+          '@id': 'http://fake/Plone/folder1/page1',
+          '@type': 'Document',
+          'description': 'Congratulations! You have successfully installed Plone.',
+          'review_state': 'private',
+          'title': 'Welcome to Plone'
         }
       ],
-      "items_total": 1
+      'items_total': 1
     };
     service.find({ SearchableText: 'John' }, '', { sort_on: 'created' }).subscribe(content => {
       id = content.items[0]['@id'];
@@ -167,17 +167,17 @@ describe('ResourceService', () => {
     const http = TestBed.get(HttpTestingController);
     let id = '';
     const response = {
-      "@id": "http://fake/Plone/@search",
-      "items": [
+      '@id': 'http://fake/Plone/@search',
+      'items': [
         {
-          "@id": "http://fake/Plone/folder1/page1",
-          "@type": "Document",
-          "description": "Congratulations! You have successfully installed Plone.",
-          "review_state": "private",
-          "title": "Welcome to Plone"
+          '@id': 'http://fake/Plone/folder1/page1',
+          '@type': 'Document',
+          'description': 'Congratulations! You have successfully installed Plone.',
+          'review_state': 'private',
+          'title': 'Welcome to Plone'
         }
       ],
-      "items_total": 1
+      'items_total': 1
     };
     service.find({ SearchableText: 'John' }, '', { review_state: 'private' }).subscribe(content => {
       id = content.items[0]['@id'];
@@ -193,23 +193,24 @@ describe('ResourceService', () => {
     const http = TestBed.get(HttpTestingController);
     let id = '';
     const response = {
-      "@id": "http://fake/Plone/@search",
-      "items": [
+      '@id': 'http://fake/Plone/@search',
+      'items': [
         {
-          "@id": "http://fake/Plone/folder1/page1",
-          "@type": "Document",
-          "description": "Congratulations! You have successfully installed Plone.",
-          "review_state": "private",
-          "title": "Welcome to Plone"
+          '@id': 'http://fake/Plone/folder1/page1',
+          '@type': 'Document',
+          'description': 'Congratulations! You have successfully installed Plone.',
+          'review_state': 'private',
+          'title': 'Welcome to Plone'
         }
       ],
-      "items_total": 1
+      'items_total': 1
     };
     service.find({ SearchableText: 'John' }, '', { metadata_fields: ['Creator', 'CreationDate'] }).subscribe(content => {
       id = content.items[0]['@id'];
     });
 
-    http.expectOne('http://fake/Plone/@search?SearchableText=John&metadata_fields:list=Creator&metadata_fields:list=CreationDate').flush(response);
+    http.expectOne('http://fake/Plone/@search?SearchableText=John&metadata_fields:list=Creator&metadata_fields:list=CreationDate')
+      .flush(response);
 
     id = 'http://fake/Plone/folder1/page1';
   });
@@ -256,10 +257,10 @@ describe('ResourceService', () => {
     const service = TestBed.get(ResourceService);
     const http = TestBed.get(HttpTestingController);
     let received_content = 'invalid';
-    let response = [
+    const response = [
       {
-        "new": "http://fake/Plone/copy_of_front-page",
-        "old": "http://fake/Plone/front-page"
+        'new': 'http://fake/Plone/copy_of_front-page',
+        'old': 'http://fake/Plone/front-page'
       }
     ];
 
@@ -276,10 +277,10 @@ describe('ResourceService', () => {
     const service = TestBed.get(ResourceService);
     const http = TestBed.get(HttpTestingController);
     let received_content = 'invalid';
-    let response = [
+    const response = [
       {
-        "new": "http://fake/Plone/copy_of_front-page",
-        "old": "http://fake/Plone/front-page"
+        'new': 'http://fake/Plone/copy_of_front-page',
+        'old': 'http://fake/Plone/front-page'
       }
     ];
 
@@ -296,12 +297,12 @@ describe('ResourceService', () => {
     const service = TestBed.get(ResourceService);
     const http = TestBed.get(HttpTestingController);
     let state = 'invalid';
-    let response = {
-      "action": "publish",
-      "actor": "admin",
-      "comments": "",
-      "review_state": "published",
-      "time": "2016-10-21T19:05:00+00:00"
+    const response = {
+      'action': 'publish',
+      'actor': 'admin',
+      'comments': '',
+      'review_state': 'published',
+      'time': '2016-10-21T19:05:00+00:00'
     };
 
     service.transition('/somepage', 'publish').subscribe(content => {
@@ -335,17 +336,17 @@ describe('ResourceService', () => {
     const http = TestBed.get(HttpTestingController);
     let url = 'invalid';
     const response = {
-        "@id": "http://fake/Plone/front-page/@navigation",
-        "items": [
-          {
-            "title": "Home",
-            "url": "http://fake/Plone"
-          },
-          {
-            "title": "Welcome to Plone",
-            "url": "http://fake/Plone/front-page"
-          }
-        ]
+      '@id': 'http://fake/Plone/front-page/@navigation',
+      'items': [
+        {
+          'title': 'Home',
+          'url': 'http://fake/Plone'
+        },
+        {
+          'title': 'Welcome to Plone',
+          'url': 'http://fake/Plone/front-page'
+        }
+      ]
     };
 
     service.navigation().subscribe(items => {
@@ -361,18 +362,18 @@ describe('ResourceService', () => {
     const service = TestBed.get(ResourceService);
     const http = TestBed.get(HttpTestingController);
     let title = 'invalid';
-    let response ={
-        "@id": "http://fake/Plone/a-folder/test/@breadcrumbs",
-        "items": [
-          {
-            "title": "A folder",
-            "url": "http://fake/Plone/a-folder"
-          },
-          {
-            "title": "test",
-            "url": "http://fake/Plone/a-folder/test"
-          }
-        ]
+    const response = {
+      '@id': 'http://fake/Plone/a-folder/test/@breadcrumbs',
+      'items': [
+        {
+          'title': 'A folder',
+          'url': 'http://fake/Plone/a-folder'
+        },
+        {
+          'title': 'test',
+          'url': 'http://fake/Plone/a-folder/test'
+        }
+      ]
     };
 
 
