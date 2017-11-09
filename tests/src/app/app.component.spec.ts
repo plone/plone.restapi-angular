@@ -5,9 +5,11 @@ import {
 import { Component } from '@angular/core';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { APP_BASE_HREF } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { RESTAPIModule } from '@plone/restapi-angular';
 
 import { AppComponent } from './app.component';
+import { Search } from './components/search';
 import { CustomViewView } from './custom';
 import { CustomGlobalNavigation } from './custom';
 
@@ -25,10 +27,12 @@ describe('AppComponent', () => {
         CustomViewView,
         FakeCustomBreadcrumbs,
         CustomGlobalNavigation,
+        Search,
       ],
       imports: [
         HttpClientTestingModule,
         RESTAPIModule,
+        FormsModule,
       ],
       providers: [
         { provide: APP_BASE_HREF, useValue: '/' },

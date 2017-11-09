@@ -1,3 +1,9 @@
+# 1.4.0 (Unreleased)
+
+## New features
+
+- Add `vocabulary` method to retrieve zope vocabularies. [Thomas Desvenain]
+
 # 1.3.1 (2017-11-08)
 
 ## Bug fixes

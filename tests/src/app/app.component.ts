@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { PloneViews, Services } from '@plone/restapi-angular';
 
 import { CustomViewView } from './custom';
-import { AuthenticatedStatus, LoadingStatus } from '@plone/restapi-angular';
+import { AuthenticatedStatus, LoadingStatus, Vocabulary, SearchView } from '@plone/restapi-angular';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Component({
@@ -10,7 +10,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
   loading = 'OK';
   error = '';
@@ -33,6 +33,7 @@ export class AppComponent {
       .subscribe((auth: AuthenticatedStatus) => {
         this.logged = auth.state;
       });
+
     this.services.api.status
       .subscribe((status: LoadingStatus) => {
         this.loading = status.loading ? 'Loading...' : 'OK';

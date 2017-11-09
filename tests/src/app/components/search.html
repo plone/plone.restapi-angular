@@ -1,0 +1,10 @@
+<form #searchForm="ngForm" (ngSubmit)="search(searchForm)">
+  <select ngModel name="type">
+    <option value="">All types</option>
+    <option *ngFor="let typeTerm of typesVocabulary" [value]="typeTerm.token">
+      {{ typeTerm.title }}
+    </option>
+  </select>
+  <input ngModel type="text" name="text" />
+  <input type="submit" value="Search" />
+</form>

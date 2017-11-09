@@ -70,7 +70,8 @@ Add the paths mapping to the ``compilerOptions`` in the ``tsconfig.app.json`` of
       "angular-traversal": ["packages/angular-traversal"]
     }
 
-With some IDEs, like IntelliJ, you will have to put those settings into root ``tsconfig.json``. Note that the baseUrl will be ``./src`` there.
+With some IDEs, like IntelliJ, you will have to put those settings into root ``tsconfig.json``.
+Note that the baseUrl will be your source directory (probably ``./src``) there.
 
 .. code-block:: javascript
 
