@@ -1,3 +1,11 @@
+import 'rxjs/add/operator/delayWhen';
+import 'rxjs/add/operator/merge';
+import 'rxjs/add/operator/publishReplay';
+import 'rxjs/add/operator/retryWhen';
+import 'rxjs/add/operator/take';
+import 'rxjs/add/operator/timeout';
+import 'rxjs/add/observable/timer';
+
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';

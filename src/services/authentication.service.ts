@@ -2,7 +2,8 @@ import { isPlatformBrowser } from '@angular/common';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/Rx';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+
 
 import { ConfigurationService } from './configuration.service';
 import { AuthenticatedStatus, Error, PasswordResetInfo, UserInfo } from '../interfaces';
