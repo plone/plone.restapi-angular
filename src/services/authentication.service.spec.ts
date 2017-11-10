@@ -35,11 +35,13 @@ describe('AuthenticationService', () => {
     // fake response
     const response = {
       'success': true,
-      'token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiZnVsbG5hbWUiOiJGb28gYmFyIiwiZXhwaXJlcyI6MTQ2NjE0MDA2Ni42MzQ5ODYsInR5cGUiOiJKV1QiLCJhbGdvcml0aG0iOiJIUzI1NiJ9.D9EL5A9xD1z3E_HPecXA-Ee7kKlljYvpDtan69KHwZ8'
+      'token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiZnVsbG5hbWUiOiJGb28gYmFyIiwiZXhwaXJlcyI6MTQ2NjE0MDA2' +
+      'Ni42MzQ5ODYsInR5cGUiOiJKV1QiLCJhbGdvcml0aG0iOiJIUzI1NiJ9.D9EL5A9xD1z3E_HPecXA-Ee7kKlljYvpDtan69KHwZ8'
     };
 
-    service.login();
-    service.isAuthenticated.subscribe(authenticated => {
+    service.login().subscribe(() => {
+    });
+    service.isAuthenticated.subscribe((authenticated: AuthenticatedStatus) => {
       state = authenticated.state;
     });
 
@@ -58,8 +60,9 @@ describe('AuthenticationService', () => {
       'success': false
     };
 
-    service.login();
-    service.isAuthenticated.subscribe(authenticated => {
+    service.login().subscribe(() => {
+    });
+    service.isAuthenticated.subscribe((authenticated: AuthenticatedStatus) => {
       state = authenticated.state;
     });
 
@@ -76,10 +79,12 @@ describe('AuthenticationService', () => {
     // fake response
     const response = {
       'success': true,
-      'token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiZnVsbG5hbWUiOiJGb28gYmFyIiwiZXhwaXJlcyI6MTQ2NjE0MDA2Ni42MzQ5ODYsInR5cGUiOiJKV1QiLCJhbGdvcml0aG0iOiJIUzI1NiJ9.D9EL5A9xD1z3E_HPecXA-Ee7kKlljYvpDtan69KHwZ8'
+      'token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiZnVsbG5hbWUiOiJGb28gYmFyIiwiZXhwaXJlcy' +
+      'I6MTQ2NjE0MDA2Ni42MzQ5ODYsInR5cGUiOiJKV1QiLCJhbGdvcml0aG0iOiJIUzI1NiJ9.D9EL5A9xD1z3E_HPecXA-Ee7kKlljYvpDtan69KHwZ8'
     };
 
-    service.login();
+    service.login().subscribe(() => {
+    });
     service.isAuthenticated.subscribe(() => {
       userinfo = service.getUserInfo();
     });
@@ -93,7 +98,8 @@ describe('AuthenticationService', () => {
     const service = TestBed.get(AuthenticationService);
 
     // fake login
-    localStorage.setItem('auth', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiZnVsbG5hbWUiOiJGb28gYmFyIiwiZXhwaXJlcyI6MTQ2NjE0MDA2Ni42MzQ5ODYsInR5cGUiOiJKV1QiLCJhbGdvcml0aG0iOiJIUzI1NiJ9.D9EL5A9xD1z3E_HPecXA-Ee7kKlljYvpDtan69KHwZ8');
+    localStorage.setItem('auth', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiZnVsbG5hbWUiOiJGb28gYmFyIiwiZ' +
+      'XhwaXJlcyI6MTQ2NjE0MDA2Ni42MzQ5ODYsInR5cGUiOiJKV1QiLCJhbGdvcml0aG0iOiJIUzI1NiJ9.D9EL5A9xD1z3E_HPecXA-Ee7kKlljYvpDtan69KHwZ8');
     localStorage.setItem('auth_time', (new Date()).toISOString());
 
     service.logout();
@@ -117,7 +123,8 @@ describe('AuthenticationService', () => {
     const service = TestBed.get(AuthenticationService);
     const http = TestBed.get(HttpTestingController);
     service.passwordReset(<PasswordResetInfo>{ token: '123456789abc', login: 'graeber', newPassword: 'secret' })
-      .subscribe(() => {});
+      .subscribe(() => {
+      });
     const req = http.expectOne('http://fake/Plone/@users/graeber/reset-password');
     expect(req.request.body).toEqual({
       new_password: 'secret',

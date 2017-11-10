@@ -1,8 +1,15 @@
-# 1.4.0 (Unreleased)
+# 2.0.0 (Unreleased)
+
+## BREAKING CHANGES
+
+- `login` method is now an observable.
+  If you don't subscribe to it, request is not send.
 
 ## New features
 
-- Normalized many error responses. Added unit tests. [Thomas Desvenain]
+- `login` method of `authentication` service now returns an observable. [Thomas Desvenain]
+
+- Normalized many error responses. Added unit tests on this. [Thomas Desvenain]
 
 - Add `vocabulary` method to retrieve zope vocabularies. [Thomas Desvenain]
 

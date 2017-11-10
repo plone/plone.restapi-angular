@@ -50,16 +50,16 @@ export class AuthenticationService {
     }
   }
 
-  login(login: string, password: string) {
+  login(login: string, password: string): Observable<any> {
     if (isPlatformBrowser(this.platformId)) {
-      let headers = this.getHeaders();
-      let body = JSON.stringify({
+      const headers = this.getHeaders();
+      const body = JSON.stringify({
         login: login,
         password: password
       });
-      this.http.post(
+      return this.http.post(
         this.config.get('BACKEND_URL') + '/@login', body, { headers: headers })
-        .subscribe(
+        .do(
           (data: LoginToken) => {
             if (data.token) {
               localStorage.setItem('auth', data['token']);
@@ -70,20 +70,17 @@ export class AuthenticationService {
               localStorage.removeItem('auth_time');
               this.isAuthenticated.next({ state: false });
             }
-          },
-          (errorResponse: HttpErrorResponse) => {
+          })
+        .catch((errorResponse: HttpErrorResponse) => {
             localStorage.removeItem('auth');
             localStorage.removeItem('auth_time');
-
-            let message: string;
-            try {
-              message = JSON.parse(errorResponse.error).error.message;
-            } catch (SyntaxError) {
-              message = errorResponse.error ? errorResponse.error : errorResponse;
-            }
-            this.isAuthenticated.next({ state: false, error: message });
+            const error = getError(errorResponse);
+            this.isAuthenticated.next({ state: false, error: error.message });
+            return Observable.throw(error);
           }
         );
+    } else {
+      return Observable.of({});
     }
   }
 
