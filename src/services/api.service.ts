@@ -6,7 +6,8 @@ import 'rxjs/add/operator/catch';
 
 import { AuthenticationService } from './authentication.service';
 import { ConfigurationService } from './configuration.service';
-import { Error, LoadingStatus } from '../interfaces';
+import { LoadingStatus } from '../interfaces';
+import { getError } from './authentication.service';
 import { LoadingService } from './loading.service';
 
 @Injectable()
@@ -94,15 +95,7 @@ export class APIService {
       })
       .do(() => this.setBackendAvailability(true))
       .catch((errorResponse: HttpErrorResponse) => {
-        let error: Error;
-        try {
-          error = JSON.parse(errorResponse.error);
-        } catch (SyntaxError) {
-          const message = errorResponse.error.message ? errorResponse.error.message : errorResponse.message;
-          error = { type: '', message: message, traceback: [] };
-        }
-        error.response = errorResponse;
-        return Observable.throw(error);
+        return Observable.throw(getError(errorResponse));
       });
   }
 

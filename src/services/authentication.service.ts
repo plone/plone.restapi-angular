@@ -4,7 +4,6 @@ import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-
 import { ConfigurationService } from './configuration.service';
 import { AuthenticatedStatus, Error, PasswordResetInfo, UserInfo } from '../interfaces';
 
@@ -132,15 +131,41 @@ export class AuthenticationService {
     return headers;
   }
 
-  private error(errorResponse: HttpErrorResponse) {
-    let error: Error;
-    try {
-      error = JSON.parse(errorResponse.error);
-    } catch (SyntaxError) {
-      const message = errorResponse.error.message ? errorResponse.error.message : errorResponse.message;
-      error = { type: '', message: message, traceback: [] }
-    }
-    error.response = errorResponse;
+  protected error(errorResponse: HttpErrorResponse): Observable<Error> {
+    const error: Error = getError(errorResponse);
     return Observable.throw(error);
   }
+}
+
+export function getError(errorResponse: HttpErrorResponse): Error {
+  let error: Error;
+  if (errorResponse.error) {
+    let errorResponseError: any = errorResponse.error;
+    try {
+      // string plone error
+      errorResponseError = JSON.parse(errorResponseError);
+      if (errorResponseError.error && errorResponseError.error.message) {
+        // two levels of error properties
+        error = errorResponseError.error;
+      } else {
+        error = errorResponseError;
+      }
+    } catch (SyntaxError) {
+      if (errorResponseError.message && errorResponseError.type) {
+        // object plone error
+        error = errorResponseError;
+      }
+      else if (typeof errorResponseError.error === 'object' && errorResponseError.error.type) {
+        // object plone error with two levels of error properties
+        error = errorResponseError.error;
+      } else {
+        // not a plone error
+        error = { type: errorResponse.statusText, message: errorResponse.message, traceback: [] };
+      }
+    }
+  } else {
+    error = { type: errorResponse.statusText, message: errorResponse.message, traceback: [] };
+  }
+  error.response = errorResponse;
+  return error;
 }

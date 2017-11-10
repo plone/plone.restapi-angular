@@ -2,6 +2,8 @@
 
 ## New features
 
+- Normalized many error responses. Added unit tests. [Thomas Desvenain]
+
 - Add `vocabulary` method to retrieve zope vocabularies. [Thomas Desvenain]
 
 # 1.3.1 (2017-11-08)
