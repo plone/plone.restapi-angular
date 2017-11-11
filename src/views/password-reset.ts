@@ -1,9 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Services } from '../services';
-import { Subscription } from 'rxjs/Subscription';
-import { HttpErrorResponse } from '@angular/common/http';
-import { PasswordResetInfo } from '../interfaces';
 import { URLSearchParams } from '@angular/http';
+import { Subscription } from 'rxjs/Subscription';
+import { PasswordResetInfo, Error } from '../interfaces';
+import { Services } from '../services';
 
 @Component({
   selector: 'plone-password-reset',
@@ -57,12 +56,15 @@ export class PasswordResetView implements OnInit, OnDestroy {
     ).subscribe(() => {
       this.error = '';
       this.services.traverser.traverse('/@@login');
-    }, (err: HttpErrorResponse) => {
-      if (err.status === 404) {
+    }, (error: Error) => {
+      if (error.response && error.response.status === 404) {
         this.error = 'This user does not exist';
-      } else if (err.status < 500) {
-        this.error = JSON.parse(err.error).error.message;
-      }
+      } else if (error.response && error.response.status < 500) {
+        this.error = error.message;
+      } else {
+          this.error = 'Password reset failed.';
+          console.error(error);
+        }
     });
   }
 

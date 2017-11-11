@@ -2,7 +2,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/Rx';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { ConfigurationService } from './configuration.service';
 import { AuthenticatedStatus, Error, PasswordResetInfo, UserInfo } from '../interfaces';
@@ -23,7 +23,7 @@ export class AuthenticationService {
               @Inject(PLATFORM_ID) private platformId: Object) {
     if (isPlatformBrowser(this.platformId)) {
       let token = localStorage.getItem('auth');
-      let lastLogin = localStorage.getItem('auth_time');
+      const lastLogin = localStorage.getItem('auth_time');
       // token expires after 12 hours
       const expire = 12 * 60 * 60 * 1000;
       if (!lastLogin || (Date.now() - Date.parse(lastLogin) > expire)) {
@@ -38,9 +38,9 @@ export class AuthenticationService {
 
   getUserInfo(): UserInfo | null {
     if (isPlatformBrowser(this.platformId)) {
-      let token = localStorage.getItem('auth');
+      const token = localStorage.getItem('auth');
       if (token) {
-        let tokenParts = token.split('.');
+        const tokenParts = token.split('.');
         return <UserInfo>JSON.parse(atob(tokenParts[1]));
       } else {
         return null;
@@ -50,16 +50,16 @@ export class AuthenticationService {
     }
   }
 
-  login(login: string, password: string) {
+  login(login: string, password: string): Observable<any> {
     if (isPlatformBrowser(this.platformId)) {
-      let headers = this.getHeaders();
-      let body = JSON.stringify({
+      const headers = this.getHeaders();
+      const body = JSON.stringify({
         login: login,
         password: password
       });
-      this.http.post(
+      return this.http.post(
         this.config.get('BACKEND_URL') + '/@login', body, { headers: headers })
-        .subscribe(
+        .do(
           (data: LoginToken) => {
             if (data.token) {
               localStorage.setItem('auth', data['token']);
@@ -70,20 +70,17 @@ export class AuthenticationService {
               localStorage.removeItem('auth_time');
               this.isAuthenticated.next({ state: false });
             }
-          },
-          (errorResponse: HttpErrorResponse) => {
+          })
+        .catch((errorResponse: HttpErrorResponse) => {
             localStorage.removeItem('auth');
             localStorage.removeItem('auth_time');
-
-            let message: string;
-            try {
-              message = JSON.parse(errorResponse.error).error.message;
-            } catch (SyntaxError) {
-              message = errorResponse.error ? errorResponse.error : errorResponse;
-            }
-            this.isAuthenticated.next({ state: false, error: message });
+            const error = getError(errorResponse);
+            this.isAuthenticated.next({ state: false, error: error.message });
+            return Observable.throw(error);
           }
         );
+    } else {
+      return Observable.of({});
     }
   }
 
@@ -131,15 +128,41 @@ export class AuthenticationService {
     return headers;
   }
 
-  private error(errorResponse: HttpErrorResponse) {
-    let error: Error;
-    try {
-      error = JSON.parse(errorResponse.error);
-    } catch (SyntaxError) {
-      const message = errorResponse.error.message ? errorResponse.error.message : errorResponse.message;
-      error = { type: '', message: message, traceback: [] }
-    }
-    error.response = errorResponse;
+  protected error(errorResponse: HttpErrorResponse): Observable<Error> {
+    const error: Error = getError(errorResponse);
     return Observable.throw(error);
   }
+}
+
+export function getError(errorResponse: HttpErrorResponse): Error {
+  let error: Error;
+  if (errorResponse.error) {
+    let errorResponseError: any = errorResponse.error;
+    try {
+      // string plone error
+      errorResponseError = JSON.parse(errorResponseError);
+      if (errorResponseError.error && errorResponseError.error.message) {
+        // two levels of error properties
+        error = errorResponseError.error;
+      } else {
+        error = errorResponseError;
+      }
+    } catch (SyntaxError) {
+      if (errorResponseError.message && errorResponseError.type) {
+        // object plone error
+        error = errorResponseError;
+      }
+      else if (typeof errorResponseError.error === 'object' && errorResponseError.error.type) {
+        // object plone error with two levels of error properties
+        error = errorResponseError.error;
+      } else {
+        // not a plone error
+        error = { type: errorResponse.statusText, message: errorResponse.message, traceback: [] };
+      }
+    }
+  } else {
+    error = { type: errorResponse.statusText, message: errorResponse.message, traceback: [] };
+  }
+  error.response = errorResponse;
+  return error;
 }

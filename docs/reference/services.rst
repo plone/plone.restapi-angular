@@ -35,13 +35,16 @@ Authentication
 
 Properties:
 
-`isAuthenticated`: observable indicating the current authentication status. The `state` property is a boolean indicating if the user is logged or not, and the `error` property indicates the error if any.
+`isAuthenticated`: observable indicating the current authentication status.
+The `state` property is a boolean indicating if the user is logged or not, and the `error` property indicates the error if any.
 
 Methods:
 
 `getUserInfo()`: returns an object containing the current user information.
 
-`login(login: string, password: string)`: authenticate to the backend using the provided credentials, the resulting authentication token and user information will be stored in localstorage.
+`login(login: string, password: string)`: authenticate to the backend using the provided credentials,
+the resulting authentication token and user information will be stored in localstorage.
+It returns an observable.
 
 `logout()`: delete the current authentication token.
 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Services } from '../services';
-import { HttpErrorResponse } from '@angular/common/http';
+import { Error } from '../interfaces';
 
 @Component({
   selector: 'plone-request-password-reset',
@@ -25,11 +25,14 @@ export class RequestPasswordResetView implements OnInit {
       .subscribe(() => {
         this.error = '';
         this.services.traverser.traverse('/@@login');
-      }, (err: HttpErrorResponse) => {
-        if (err.status === 404) {
-          this.error = 'This user does not exist';
-        } else if (err.status < 500) {
-          this.error = JSON.parse(err.error).error.message;
+      }, (error: Error) => {
+        if (error.response && error.response.status === 404) {
+          this.error = 'This user does not exist.';
+        } else if (error.response && error.response.status < 500) {
+          this.error = error.message;
+        } else {
+          this.error = 'Password reset failed.';
+          console.error(error);
         }
       });
   }
