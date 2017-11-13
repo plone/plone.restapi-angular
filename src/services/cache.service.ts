@@ -54,7 +54,6 @@ export class CacheService {
       service.cache[url] = service.api.get(url)
         // set hits to 0 each time request is actually sent
         .map((observable: Observable<T>) => {
-          const hits = this.hits[url];
           service.hits[url] = 0;
           return observable;
         })

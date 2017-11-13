@@ -4,7 +4,6 @@ import { TraversingComponent } from '../traversing';
 import { NavLink } from '../interfaces';
 import { Target } from 'angular-traversal';
 import { Subscription } from 'rxjs/Subscription';
-import { ResourceService } from '../services/resource.service';
 import { Observable } from 'rxjs/Observable';
 
 
