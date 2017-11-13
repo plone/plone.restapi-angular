@@ -1,10 +1,14 @@
 import 'rxjs/add/operator/delayWhen';
+import 'rxjs/add/operator/filter';
+import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/merge';
+import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/publishReplay';
 import 'rxjs/add/operator/retryWhen';
 import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/timeout';
 import 'rxjs/add/observable/timer';
+import 'rxjs/add/observable/throw';
 
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
