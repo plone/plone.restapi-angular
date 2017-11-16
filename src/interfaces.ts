@@ -103,6 +103,7 @@ export interface SearchResults {
 /* Authentication status */
 export interface AuthenticatedStatus {
   state: boolean;
+  username: string | null;
   error?: string;
 }
 
@@ -118,12 +119,6 @@ export interface PasswordResetInfo {
   token?: string;
 }
 
-/* User information */
-export interface UserInfo {
-  sub: string;
-  exp: number;
-  fullname: string;
-}
 
 /* File download */
 

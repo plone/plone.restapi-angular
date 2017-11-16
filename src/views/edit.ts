@@ -82,6 +82,6 @@ export class EditView extends TraversingComponent {
   }
 
   onError(err: Response) {
-    console.log(err);
+    console.error(err);
   }
 }

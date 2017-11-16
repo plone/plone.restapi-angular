@@ -7,6 +7,7 @@ import 'rxjs/add/operator/publishReplay';
 import 'rxjs/add/operator/retryWhen';
 import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/timeout';
+import 'rxjs/add/observable/forkJoin';
 import 'rxjs/add/observable/timer';
 import 'rxjs/add/observable/throw';
 
