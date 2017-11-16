@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/plone/plone.restapi-angular.svg?branch=master)](https://travis-ci.org/plone/plone.restapi-angular)
 [![Coverage Status](https://coveralls.io/repos/github/plone/plone.restapi-angular/badge.svg?branch=master)](https://coveralls.io/github/plone/plone.restapi-angular?branch=master)
+[![Documentation Status](https://readthedocs.org/projects/plonerestapi-angular/badge/?version=latest)](http://plonerestapi-angular.readthedocs.io/en/latest/?badge=latest)
 
 **A simple Angular SDK to build web sites easily on top of the Plone RESTAPI.**
 
@@ -21,7 +22,7 @@ The Plone Angular SDK provides ready-to-use components to build a wide range of 
 
 ## Documentation
 
-See [documentation folder](/docs).
+See [documentation](http://plonerestapi-angular.readthedocs.io).
 
 ## Example
 
