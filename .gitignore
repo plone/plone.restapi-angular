@@ -48,3 +48,6 @@ Thumbs.db
 /tests/typings
 /tests/e2e/*.js
 /tests/e2e/*.map
+
+/venv
+/docs/_build

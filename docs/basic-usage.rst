@@ -70,7 +70,7 @@ In this example we will override the template used by the ``Navigation`` compone
 
 Let's use Angular CLI to create our custom components:
 
-.. code-block::
+.. code-block:: bash
 
   ng generate component custom-navigation
   ng generate component custom-navigation-level
@@ -130,7 +130,7 @@ Note that we are using the same structure as in the |defaultNavigationLeveltempl
 .. |defaultNavigationLeveltemplate| replace:: default ``NavigationLevel`` template
 .. _defaultNavigationLeveltemplate: https://github.com/plone/plone.restapi-angular/blob/master/src/components/navigation.level.ts#L5
 
-.. code-block::
+.. code-block:: bash
 
   npm install --save @angular/material
   npm install --save @angular/animations
@@ -165,7 +165,7 @@ In this example we will modify the default view so that it will display the cont
 
 Let's use Angular CLI to create our custom view:
 
-.. code-block::
+.. code-block:: bash
 
   ng generate component custom-view
 

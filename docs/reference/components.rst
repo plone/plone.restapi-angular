@@ -1,4 +1,5 @@
-## Components
+Components
+==========
 
 Breadcrumbs
 -----------
