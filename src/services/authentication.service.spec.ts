@@ -74,7 +74,7 @@ describe('AuthenticationService', () => {
   it('should return user info', () => {
     const service = TestBed.get(AuthenticationService);
     const http = TestBed.get(HttpTestingController);
-    let userinfo = {};
+    let username = '';
 
     // fake response
     const response = {
@@ -86,12 +86,12 @@ describe('AuthenticationService', () => {
     service.login().subscribe(() => {
     });
     service.isAuthenticated.subscribe(() => {
-      userinfo = service.getUserInfo();
+      username = service.getUsername();
     });
 
     http.expectOne('http://fake/Plone/@login').flush(response);
 
-    expect(userinfo).toEqual({ username: 'admin', fullname: 'Foo bar', expires: 1466140066.634986, type: 'JWT', algorithm: 'HS256' });
+    expect(username).toEqual('admin');
   });
 
   it('should logout', () => {

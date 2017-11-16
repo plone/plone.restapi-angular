@@ -30,11 +30,11 @@ export class PasswordResetView implements OnInit, OnDestroy {
     const authentication = this.services.authentication;
     authentication.isAuthenticated
       .subscribe(() => {
-        const userInfo = authentication.getUserInfo();
-        if (!userInfo) {
+        const authenticatedStatus = authentication.isAuthenticated.getValue();
+        if (!authenticatedStatus.state) {
           this.login = null;
         } else {
-          this.login = userInfo.sub;
+          this.login = authenticatedStatus.username;
         }
       });
     // TODO: get queryString on traverse

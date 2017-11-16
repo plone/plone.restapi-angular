@@ -37,6 +37,7 @@ Properties:
 
 `isAuthenticated`: observable indicating the current authentication status.
 The `state` property is a boolean indicating if the user is logged or not, and the `error` property indicates the error if any.
+The `username` property is the name of the logged in user, if any.
 
 Methods:
 

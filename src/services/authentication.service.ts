@@ -5,18 +5,26 @@ import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { ConfigurationService } from './configuration.service';
-import { AuthenticatedStatus, Error, PasswordResetInfo, UserInfo } from '../interfaces';
+import { AuthenticatedStatus, Error, PasswordResetInfo } from '../interfaces';
 
 
 interface LoginToken {
   token: string;
 }
 
+/* User information */
+export interface UserInfoTokenParts {
+  username?: string;
+  sub?: string;
+  exp?: number;
+  fullname?: string;
+}
+
 
 @Injectable()
 export class AuthenticationService {
 
-  public isAuthenticated: BehaviorSubject<AuthenticatedStatus> = new BehaviorSubject({ state: false });
+  public isAuthenticated: BehaviorSubject<AuthenticatedStatus> = new BehaviorSubject({ state: false, username: null });
 
   constructor(private config: ConfigurationService,
               private http: HttpClient,
@@ -31,17 +39,27 @@ export class AuthenticationService {
         token = null;
       }
       if (token) {
-        this.isAuthenticated.next({ state: true });
+        const tokenParts = this.getUserTokenInfo();
+        this.isAuthenticated.next({ state: true, username: this.getUsername() });
       }
     }
   }
 
-  getUserInfo(): UserInfo | null {
+  getUsername(): string | null {
+    const userTokenInfo = this.getUserTokenInfo();
+    if (userTokenInfo === null) {
+      return null;
+    } else {
+      return userTokenInfo.username || userTokenInfo.sub || null;
+    }
+  }
+
+  protected getUserTokenInfo(): UserInfoTokenParts | null {
     if (isPlatformBrowser(this.platformId)) {
       const token = localStorage.getItem('auth');
       if (token) {
         const tokenParts = token.split('.');
-        return <UserInfo>JSON.parse(atob(tokenParts[1]));
+        return <UserInfoTokenParts>JSON.parse(atob(tokenParts[1]));
       } else {
         return null;
       }
@@ -64,18 +82,19 @@ export class AuthenticationService {
             if (data.token) {
               localStorage.setItem('auth', data['token']);
               localStorage.setItem('auth_time', (new Date()).toISOString());
-              this.isAuthenticated.next({ state: true });
+              const tokenParts = this.getUserTokenInfo();
+              this.isAuthenticated.next({ state: true, username: this.getUsername() });
             } else {
               localStorage.removeItem('auth');
               localStorage.removeItem('auth_time');
-              this.isAuthenticated.next({ state: false });
+              this.isAuthenticated.next({ state: false, username: null });
             }
           })
         .catch((errorResponse: HttpErrorResponse) => {
             localStorage.removeItem('auth');
             localStorage.removeItem('auth_time');
             const error = getError(errorResponse);
-            this.isAuthenticated.next({ state: false, error: error.message });
+            this.isAuthenticated.next({ state: false, username: null, error: error.message });
             return Observable.throw(error);
           }
         );
@@ -88,7 +107,7 @@ export class AuthenticationService {
     if (isPlatformBrowser(this.platformId)) {
       localStorage.removeItem('auth');
       localStorage.removeItem('auth_time');
-      this.isAuthenticated.next({ state: false });
+      this.isAuthenticated.next({ state: false, username: null });
     }
   }
 
@@ -151,8 +170,7 @@ export function getError(errorResponse: HttpErrorResponse): Error {
       if (errorResponseError.message && errorResponseError.type) {
         // object plone error
         error = errorResponseError;
-      }
-      else if (typeof errorResponseError.error === 'object' && errorResponseError.error.type) {
+      } else if (typeof errorResponseError.error === 'object' && errorResponseError.error.type) {
         // object plone error with two levels of error properties
         error = errorResponseError.error;
       } else {

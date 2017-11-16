@@ -5,7 +5,11 @@
 - `login` method is now an observable.
   If you don't subscribe to it, request is not send.
 
+- `getUserInfo` method has been removed.
+
 ## New features
+
+- Add `username` to isAuthenticated behavior subject. [Thomas Desvenain]
 
 - `login` method of `authentication` service now returns an observable. [Thomas Desvenain]
 

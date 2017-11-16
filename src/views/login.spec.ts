@@ -20,6 +20,8 @@ import { Traverser, TraversalModule, Resolver, Marker, Normalizer } from 'angula
 import { TypeMarker, RESTAPIResolver, PloneViews, FullPathNormalizer } from '../traversal';
 import { LoginView } from './login';
 import { ViewView } from './view';
+import { AuthenticatedStatus } from '../interfaces';
+
 
 describe('LoginView', () => {
   let component: LoginView;
@@ -71,22 +73,24 @@ describe('LoginView', () => {
 
   it('should authenticate on submit', () => {
     const http = TestBed.get(HttpTestingController);
-    let state = false;
+    let authenticatedStatus: AuthenticatedStatus = { state: false, username: null };
     const response_home = {
-      "@id": "Plone"
+      '@id': 'Plone'
     };
     const response_login = {
-      "token": "11111"
+      token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiZnVsbG5hbWUiOiJGb28gYmFyIiwiZXhwaXJlcy' +
+      'I6MTQ2NjE0MDA2Ni42MzQ5ODYsInR5cGUiOiJKV1QiLCJhbGdvcml0aG0iOiJIUzI1NiJ9.D9EL5A9xD1z3E_HPecXA-Ee7kKlljYvpDtan69KHwZ8'
     };
     component.services.traverser.traverse('/@@login');
-    component.onSubmit({ login: 'eric', password: 'secret' });
+    component.onSubmit({ login: 'admin', password: 'secret' });
     component.services.authentication.isAuthenticated.subscribe(logged => {
-      state = logged.state;
+      authenticatedStatus = logged;
     });
 
     http.expectOne('http://fake/Plone').flush(response_home);
     http.expectOne('http://fake/Plone/@login').flush(response_login);
 
-    expect(state).toBe(true);
+    expect(authenticatedStatus.username).toBe('admin');
+    expect(authenticatedStatus.state).toBe(true);
   });
 });
