@@ -9,6 +9,8 @@
 
 ## New features
 
+- Add base interfaces for contents. [Thomas Desvenain]
+
 - Add `username` to isAuthenticated behavior subject. [Thomas Desvenain]
 
 - `login` method of `authentication` service now returns an observable. [Thomas Desvenain]

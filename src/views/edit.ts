@@ -34,14 +34,14 @@ export class EditView extends TraversingComponent {
       cancel: this.onCancel.bind(this)
     };
     this.path = target.contextPath;
-    let model = target.context;
+    const model = target.context;
     this.services.resource.type(target.context['@type']).subscribe(schema => {
       schema.buttons = [
         { id: 'save', label: 'Save' },
         { id: 'cancel', label: 'Cancel' }
       ];
       // FIX THE SCHEMA AND THE MODEL
-      for (let property in schema.properties) {
+      for (const property in schema.properties) {
         if (property === 'allow_discussion') {
           schema.properties[property].type = 'boolean';
         }
@@ -56,13 +56,13 @@ export class EditView extends TraversingComponent {
   }
 
   onSave(schemaForm: any) {
-    let model = schemaForm.value;
+    const model = schemaForm.value;
     Object.keys(model).forEach(key => {
       if (model[key] === '' && this.schema.properties[key].widget.id === 'date') {
         model[key] = null;
       }
     });
-    this.services.resource.update(this.path, model).subscribe(res => {
+    this.services.resource.update(this.path, model).subscribe(() => {
       this.services.traverser.traverse(this.path);
     });
   }

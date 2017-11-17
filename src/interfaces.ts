@@ -15,6 +15,41 @@ export interface Error {
   response?: HttpErrorResponse;
 }
 
+/*
+ * CONTENT
+ */
+
+export interface ContentSummary {
+  '@id': string;
+  '@type': string;
+  description: string;
+  review_state: string;
+  title: string;
+
+  [x: string]: any;
+}
+
+export interface Content {
+  '@id': string;
+  '@type': string;
+  UID: string;
+  created: string;
+  id: string;
+  is_folderish: boolean;
+  items: ContentSummary[];
+  items_total: number;
+  layout: string;
+  modified: string;
+  parent: ContentSummary;
+  review_state: string;
+  sharing: any;
+  version: string;
+
+  [x: string]: any;
+}
+
+export type PartialContent = Partial<Content>;
+
 
 /*
  * NAVIGATION

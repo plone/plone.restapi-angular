@@ -3,7 +3,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { APIService } from './api.service';
 import { ConfigurationService } from './configuration.service';
-import { NavLink, SearchOptions, SearchResults } from '../interfaces';
+import { Content, NavLink, PartialContent, SearchOptions, SearchResults } from '../interfaces';
 import { CacheService } from './cache.service';
 import { Vocabulary } from '../vocabularies';
 
@@ -64,7 +64,7 @@ export class ResourceService {
     if (!path.endsWith('/')) {
       path += '/';
     }
-    let params: string[] = [];
+    const params: string[] = [];
     Object.keys(query).map(index => {
       const criteria = query[index];
       if (typeof criteria === 'boolean') {
@@ -107,7 +107,7 @@ export class ResourceService {
     return this.cache.get(path + '@search' + '?' + params.join('&'));
   }
 
-  get(path: string, expand?: string[]) {
+  get<T extends Content>(path: string, expand?: string[]): Observable<T> {
     expand = Object.keys(this.defaultExpand).concat(expand || []);
     if (expand.length > 0) {
       path = path + '?expand=' + expand.join(',');
@@ -129,7 +129,7 @@ export class ResourceService {
     );
   }
 
-  update(path: string, model: any): Observable<any> {
+  update(path: string, model: PartialContent): Observable<null> {
     return this.emittingModified(
       this.api.patch(path, model), path
     );
