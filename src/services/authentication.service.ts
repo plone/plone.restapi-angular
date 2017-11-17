@@ -39,7 +39,6 @@ export class AuthenticationService {
         token = null;
       }
       if (token) {
-        const tokenParts = this.getUserTokenInfo();
         this.isAuthenticated.next({ state: true, username: this.getUsername() });
       }
     }
@@ -82,7 +81,6 @@ export class AuthenticationService {
             if (data.token) {
               localStorage.setItem('auth', data['token']);
               localStorage.setItem('auth_time', (new Date()).toISOString());
-              const tokenParts = this.getUserTokenInfo();
               this.isAuthenticated.next({ state: true, username: this.getUsername() });
             } else {
               localStorage.removeItem('auth');
