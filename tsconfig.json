@@ -1,48 +1,46 @@
 {
-    "compilerOptions": {
-        "baseUrl": "",
-        "target": "es5",
-        "module": "es2015",
-        "moduleResolution": "node",
-        "declaration": true,
-        "allowUnusedLabels": false,
-        "noImplicitAny": true,
-        "noImplicitReturns": true,
-        "strictNullChecks": true,
-        "sourceMap": false,
-        "emitDecoratorMetadata": true,
-        "experimentalDecorators": true,
-        "outDir": "./dist",
-        "rootDir": "./src",
-        "skipLibCheck": true,
-        "stripInternal": true,
-        "typeRoots": ["./node_modules/@types"],
-        "types": [
-            "node"
-        ],
-        "lib": [
-            "dom",
-            "es2015"
-        ],
-        "paths": {
-            "@angular/http": ["node_modules/@angular/http"],
-            "rxjs/*": ["node_modules/rxjs/*"]
-        }
-    },
-    "compileOnSave": false,
-    "buildOnSave": false,
-    "exclude": [
-        "node_modules",
-        "dist",
-        "tests",
-        "**/*.ngfactory.ts",
-        "**/*.spec.ts",
-        "**/*.shim.ts"
+  "angularCompilerOptions": {
+    "entryModule": "src/module#RESTAPIModule",
+    "genDir": "dist",
+    "skipTemplateCodegen": true,
+    "strictMetadataEmit": true
+  },
+  "buildOnSave": false,
+  "compileOnSave": false,
+  "compilerOptions": {
+    "allowUnusedLabels": false,
+    "baseUrl": "",
+    "declaration": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "lib": [
+      "dom",
+      "es2015"
     ],
-    "angularCompilerOptions": {
-        "genDir": "dist",
-        "entryModule": "src/module#RESTAPIModule",
-        "skipTemplateCodegen": true,
-        "strictMetadataEmit": true
-    }
+    "module": "es2015",
+    "moduleResolution": "node",
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "outDir": "./dist",
+    "paths": {
+      "@angular/http": ["node_modules/@angular/http"],
+      "rxjs/*": ["node_modules/rxjs/*"]
+    },
+    "rootDir": "./src",
+    "skipLibCheck": true,
+    "strictNullChecks": true,
+    "sourceMap": false,
+    "stripInternal": true,
+    "target": "es5",
+    "typeRoots": ["./node_modules/@types"],
+    "types": ["node"]
+  },
+  "exclude": [
+    "node_modules",
+    "dist",
+    "tests",
+    "**/*.ngfactory.ts",
+    "**/*.spec.ts",
+    "**/*.shim.ts"
+  ]
 }
