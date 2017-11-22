@@ -49,6 +49,16 @@ Comments
 
 Display the existing comments and allow to add new ones.
 
+Workflow
+--------
+
+.. code-block:: html
+
+  <plone-workflow [showHistory]="true" [haveCommentInput]="true"></plone-workflow>
+
+Display workflow history and actionable list of available transitions.
+
+
 Toolbar
 -------
 

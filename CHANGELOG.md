@@ -9,6 +9,8 @@
 
 ## New features
 
+- Add plone-workflow component. [Thomas Desvenain]
+
 - We can set a comment on workflow transition. [Thomas Desvenain]
 
 - Add `workflow` method to get available transitions and history. [Thomas Desvenain]

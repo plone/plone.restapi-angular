@@ -61,6 +61,7 @@ import { RequestPasswordResetView } from './views/request-password-reset';
 import { PasswordResetView } from './views/password-reset';
 import { DownloadDirective } from './directives/download.directive';
 import { LoadingService, LoadingInterceptor } from './services/loading.service';
+import { Workflow } from './components/workflow';
 
 @NgModule({
   declarations: [
@@ -80,6 +81,7 @@ import { LoadingService, LoadingInterceptor } from './services/loading.service';
     GlobalNavigation,
     Navigation,
     NavigationLevel,
+    Workflow,
   ],
   entryComponents: [
     AddView,
@@ -132,6 +134,7 @@ import { LoadingService, LoadingInterceptor } from './services/loading.service';
     NavigationLevel,
     TraverserOutlet,
     TraverserLink,
+    Workflow,
   ]
 })
 export class RESTAPIModule {}
