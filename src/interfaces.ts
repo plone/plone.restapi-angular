@@ -1,5 +1,6 @@
 /*
- * Status
+ * STATUS
+ *
  */
 import { HttpErrorResponse } from '@angular/common/http';
 
@@ -18,6 +19,7 @@ export interface Error {
 
 /*
  * NAVIGATION
+ *
  */
 
 
@@ -34,6 +36,7 @@ export interface NavLink {
 
 /*
  * Navigation tree
+ *
  */
 export interface NavTree {
   children: NavTree[];
@@ -120,7 +123,7 @@ export interface PasswordResetInfo {
 }
 
 
-/* File download */
+/* FILE DOWNLOAD */
 
 export interface NamedFile {
   download: string;  // download path
@@ -141,4 +144,36 @@ export interface DownloadSucceededEvent {
 export interface DownloadFailedEvent {
   error: Error;
   namedFile: NamedFile;
+}
+
+
+/*
+ * WORKFLOW
+ *
+ */
+
+export interface WorkflowHistoryItem<S extends string = string, T extends string = string> {
+  action: T | null;
+  actor: string;
+  comments: string;
+  review_state: S;
+  time: string;
+  title: string;
+}
+
+export interface WorkflowTransitionItem {
+  '@id': string;
+  title: string;
+}
+
+export interface WorkflowInformation<S extends string = string, T extends string = string> {
+  '@id': string;
+  history: WorkflowHistoryItem<S, T>[];
+  transitions: WorkflowTransitionItem[];
+}
+
+export interface WorkflowTransitionOptions {
+  comment?: string;
+
+  [x: string]: any;
 }

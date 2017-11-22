@@ -9,6 +9,10 @@
 
 ## New features
 
+- We can set a comment on workflow transition. [Thomas Desvenain]
+
+- Add `workflow` method to get available transitions and history. [Thomas Desvenain]
+
 - Add `username` to isAuthenticated behavior subject. [Thomas Desvenain]
 
 - `login` method of `authentication` service now returns an observable. [Thomas Desvenain]
