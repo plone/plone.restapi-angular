@@ -1,10 +1,10 @@
-export interface Term<T extends number | string> {
+export interface Term<T extends number | string = string> {
   '@id': string;
   token: T;
   title: string;
 }
 
-export class Vocabulary<T extends number | string> implements Iterable<Term<T>> {
+export class Vocabulary<T extends number | string = string> implements Iterable<Term<T>> {
   protected _terms: Term<T>[];
   protected _byToken: any = {};  // can't declare indexer with generics
 
