@@ -14,6 +14,8 @@ export interface Error {
   message: string;
   traceback?: string[];
   response?: HttpErrorResponse;
+
+  [x: string]: any;
 }
 
 
