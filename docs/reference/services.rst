@@ -100,7 +100,9 @@ Methods:
 
 `navigation()`: get the global navigation links. Returns an observable.
 
-`transition(path: string, transition: string)`: perform the transition on the resource. Returns an observable.
+`transition(path: string, transition: string, options: WorkflowTransitionOptions)`: perform the transition on the resource. You can set a workflow comment. Returns an observable of the last action information.
+
+`workflow(path: string)`: get the workflow history and the available transitions on the content. Returns an observable.
 
 `update(path: string, model: any)`: update the resource. Returns an observable.
 

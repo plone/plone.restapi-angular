@@ -3,7 +3,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { APIService } from './api.service';
 import { ConfigurationService } from './configuration.service';
-import { NavLink, SearchOptions, SearchResults } from '../interfaces';
+import { NavLink, SearchOptions, SearchResults, WorkflowHistoryItem, WorkflowInformation, WorkflowTransitionOptions } from '../interfaces';
 import { CacheService } from './cache.service';
 import { Vocabulary } from '../vocabularies';
 
@@ -56,15 +56,13 @@ export class ResourceService {
     );
   }
 
-  find(
-    query: {[key: string]: any},
-    path: string = '/',
-    options: SearchOptions = {}
-    ): Observable<SearchResults> {
+  find(query: { [key: string]: any },
+       path: string = '/',
+       options: SearchOptions = {}): Observable<SearchResults> {
     if (!path.endsWith('/')) {
       path += '/';
     }
-    let params: string[] = [];
+    const params: string[] = [];
     Object.keys(query).map(index => {
       const criteria = query[index];
       if (typeof criteria === 'boolean') {
@@ -123,10 +121,15 @@ export class ResourceService {
     );
   }
 
-  transition(contextPath: string, transition: string) {
+  transition<S extends string = string, T extends string = string>(
+    contextPath: string, transition: T, options: WorkflowTransitionOptions = {}): Observable<WorkflowHistoryItem<S, T>> {
     return this.emittingModified(
-      this.api.post(contextPath + '/@workflow/' + transition, {}), contextPath
+      this.api.post(contextPath + '/@workflow/' + transition, options), contextPath
     );
+  }
+
+  workflow<S extends string = string, T extends string = string>(contextPath: string): Observable<WorkflowInformation<S, T>> {
+    return this.cache.get(contextPath + '/@workflow');
   }
 
   update(path: string, model: any): Observable<any> {
