@@ -73,6 +73,9 @@ export class FullPathNormalizer extends Normalizer {
   }
 
   normalize(path: string): string {
+    if (path == null) {
+      return path;
+    }
     const base = this.config.get('BACKEND_URL');
     if (path.startsWith(base)) {
       return path.split(base)[1];

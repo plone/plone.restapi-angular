@@ -23,6 +23,10 @@
 
 - Add `vocabulary` method to retrieve zope vocabularies. [Thomas Desvenain]
 
+## Bug fixes
+
+- Dont fail in normalising urls if path is null [Sune Wøller]
+
 # 1.3.1 (2017-11-08)
 
 ## Bug fixes
