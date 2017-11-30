@@ -20,6 +20,7 @@ export class GlobalNavigation extends TraversingComponent implements OnInit, OnD
 
   links: NavLink[] = [];
   refreshNavigation: Subscription;
+  contextPath: string;
 
   constructor(public services: Services) {
     super(services);
@@ -33,14 +34,19 @@ export class GlobalNavigation extends TraversingComponent implements OnInit, OnD
       .merge(component.services.navigation.refreshNavigation)
       .mergeMap(() => component.services.resource.navigation())
       .subscribe((links: NavLink[]) => {
-          component.links = links;
-        }
-      );
+        this.setLinks(links);
+      });
+  }
 
+  public setLinks(links: NavLink[]) {
+    this.links = links;
+    this.setActiveLinks(this.contextPath);
   }
 
   onTraverse(target: Target) {
-    this.setActiveLinks(target);
+    // contextPath = '' for the root of the site - always set the contextPath
+    this.contextPath = target.contextPath;
+    this.setActiveLinks(this.contextPath);
   }
 
   ngOnDestroy() {
@@ -49,15 +55,12 @@ export class GlobalNavigation extends TraversingComponent implements OnInit, OnD
     }
   }
 
-  private setActiveLinks(target: Target) {
-    if (!target) {
-      return;
-    }
+  private setActiveLinks(contextPath: string) {
     this.links.map((link: NavLink) => {
-      if (!target.path || target.path === '/') {
+      if (!contextPath || contextPath === '/') {
         link.active = (!link.path || link.path === '/');
       } else {
-        let targetList: Array<String> = target.path.split('/');
+        let targetList: Array<String> = contextPath.split('/');
         let linkList: Array<String> = link.path.split('/');
         let isSubpath = true;   // you could just use link.active
         for (const {item, index} of linkList.map((item, index) => ({ item, index }))) {
