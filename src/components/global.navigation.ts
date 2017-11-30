@@ -38,7 +38,7 @@ export class GlobalNavigation extends TraversingComponent implements OnInit, OnD
       });
   }
 
-  public setLinks(links: NavLink[]) {
+  protected setLinks(links: NavLink[]) {
     this.links = links;
     this.setActiveLinks(this.contextPath);
   }
@@ -55,7 +55,7 @@ export class GlobalNavigation extends TraversingComponent implements OnInit, OnD
     }
   }
 
-  private setActiveLinks(contextPath: string) {
+  protected setActiveLinks(contextPath: string) {
     this.links.map((link: NavLink) => {
       if (!contextPath || contextPath === '/') {
         link.active = (!link.path || link.path === '/');
