@@ -17,11 +17,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import {
-  SchemaFormModule,
-  WidgetRegistry,
-  DefaultWidgetRegistry
-} from 'angular2-schema-form';
-import {
   TraversalModule,
   Resolver,
   Marker,
@@ -93,7 +88,6 @@ import { LoadingService, LoadingInterceptor } from './services/loading.service';
   ],
   imports: [
     FormsModule,
-    SchemaFormModule,
     HttpClientModule,
     CommonModule,
     TraversalModule,
@@ -113,7 +107,6 @@ import { LoadingService, LoadingInterceptor } from './services/loading.service';
     { provide: Resolver, useClass: RESTAPIResolver },
     { provide: Marker, useClass: TypeMarker },
     { provide: Normalizer, useClass: FullPathNormalizer },
-    { provide: WidgetRegistry, useClass: DefaultWidgetRegistry }
   ],
   exports: [
     EditView,
