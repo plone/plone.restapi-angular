@@ -7,6 +7,21 @@
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "paths": {
+      "@plone/restapi-angular": ["lib/@plone/restapi-angular"],
+      "angular-traversal": [
+        "../node_modules/angular-traversal"
+      ],
+      "@angular/*": [
+        "../node_modules/@angular/*"
+      ],
+      "rxjs": [
+        "../node_modules/rxjs"
+      ],
+      "rxjs/*": [
+        "../node_modules/rxjs/*"
+      ]
+    },
     "target": "es5",
     "typeRoots": [
       "node_modules/@types"
@@ -15,5 +30,13 @@
       "es2016",
       "dom"
     ]
-  }
+  },
+  "files": [
+    "./src/main.ts",
+    "./src/polyfills.ts",
+    "../src/index.ts"
+  ],
+  "include": [
+      "./src/app/**/*"
+  ]
 }
