@@ -3,9 +3,11 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { tap } from 'rxjs/operators';
 
 import { ConfigurationService } from './configuration.service';
 import { AuthenticatedStatus, Error, PasswordResetInfo } from '../interfaces';
+import { catchError } from 'rxjs/operators/catchError';
 
 
 interface LoginToken {
@@ -76,8 +78,8 @@ export class AuthenticationService {
       });
       return this.http.post(
         this.config.get('BACKEND_URL') + '/@login', body, { headers: headers })
-        .do(
-          (data: LoginToken) => {
+        .pipe(
+          tap((data: LoginToken) => {
             if (data.token) {
               localStorage.setItem('auth', data['token']);
               localStorage.setItem('auth_time', (new Date()).toISOString());
@@ -87,14 +89,14 @@ export class AuthenticationService {
               localStorage.removeItem('auth_time');
               this.isAuthenticated.next({ state: false, username: null });
             }
-          })
-        .catch((errorResponse: HttpErrorResponse) => {
+          }),
+          catchError((errorResponse: HttpErrorResponse) => {
             localStorage.removeItem('auth');
             localStorage.removeItem('auth_time');
             const error = getError(errorResponse);
             this.isAuthenticated.next({ state: false, username: null, error: error.message });
             return Observable.throw(error);
-          }
+          })
         );
     } else {
       return Observable.of({});

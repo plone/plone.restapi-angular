@@ -6,6 +6,7 @@ import { ConfigurationService } from './configuration.service';
 import { NavLink, SearchOptions, SearchResults } from '../interfaces';
 import { CacheService } from './cache.service';
 import { Vocabulary } from '../vocabularies';
+import { map } from 'rxjs/operators';
 
 
 interface NavigationItem {
@@ -137,7 +138,7 @@ export class ResourceService {
 
   navigation(): Observable<NavLink[]> {
     return this.cache.get('/@navigation')
-      .map((data: NavigationItems) => {
+      .pipe(map((data: NavigationItems) => {
         if (data) {
           return data.items.filter(item => {
             return !item.properties || !item.properties.exclude_from_nav;
@@ -145,18 +146,18 @@ export class ResourceService {
         } else {
           return [];
         }
-      });
+      }));
   }
 
   breadcrumbs(path: string): Observable<NavLink[]> {
     return this.cache.get(path + '/@breadcrumbs')
-      .map((data: NavigationItems) => {
+      .pipe(map((data: NavigationItems) => {
         if (data) {
           return data.items.map(this.linkFromItem.bind(this));
         } else {
           return [];
         }
-      });
+      }));
   }
 
   type(typeId: string): Observable<any> {
@@ -165,7 +166,7 @@ export class ResourceService {
 
   vocabulary(vocabularyId: string): Observable<Vocabulary<string | number>> {
     return this.cache.get('/@vocabularies/' + vocabularyId)
-      .map((jsonObject: any): Vocabulary<string | number> => new Vocabulary(jsonObject.terms));
+      .pipe(map((jsonObject: any): Vocabulary<string | number> => new Vocabulary(jsonObject.terms)));
   }
 
   /*
@@ -173,10 +174,10 @@ export class ResourceService {
    */
   public emittingModified<T>(observable: Observable<T>, path: string): Observable<T> {
     const service = this;
-    return observable.map((val: T): T => {
+    return observable.pipe(map((val: T): T => {
       service.resourceModified.emit({ id: path, context: val });
       return val;
-    });
+    }));
   }
 
   private linkFromItem(item: NavigationItem): NavLink {

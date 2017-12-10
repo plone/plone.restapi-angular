@@ -1,8 +1,8 @@
 import { OnInit, OnDestroy } from '@angular/core';
 import { Target } from 'angular-traversal';
 import { Services } from './services';
-import 'rxjs/add/operator/takeUntil';
 import { Subject } from 'rxjs/Subject';
+import { takeUntil } from 'rxjs/operators';
 
 export abstract class TraversingComponent implements OnInit, OnDestroy {
 
@@ -14,8 +14,7 @@ export abstract class TraversingComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.services.traverser.target
-      .takeUntil(this.ngUnsubscribe)
+    this.services.traverser.target.pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((target: Target) => {
         this.context = target.context;
         window.scrollTo(0, 0);

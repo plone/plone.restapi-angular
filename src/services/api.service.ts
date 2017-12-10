@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
+import { TimerObservable } from 'rxjs/observable/TimerObservable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import 'rxjs/add/operator/catch';
+import { tap, retryWhen, catchError, delayWhen, timeout } from 'rxjs/operators';
 
 import { AuthenticationService } from './authentication.service';
 import { ConfigurationService } from './configuration.service';
@@ -78,25 +80,26 @@ export class APIService {
   private wrapRequest<T>(request: Observable<T>): Observable<T> {
     const timeout = this.config.get('CLIENT_TIMEOUT', 15000);
     let attempts = 0;
-    return request
-      .timeout(timeout)
-      .retryWhen((errors: Observable<Response>) => {
+    return request.pipe(
+      //timeout(timeout), //TODO: FIXME (error at runtime, `timeout` is not a function)
+      retryWhen((errors: Observable<Response>) => {
         /* retry when backend unavailable errors */
-        return errors.delayWhen((response: Response) => {
+        return errors.pipe(delayWhen((response: Response) => {
           if ([0, 502, 503, 504].indexOf(response.status) >= 0) {
             if (attempts < 3) {
               attempts += 1;
-              return Observable.timer(2000);
+              return new TimerObservable(2000);
             }
             this.setBackendAvailability(false);
           }
           return Observable.throw(response);
-        });
-      })
-      .do(() => this.setBackendAvailability(true))
-      .catch((errorResponse: HttpErrorResponse) => {
+        }));
+      }),
+      tap(() => this.setBackendAvailability(true)),
+      catchError((errorResponse: HttpErrorResponse) => {
         return Observable.throw(getError(errorResponse));
-      });
+      })
+    );
   }
 
   /* Emits only if it has changed */
