@@ -6,6 +6,7 @@ import 'rxjs/add/operator/takeUntil';
 import { TraversingComponent } from '../traversing';
 import { Services } from '../services';
 import { Target } from 'angular-traversal';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'plone-add',
@@ -13,13 +14,15 @@ import { Target } from 'angular-traversal';
   <li *ngFor="let type of types">
     <a [traverseTo]="'@@add?type=' + type">{{ type }}</a>
   </li>
-</ul></ng-container><sf-form *ngIf="type" [schema]="schema" [model]="model" [actions]="actions"></sf-form>`
+</ul></ng-container>
+<form *ngIf="type" #f="ngForm" (submit)="onSave(f.value)">
+  <p><label>Title : <input type="text" name="title" ngModel /></label></p>
+  <p><label>Description : <textarea name="description" ngModel></textarea></label></p>
+  <button (click)="onSave(f.value)">Save</button><button (click)="onCancel()">Cancel</button>
+</form>`
 })
 export class AddView extends TraversingComponent implements OnInit {
 
-  schema: any;
-  model: any = {};
-  actions: any = {};
   path: string;
   type: string;
   // TODO: addable types should be provided by the backend
@@ -37,23 +40,11 @@ export class AddView extends TraversingComponent implements OnInit {
     @Inject(PLATFORM_ID) private platformId: Object,
   ) {
     super(services);
-    this.model = {};
-    this.schema = {
-      'properties': {},
-      'buttons': [
-        { id: 'save', label: 'Save' },
-        { id: 'cancel', label: 'Cancel' }
-      ]
-    };
   }
 
   ngOnInit() {
-    this.actions = {
-      save: this.onSave.bind(this),
-      cancel: this.onCancel.bind(this)
-    };
     this.services.traverser.target
-      .takeUntil(this.ngUnsubscribe)
+      .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((target: Target) => {
         this.path = target.contextPath;
       });
@@ -64,34 +55,9 @@ export class AddView extends TraversingComponent implements OnInit {
         this.type = param[0];
       }
     }
-    if (this.type) {
-      this.services.resource.type(this.type).subscribe((schema: any) => {
-        schema.buttons = [
-          { id: 'save', label: 'Save' },
-          { id: 'cancel', label: 'Cancel' }
-        ];
-        // FIX THE SCHEMA AND THE MODEL
-        for (let property in schema.properties) {
-          if (property === 'allow_discussion') {
-            schema.properties[property].type = 'boolean';
-          }
-          if (property === 'effective' || property === 'expires') {
-            schema.properties[property].widget = 'date';
-          }
-        }
-
-        this.schema = schema;
-      });
-    }
   }
 
-  onSave(schemaForm: any) {
-    let model = schemaForm.value;
-    Object.keys(model).forEach(key => {
-      if (model[key] === '' && this.schema.properties[key].widget.id === 'date') {
-        model[key] = null;
-      }
-    });
+  onSave(model: any) {
     model['@type'] = this.type;
     this.services.resource.create(this.path, model).subscribe((res: any) => {
       this.services.traverser.traverse(res['@id']);
