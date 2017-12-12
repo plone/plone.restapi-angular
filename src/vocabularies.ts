@@ -22,7 +22,11 @@ export class Vocabulary<T extends number | string = string> implements Iterable<
   public byToken(token: T): Term<T> {
     const term = this._byToken[token];
     if (term === undefined) {
-      throw Error(`${token} token doesn't exist in vocabulary`);
+      return {
+        '@id': '',
+        token: token,
+        title: <string>(typeof token === 'number' ? token.toString() : token)
+      };
     } else {
       return term;
     }
