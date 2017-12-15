@@ -62,7 +62,7 @@ export interface TextValue {
 export interface Comment {
   author_name: string;
   author_username: string;
-  comment_id: string ;
+  comment_id: string;
   creation_date: Date;
   in_reply_to?: string | null;
   modification_date: Date;
@@ -149,6 +149,16 @@ export interface DownloadFailedEvent {
   namedFile: NamedFile;
 }
 
+/*
+ * FILE UPLOAD
+ */
+
+export interface NamedFileUpload {
+  data: any;
+  encoding: string;
+  filename: string;
+  'content-type': string;
+}
 
 /*
  * WORKFLOW
