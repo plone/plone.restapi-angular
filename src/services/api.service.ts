@@ -41,7 +41,10 @@ export class APIService {
 
   patch(path: string, data: Object): Observable<any> {
     const url = this.getFullPath(path);
-    const headers = this.authentication.getHeaders();
+    let headers = this.authentication.getHeaders();
+    if (this.config.get('PATCH_RETURNS_REPRESENTATION', true)) {
+      headers = headers.set('Prefer', 'return=representation');
+    }
     return this.wrapRequest(this.http.patch(url, data, { headers: headers }));
   }
 
