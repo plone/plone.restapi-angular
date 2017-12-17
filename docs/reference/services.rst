@@ -30,6 +30,7 @@ It manages the following configuration values:
 - `RETRY_REQUEST_ATTEMPTS`: the number of times client will try a request when server is unavailable. (3 by default).
 - `RETRY_REQUEST_DELAY`: the retry delay in milliseconds (2000 by default).
 
+
 Methods:
 
 `get(key: string)`: returns the configuration value for the given key.
