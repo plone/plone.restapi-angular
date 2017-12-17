@@ -7,6 +7,9 @@
 
 - `getUserInfo` method has been removed.
 
+- By default, patch request returns a 200 with full modified content representation.
+  No effect with plone.restapi <= 1.0a25
+
 ## New features
 
 - Add plone-workflow component. [Thomas Desvenain]

@@ -23,6 +23,9 @@ Configuration
 It manages the following configuration values:
 
 - `BACKEND_URL`: the URL of the backend searver exposing a valid Plone REST API
+- `PATCH_RETURNS_REPRESENTATION`: if true (by default), successful patch requests return a 200
+  with full modified content representation as body.
+  If false, it returns a 204 response with no content.
 
 Methods:
 
