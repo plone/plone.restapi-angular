@@ -108,7 +108,24 @@ describe('ResourceService', () => {
 
     expect(id).toBe('http://fake/Plone/folder1/page1');
   });
+  it('should generate search query string contents', () => {
+    expect(ResourceService.getSearchQueryString({ portal_type: 'News Item', Subject: 'biology' }))
+      .toBe('portal_type=News%20Item&Subject=biology');
 
+    expect(ResourceService.getSearchQueryString({ portal_type: ['Page', 'News Item'] }))
+      .toBe('portal_type=Page&portal_type=News%20Item');
+
+    expect(ResourceService.getSearchQueryString({ portal_type: ['Page', 'News Item'] },
+      { sort_on: 'sortable_title', sort_order: 'desc' }))
+      .toBe('portal_type=Page&portal_type=News%20Item&sort_on=sortable_title&sort_order=desc');
+
+    expect(ResourceService.getSearchQueryString({ is_folderish: true }))
+      .toBe('is_folderish=1');
+
+    expect(ResourceService.getSearchQueryString({ is_folderish: false }))
+      .toBe('is_folderish=0');
+
+  });
   it('should search contents in context', () => {
     const service = TestBed.get(ResourceService);
     const http = TestBed.get(HttpTestingController);

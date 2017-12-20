@@ -84,7 +84,9 @@ Methods:
 
 `delete(path: string)`: remove the requested resource as an observable. Returns an observable.
 
-`find(query: any,  path: string='/', options: any={})`: returns the search results as an observable.
+`getSearchQueryString`: (static) get a query string from a criterion/value(s) mapping and options object. Used by `find` method.
+
+`find(query: any,  path: string='/', options: SearchOptions={})`: returns the search results as an observable.
 
   See `http://plonerestapi.readthedocs.io/en/latest/searching.html#search <http://plonerestapi.readthedocs.io/en/latest/searching.html#search>`_.
   The `options` parameter can contain the following attributes:
