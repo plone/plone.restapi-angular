@@ -70,8 +70,8 @@ export class APIService {
   getFullPath(path: string): string {
     const base = this.config.get('BACKEND_URL');
     // if path is already prefixed by base, no need to prefix twice
-    // if path is already a full url, and base is a local url, no need to prefix either
-    if (path.startsWith(base) || (base.startsWith('/') && path.startsWith('http'))) {
+    // if path is already a full url no need to prefix either
+    if (path.startsWith(base) || path.startsWith('http:') || path.startsWith('https:')) {
       return path;
     } else {
       return base + path;
