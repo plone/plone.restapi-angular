@@ -40,6 +40,9 @@
 
 - All services injected are protected to ease overloading [Thomas Desvenain]
 
+- url was missing from navlink interface. [Thomas Desvenain]
+
+
 # 1.3.1 (2017-11-08)
 
 ## Bug fixes
