@@ -30,6 +30,8 @@
 
 - Dont fail in normalising urls if path is null [Sune Wøller]
 
+- Do not prefix url once it starts with http: or https:
+
 # 1.3.1 (2017-11-08)
 
 ## Bug fixes
