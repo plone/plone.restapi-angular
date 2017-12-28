@@ -34,6 +34,9 @@
 
 - Do not prefix url once it starts with http: or https:
 
+- url was missing from navlink interface. [Thomas Desvenain]
+
+
 # 1.3.1 (2017-11-08)
 
 ## Bug fixes

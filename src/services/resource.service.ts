@@ -147,9 +147,11 @@ export class ResourceService {
     return this.cache.get('/@navigation')
       .map((data: NavigationItems) => {
         if (data) {
-          return data.items.filter(item => {
-            return !item.properties || !item.properties.exclude_from_nav;
-          }).map(this.linkFromItem.bind(this));
+          return data.items
+            .filter((item: NavigationItem) => {
+              return !item.properties || !item.properties.exclude_from_nav;
+            })
+            .map(this.linkFromItem.bind(this));
         } else {
           return [];
         }
@@ -188,9 +190,10 @@ export class ResourceService {
   }
 
   private linkFromItem(item: NavigationItem): NavLink {
-    return <NavLink>Object.assign({
+    return {
       active: false,
-      path: this.configuration.urlToPath(item.url)
-    }, item);
+      path: this.configuration.urlToPath(item.url),
+      ...item
+    };
   }
 }
