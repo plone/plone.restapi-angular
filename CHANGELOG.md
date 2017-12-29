@@ -26,6 +26,8 @@
 
 - Add `vocabulary` method to retrieve zope vocabularies. [Thomas Desvenain]
 
+- We can configure request retries. [Thomas Desvenain]
+
 ## Bug fixes
 
 - Dont fail in normalising urls if path is null [Sune Wøller]
