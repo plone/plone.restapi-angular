@@ -1,11 +1,10 @@
-import { Injectable, EventEmitter } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-
-import { APIService } from './api.service';
-import { ConfigurationService } from './configuration.service';
 import { NavLink, SearchOptions, SearchResults, WorkflowHistoryItem, WorkflowInformation, WorkflowTransitionOptions } from '../interfaces';
-import { CacheService } from './cache.service';
 import { Vocabulary } from '../vocabularies';
+import { APIService } from './api.service';
+import { CacheService } from './cache.service';
+import { ConfigurationService } from './configuration.service';
 
 
 interface NavigationItem {
@@ -26,42 +25,7 @@ export class ResourceService {
   defaultExpand: any = {};
   public resourceModified: EventEmitter<{ id: string, context: any } | null> = new EventEmitter();
 
-  constructor(private api: APIService,
-              private cache: CacheService,
-              private configuration: ConfigurationService) {
-    this.resourceModified.subscribe(() => {
-      cache.revoke.emit();
-    });
-  }
-
-  copy(sourcePath: string, targetPath: string) {
-    const path = targetPath + '/@copy';
-    return this.emittingModified(
-      this.api.post(
-        targetPath + '/@copy',
-        { source: this.api.getFullPath(sourcePath) }
-      ), path
-    );
-  }
-
-  create(path: string, model: any) {
-    return this.emittingModified(
-      this.api.post(path, model), path
-    );
-  }
-
-  delete(path: string) {
-    return this.emittingModified(
-      this.api.delete(path), path
-    );
-  }
-
-  find(query: { [key: string]: any },
-       path: string = '/',
-       options: SearchOptions = {}): Observable<SearchResults> {
-    if (!path.endsWith('/')) {
-      path += '/';
-    }
+  public static getSearchQueryString(query: { [key: string]: any }, options: SearchOptions = {}): string {
     const params: string[] = [];
     Object.keys(query).map(index => {
       const criteria = query[index];
@@ -102,7 +66,48 @@ export class ResourceService {
     if (options.fullobjects) {
       params.push('fullobjects');
     }
-    return this.cache.get(path + '@search' + '?' + params.join('&'));
+    return params.join('&');
+  }
+
+  constructor(protected api: APIService,
+              protected cache: CacheService,
+              protected configuration: ConfigurationService) {
+    this.resourceModified.subscribe(() => {
+      cache.revoke.emit();
+    });
+  }
+
+  copy(sourcePath: string, targetPath: string) {
+    const path = targetPath + '/@copy';
+    return this.emittingModified(
+      this.api.post(
+        targetPath + '/@copy',
+        { source: this.api.getFullPath(sourcePath) }
+      ), path
+    );
+  }
+
+  create(path: string, model: any) {
+    return this.emittingModified(
+      this.api.post(path, model), path
+    );
+  }
+
+  delete(path: string) {
+    return this.emittingModified(
+      this.api.delete(path), path
+    );
+  }
+
+  find(query: { [key: string]: any },
+       path: string = '/',
+       options: SearchOptions = {}): Observable<SearchResults> {
+    if (!path.endsWith('/')) {
+      path += '/';
+    }
+
+    const queryString = ResourceService.getSearchQueryString(query, options);
+    return this.cache.get(path + '@search' + '?' + queryString);
   }
 
   get(path: string, expand?: string[]) {
