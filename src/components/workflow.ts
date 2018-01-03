@@ -86,7 +86,7 @@ export class Workflow extends TraversingComponent {
   }
 
   currentState(): string | null {
-    if (this.workflowInformation) {
+    if (this.workflowInformation && this.workflowInformation.history.length > 0) {
       return this.workflowInformation.history[this.workflowInformation.history.length - 1].title;
     } else {
       return '';
