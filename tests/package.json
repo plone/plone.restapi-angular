@@ -23,6 +23,7 @@
     "@angular/platform-server": "^5.0.0",
     "@angular/router": "^5.0.0",
     "angular-traversal": "^1.0.4",
+    "angular2-schema-form": "^1.2.0",
     "core-js": "^2.4.1",
     "rxjs": "^5.5.2",
     "zone.js": "^0.8.12"

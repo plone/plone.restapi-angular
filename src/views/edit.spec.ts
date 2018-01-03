@@ -5,6 +5,7 @@ import {
 } from '@angular/common/http/testing';
 
 import { APP_BASE_HREF } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 import { ConfigurationService } from '../services/configuration.service';
 import { APIService } from '../services/api.service';
@@ -26,7 +27,7 @@ describe('EditView', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [EditView],
-      imports: [HttpClientTestingModule, TraversalModule],
+      imports: [HttpClientTestingModule, TraversalModule, FormsModule],
       providers: [
         APIService,
         AuthenticationService,
