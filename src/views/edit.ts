@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Target } from 'angular-traversal';
 
 import { TraversingComponent } from '../traversing';
 import { Services } from '../services';
@@ -14,20 +15,19 @@ import { Services } from '../services';
 export class EditView extends TraversingComponent {
 
   model: any = {};
-  actions: any = {};
   path: string;
 
   constructor(services: Services) {
     super(services);
   }
 
-  onTraverse(target: any) {
+  onTraverse(target: Target) {
     this.path = target.contextPath;
     this.model = target.context;
   }
 
   onSave(data: any) {
-    this.services.resource.update(this.path, data).subscribe(res => {
+    this.services.resource.update(this.path, data).subscribe(() => {
       this.services.traverser.traverse(this.path);
     });
   }
