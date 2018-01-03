@@ -31,6 +31,7 @@ export interface Error {
 
 export interface NavLink {
   title: string;
+  url: string;
   path: string;
   active: boolean;
   properties?: any;

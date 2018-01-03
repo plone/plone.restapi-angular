@@ -1,18 +1,14 @@
 /* tslint:disable:no-unused-variable */
-
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import {
-  HttpTestingController,
-  HttpClientTestingModule
-} from '@angular/common/http/testing';
-
-import { APIService } from './api.service';
-import { ConfigurationService } from './configuration.service';
-import { AuthenticationService } from './authentication.service';
-import { ResourceService } from './resource.service';
-import { CacheService } from './cache.service';
-import { LoadingService } from './loading.service';
+import { NavLink } from '../interfaces';
 import { Vocabulary } from '../vocabularies';
+import { APIService } from './api.service';
+import { AuthenticationService } from './authentication.service';
+import { CacheService } from './cache.service';
+import { ConfigurationService } from './configuration.service';
+import { LoadingService } from './loading.service';
+import { ResourceService } from './resource.service';
 
 describe('ResourceService', () => {
   beforeEach(() => {
@@ -27,8 +23,8 @@ describe('ResourceService', () => {
         LoadingService,
         {
           provide: 'CONFIGURATION', useValue: {
-          BACKEND_URL: 'http://fake/Plone',
-        }
+            BACKEND_URL: 'http://fake/Plone',
+          }
         },
       ]
     });
@@ -73,7 +69,7 @@ describe('ResourceService', () => {
       'parent': {}
     };
 
-    service.get('/').subscribe(content => {
+    service.get('/').subscribe((content: any) => {
       id = content['@id'];
     });
 
@@ -100,9 +96,10 @@ describe('ResourceService', () => {
       'items_total': 1
     };
 
-    service.find({ SearchableText: 'John', path: { query: '/folder1', depth: 2 } }).subscribe(content => {
-      id = content.items[0]['@id'];
-    });
+    service.find({ SearchableText: 'John', path: { query: '/folder1', depth: 2 } })
+      .subscribe((content: any) => {
+        id = content.items[0]['@id'];
+      });
 
     http.expectOne('http://fake/Plone/@search?SearchableText=John&path.query=%2Ffolder1&path.depth=2').flush(response);
 
@@ -144,7 +141,7 @@ describe('ResourceService', () => {
       'items_total': 1
     };
 
-    service.find({ SearchableText: 'John' }, '/folder1').subscribe(content => {
+    service.find({ SearchableText: 'John' }, '/folder1').subscribe((content: any) => {
       id = content.items[0]['@id'];
     });
 
@@ -170,7 +167,7 @@ describe('ResourceService', () => {
       ],
       'items_total': 1
     };
-    service.find({ SearchableText: 'John' }, '', { sort_on: 'created' }).subscribe(content => {
+    service.find({ SearchableText: 'John' }, '', { sort_on: 'created' }).subscribe((content: any) => {
       id = content.items[0]['@id'];
     });
 
@@ -196,7 +193,7 @@ describe('ResourceService', () => {
       ],
       'items_total': 1
     };
-    service.find({ SearchableText: 'John' }, '', { review_state: 'private' }).subscribe(content => {
+    service.find({ SearchableText: 'John' }, '', { review_state: 'private' }).subscribe((content: any) => {
       id = content.items[0]['@id'];
     });
 
@@ -222,9 +219,10 @@ describe('ResourceService', () => {
       ],
       'items_total': 1
     };
-    service.find({ SearchableText: 'John' }, '', { metadata_fields: ['Creator', 'CreationDate'] }).subscribe(content => {
-      id = content.items[0]['@id'];
-    });
+    service.find({ SearchableText: 'John' }, '', { metadata_fields: ['Creator', 'CreationDate'] })
+      .subscribe((content: any) => {
+        id = content.items[0]['@id'];
+      });
 
     http.expectOne('http://fake/Plone/@search?SearchableText=John&metadata_fields:list=Creator&metadata_fields:list=CreationDate')
       .flush(response);
@@ -246,7 +244,7 @@ describe('ResourceService', () => {
       '@type': 'Document',
       'id': 'my-document',
       'title': 'My Document',
-    }).subscribe(content => {
+    }).subscribe((content: any) => {
       id = content.id;
     });
 
@@ -261,7 +259,7 @@ describe('ResourceService', () => {
     let received_content = 'invalid';
     const response = 'passed';
 
-    service.delete('/page1').subscribe(content => {
+    service.delete('/page1').subscribe((content: any) => {
       received_content = content;
     });
 
@@ -281,9 +279,10 @@ describe('ResourceService', () => {
       }
     ];
 
-    service.copy('/front-page', '/copy_of_front-page').subscribe(content => {
-      received_content = content[0].new;
-    });
+    service.copy('/front-page', '/copy_of_front-page')
+      .subscribe((content: any) => {
+        received_content = content[0].new;
+      });
 
     http.expectOne('http://fake/Plone/copy_of_front-page/@copy').flush(response);
 
@@ -301,9 +300,10 @@ describe('ResourceService', () => {
       }
     ];
 
-    service.move('/front-page', '/copy_of_front-page').subscribe(content => {
-      received_content = content[0].new;
-    });
+    service.move('/front-page', '/copy_of_front-page')
+      .subscribe((content: any) => {
+        received_content = content[0].new;
+      });
 
     http.expectOne('http://fake/Plone/copy_of_front-page/@move').flush(response);
 
@@ -322,9 +322,10 @@ describe('ResourceService', () => {
       'time': '2016-10-21T19:05:00+00:00'
     };
 
-    service.transition('/somepage', 'publish').subscribe(content => {
-      state = content.review_state;
-    });
+    service.transition('/somepage', 'publish')
+      .subscribe((content: any) => {
+        state = content.review_state;
+      });
 
     http.expectOne('http://fake/Plone/somepage/@workflow/publish').flush(response);
 
@@ -338,9 +339,10 @@ describe('ResourceService', () => {
     let received_content = 'invalid';
     const response = 'passed';
 
-    service.update('/somepage', { 'title': 'New title' }).subscribe(content => {
-      received_content = content;
-    });
+    service.update('/somepage', { 'title': 'New title' })
+      .subscribe((content: any) => {
+        received_content = content;
+      });
 
     http.expectOne('http://fake/Plone/somepage').flush(response);
 
@@ -352,6 +354,10 @@ describe('ResourceService', () => {
     const service = TestBed.get(ResourceService);
     const http = TestBed.get(HttpTestingController);
     let url = 'invalid';
+    let path = 'invalid';
+    let url2 = 'invalid';
+    let path2 = 'invalid';
+
     const response = {
       '@id': 'http://fake/Plone/front-page/@navigation',
       'items': [
@@ -366,13 +372,19 @@ describe('ResourceService', () => {
       ]
     };
 
-    service.navigation().subscribe(items => {
+    service.navigation().subscribe((items: NavLink[]) => {
       url = items[0].url;
+      path = items[0].path;
+      url2 = items[1].url;
+      path2 = items[1].path;
     });
 
     http.expectOne('http://fake/Plone/@navigation').flush(response);
 
     expect(url).toBe('http://fake/Plone');
+    expect(path).toBe('/');
+    expect(url2).toBe('http://fake/Plone/front-page');
+    expect(path2).toBe('/front-page');
   });
 
   it('should get breadcrumbs', () => {
@@ -394,7 +406,7 @@ describe('ResourceService', () => {
     };
 
 
-    service.breadcrumbs('/a-folder/test').subscribe(items => {
+    service.breadcrumbs('/a-folder/test').subscribe((items: NavLink[]) => {
       title = items[0].title;
     });
 
