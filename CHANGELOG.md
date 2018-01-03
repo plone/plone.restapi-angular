@@ -26,7 +26,7 @@
 
 - Add `vocabulary` method to retrieve zope vocabularies. [Thomas Desvenain]
 
-- We can configure request retries. [Thomas Desvenain]
+- We can configure request retries and auth token expiration delay. [Thomas Desvenain]
 
 ## Bug fixes
 
