@@ -26,6 +26,8 @@ It manages the following configuration values:
 - `PATCH_RETURNS_REPRESENTATION`: if true (by default), successful patch requests return a 200
   with full modified content representation as body.
   If false, it returns a 204 response with no content.
+- `RETRY_REQUEST_ATTEMPTS`: the number of times client will try a request when server is unavailable. (3 by default).
+- `RETRY_REQUEST_DELAY`: the retry delay in milliseconds (2000 by default).
 
 Methods:
 

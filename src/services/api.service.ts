@@ -87,9 +87,9 @@ export class APIService {
         /* retry when backend unavailable errors */
         return errors.delayWhen((response: Response) => {
           if ([0, 502, 503, 504].indexOf(response.status) >= 0) {
-            if (attempts < 3) {
+            if (attempts < this.config.get('RETRY_REQUEST_ATTEMPTS', 3)) {
               attempts += 1;
-              return Observable.timer(2000);
+              return Observable.timer(this.config.get('RETRY_REQUEST_DELAY', 2000));
             }
             this.setBackendAvailability(false);
           }
