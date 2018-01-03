@@ -42,14 +42,14 @@ export class LoadingService {
   isLoading(id: string): Observable<boolean> {
     return this.loadingIds.map((loadingIds: string[]) => {
       return loadingIds.indexOf(id) >= 0;
-    })
+    });
   }
 
 }
 
 @Injectable()
 export class LoadingInterceptor implements HttpInterceptor {
-  constructor(private loading: LoadingService) {}
+  constructor(protected loading: LoadingService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const loadingId = `${req.method}-${req.urlWithParams}`;

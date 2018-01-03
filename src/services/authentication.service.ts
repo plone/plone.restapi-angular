@@ -26,9 +26,9 @@ export class AuthenticationService {
 
   public isAuthenticated: BehaviorSubject<AuthenticatedStatus> = new BehaviorSubject({ state: false, username: null });
 
-  constructor(private config: ConfigurationService,
-              private http: HttpClient,
-              @Inject(PLATFORM_ID) private platformId: Object) {
+  constructor(protected config: ConfigurationService,
+              protected http: HttpClient,
+              @Inject(PLATFORM_ID) protected platformId: Object) {
     if (isPlatformBrowser(this.platformId)) {
       let token = localStorage.getItem('auth');
       const lastLogin = localStorage.getItem('auth_time');
