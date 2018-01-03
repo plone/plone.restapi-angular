@@ -48,9 +48,13 @@
 
 ## Refactor
 
+
 - Remove dependency on angular2-schema-form. [Eric Brehault]
 
 - Add an edit view with angular2-schema-form on test app. [Thomas Desvenain]
+
+- All services injected are protected to ease overloading [Thomas Desvenain]
+
 
 
 # 1.3.1 (2017-11-08)
