@@ -4,7 +4,7 @@ import { Inject, Injectable } from '@angular/core';
 export class ConfigurationService {
 
   constructor(
-    @Inject('CONFIGURATION') private config: any,
+    @Inject('CONFIGURATION') protected config: any,
   ) {}
 
   get(key: string, defaultValue?: any): any {

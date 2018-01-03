@@ -18,8 +18,8 @@ export class NavigationService {
   public refreshNavigation: EventEmitter<null> = new EventEmitter();
 
   constructor(auth: AuthenticationService,
-              private resource: ResourceService,
-              private config: ConfigurationService) {
+              protected resource: ResourceService,
+              protected config: ConfigurationService) {
     resource.resourceModified
       .merge(auth.isAuthenticated)
       .subscribe(() => {

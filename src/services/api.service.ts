@@ -18,9 +18,9 @@ export class APIService {
   );
   public backendAvailable: BehaviorSubject<boolean> = new BehaviorSubject(true);
 
-  constructor(private authentication: AuthenticationService,
-              private config: ConfigurationService,
-              private http: HttpClient,
+  constructor(protected authentication: AuthenticationService,
+              protected config: ConfigurationService,
+              protected http: HttpClient,
               loading: LoadingService) {
     loading.status.subscribe((isLoading: boolean) => {
       this.status.next({ loading: isLoading });

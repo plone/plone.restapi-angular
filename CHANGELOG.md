@@ -36,12 +36,17 @@
 
 - url was missing from navlink interface. [Thomas Desvenain]
 
+## Refactor
+
+- All services injected are protected to ease overloading [Thomas Desvenain]
+
 
 # 1.3.1 (2017-11-08)
 
 ## Bug fixes
 
 - Move from @components plone.restapi endpoint to @navigation and @breadcrumbs [Sune Brøndum Wøller]
+
 - More robust error handling [Thomas Desvenain]
 
 # 1.3.0 (2017-11-04)

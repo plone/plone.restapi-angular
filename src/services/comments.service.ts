@@ -7,8 +7,8 @@ import { CacheService } from './cache.service';
 @Injectable()
 export class CommentsService {
 
-  constructor(private api: APIService,
-              private cache: CacheService) {
+  constructor(protected api: APIService,
+              protected cache: CacheService) {
   }
 
   add(path: string, data: Object): Observable<any> {
