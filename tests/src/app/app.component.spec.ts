@@ -7,17 +7,19 @@ import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/t
 import { APP_BASE_HREF } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RESTAPIModule } from '@plone/restapi-angular';
+import { SchemaFormModule } from 'angular2-schema-form';
 
 import { AppComponent } from './app.component';
 import { Search } from './components/search';
-import { CustomViewView } from './custom';
+import { CustomSfEditView, CustomViewView } from './custom';
 import { CustomGlobalNavigation } from './custom';
 
 @Component({
   selector: 'custom-breadcrumbs',
   template: ''
 })
-export class FakeCustomBreadcrumbs {}
+export class FakeCustomBreadcrumbs {
+}
 
 describe('AppComponent', () => {
   beforeEach(() => {
@@ -25,6 +27,7 @@ describe('AppComponent', () => {
       declarations: [
         AppComponent,
         CustomViewView,
+        CustomSfEditView,
         FakeCustomBreadcrumbs,
         CustomGlobalNavigation,
         Search,
@@ -32,6 +35,7 @@ describe('AppComponent', () => {
       imports: [
         HttpClientTestingModule,
         RESTAPIModule,
+        SchemaFormModule.forRoot(),
         FormsModule,
       ],
       providers: [
@@ -46,7 +50,7 @@ describe('AppComponent', () => {
 
     TestBed.overrideModule(BrowserDynamicTestingModule, {
       set: {
-        entryComponents: [ CustomViewView ],
+        entryComponents: [CustomViewView],
       },
     });
   });
