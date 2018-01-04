@@ -17,9 +17,9 @@ export class CacheService {
   public hits: { [key: string]: number } = {};
 
   constructor(
-    private auth: AuthenticationService,
-    public api: APIService,
-    public config: ConfigurationService
+    protected auth: AuthenticationService,
+    protected api: APIService,
+    protected config: ConfigurationService
   ) {
     const service = this;
     this.auth.isAuthenticated.subscribe(() => {
