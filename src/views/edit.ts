@@ -1,68 +1,33 @@
 import { Component } from '@angular/core';
+import { Target } from 'angular-traversal';
 
 import { TraversingComponent } from '../traversing';
 import { Services } from '../services';
 
 @Component({
   selector: 'plone-edit',
-  template: `<sf-form [schema]="schema" [model]="model" [actions]="actions"></sf-form>`
+  template: `<form #f="ngForm" (submit)="onSave(f.value)">
+  <p><label>Title : <input type="text" name="title" [ngModel]="model.title" /></label></p>
+  <p><label>Description : <textarea name="description" [ngModel]="model.description"></textarea></label></p>
+  <button (click)="onSave(f.value)">Save</button><button (click)="onCancel()">Cancel</button>
+</form>`
 })
 export class EditView extends TraversingComponent {
 
-  schema: any;
-  model: any;
-  actions: any = {};
+  model: any = {};
   path: string;
 
-  constructor(
-    public services: Services,
-  ) {
+  constructor(services: Services) {
     super(services);
-    this.model = {};
-    this.schema = {
-      'properties': {},
-      'buttons': [
-        { id: 'save', label: 'Save' },
-        { id: 'cancel', label: 'Cancel' }
-      ]
-    };
   }
 
-  onTraverse(target: any) {
-    this.actions = {
-      save: this.onSave.bind(this),
-      cancel: this.onCancel.bind(this)
-    };
+  onTraverse(target: Target) {
     this.path = target.contextPath;
-    let model = target.context;
-    this.services.resource.type(target.context['@type']).subscribe(schema => {
-      schema.buttons = [
-        { id: 'save', label: 'Save' },
-        { id: 'cancel', label: 'Cancel' }
-      ];
-      // FIX THE SCHEMA AND THE MODEL
-      for (let property in schema.properties) {
-        if (property === 'allow_discussion') {
-          schema.properties[property].type = 'boolean';
-        }
-        if (property === 'effective' || property === 'expires') {
-          schema.properties[property].widget = 'date';
-        }
-      }
-
-      this.schema = schema;
-      this.model = model;
-    });
+    this.model = target.context;
   }
 
-  onSave(schemaForm: any) {
-    let model = schemaForm.value;
-    Object.keys(model).forEach(key => {
-      if (model[key] === '' && this.schema.properties[key].widget.id === 'date') {
-        model[key] = null;
-      }
-    });
-    this.services.resource.update(this.path, model).subscribe(res => {
+  onSave(data: any) {
+    this.services.resource.update(this.path, data).subscribe(() => {
       this.services.traverser.traverse(this.path);
     });
   }

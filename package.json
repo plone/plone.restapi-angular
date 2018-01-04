@@ -26,8 +26,7 @@
   },
   "homepage": "https://github.com/plone/plone.restapi-angular#readme",
   "dependencies": {
-    "angular-traversal": "^1.0.4",
-    "angular2-schema-form": "^1.0.0-beta.12"
+    "angular-traversal": "^1.0.4"
   },
   "devDependencies": {
     "@angular/compiler-cli": "^5.0.0",

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PloneViews, Services } from '@plone/restapi-angular';
 
-import { CustomViewView } from './custom';
+import { CustomSfEditView, CustomViewView } from './custom';
 import { AuthenticatedStatus, LoadingStatus, Vocabulary, SearchView } from '@plone/restapi-angular';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 

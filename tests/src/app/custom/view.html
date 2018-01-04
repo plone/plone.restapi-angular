@@ -1,4 +1,7 @@
-<button *ngIf="mode !== 'edit'" (click)="mode = 'edit'">Edit</button>
+<button *ngIf="mode !== 'edit'"
+        (click)="changeMode('edit')">Edit</button>
+<button *ngIf="mode !== 'edit'"
+        (click)="changeMode('advanced-edit')">Advanced edit</button>
 <ng-container *ngIf="mode === 'view'">
   <h1>{{ context.title }}</h1>
 
@@ -26,4 +29,7 @@
 </ng-container>
 <ng-container *ngIf="mode === 'edit'">
   <plone-edit></plone-edit>
+</ng-container>
+<ng-container *ngIf="mode === 'advanced-edit'">
+  <custom-sf-edit></custom-sf-edit>
 </ng-container>
