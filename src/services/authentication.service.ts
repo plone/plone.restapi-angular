@@ -33,7 +33,7 @@ export class AuthenticationService {
       let token = localStorage.getItem('auth');
       const lastLogin = localStorage.getItem('auth_time');
       // token expires after 12 hours
-      const expire = 12 * 60 * 60 * 1000;
+      const expire = config.get('AUTH_TOKEN_EXPIRES', 12 * 60 * 60 * 1000);
       if (!lastLogin || (Date.now() - Date.parse(lastLogin) > expire)) {
         localStorage.removeItem('auth');
         token = null;

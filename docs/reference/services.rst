@@ -22,6 +22,7 @@ Configuration
 
 It manages the following configuration values:
 
+- `AUTH_TOKEN_EXPIRES`: the expiration delay of the authentication token stored in local storage, in milliseconds (1 day by default).
 - `BACKEND_URL`: the URL of the backend searver exposing a valid Plone REST API
 - `PATCH_RETURNS_REPRESENTATION`: if true (by default), successful patch requests return a 200
   with full modified content representation as body.
