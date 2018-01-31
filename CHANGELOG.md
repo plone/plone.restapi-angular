@@ -40,6 +40,8 @@
 
 - url was missing from navlink interface. [Thomas Desvenain]
 
+- Fixed Date search criteria. [Thomas Desvenain]
+
 ## Refactor
 
 - All services injected are protected to ease overloading [Thomas Desvenain]

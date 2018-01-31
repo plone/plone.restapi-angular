@@ -122,6 +122,11 @@ describe('ResourceService', () => {
     expect(ResourceService.getSearchQueryString({ is_folderish: false }))
       .toBe('is_folderish=0');
 
+    expect(ResourceService.getSearchQueryString({
+      created: new Date(Date.UTC(2018, 12-1, 29, 0, 0, 0))
+    }))
+      .toBe('created=2018-12-29T00%3A00%3A00.000Z');
+
   });
   it('should search contents in context', () => {
     const service = TestBed.get(ResourceService);
