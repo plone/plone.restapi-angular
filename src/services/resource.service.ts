@@ -37,6 +37,8 @@ export class ResourceService {
         criteria.map(value => {
           params.push(index + '=' + encodeURIComponent(value));
         });
+      } else if (criteria instanceof Date) {
+        params.push(index + '=' + encodeURIComponent(criteria.toISOString()));
       } else {
         Object.keys(criteria).map(key => {
           params.push(index + '.' + key + '=' + encodeURIComponent(criteria[key]));

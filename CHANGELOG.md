@@ -34,6 +34,8 @@
 
 - Do not prefix url once it starts with http: or https:
 
+- Fixed Date search criteria. [Thomas Desvenain]
+
 ## Refactor
 
 - All services injected are protected to ease overloading [Thomas Desvenain]
