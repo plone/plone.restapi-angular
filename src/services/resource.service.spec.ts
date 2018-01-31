@@ -193,7 +193,7 @@ describe('ResourceService', () => {
       ],
       'items_total': 1
     };
-    service.find({ SearchableText: 'John' }, '', { review_state: 'private' }).subscribe((content: any) => {
+    service.find({ SearchableText: 'John', review_state: 'private' }, '').subscribe((content: any) => {
       id = content.items[0]['@id'];
     });
 
