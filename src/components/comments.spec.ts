@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DatePipe } from '@angular/common';
-import { Comment as CommentItem } from '../interfaces';
+import { CommentItem } from '../interfaces';
 
 import { Comment } from './comments';
 

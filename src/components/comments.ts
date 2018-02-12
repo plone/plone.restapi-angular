@@ -9,7 +9,7 @@ import { NgForm } from '@angular/forms';
 import { Services } from '../services';
 import { TraversingComponent } from '../traversing';
 import { Target } from 'angular-traversal';
-import { Comment as CommentItem, TextValue } from '../interfaces';
+import { CommentItem, TextValue } from '../interfaces';
 
 @Component({
   selector: 'plone-comment',
