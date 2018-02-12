@@ -32,6 +32,8 @@
 
 - We can configure request retries and auth token expiration delay. [Thomas Desvenain]
 
+- Add interface and helper for file field value upload. [Thomas Desvenain]
+
 ## Bug fixes
 
 - Dont fail in normalising urls if path is null [Sune Wøller]

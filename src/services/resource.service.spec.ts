@@ -1,7 +1,7 @@
 /* tslint:disable:no-unused-variable */
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { TestBed } from '@angular/core/testing';
-import { NavLink } from '../interfaces';
+import { fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { NamedFileUpload, NavLink } from '../interfaces';
 import { Vocabulary } from '../vocabularies';
 import { APIService } from './api.service';
 import { AuthenticationService } from './authentication.service';
@@ -480,4 +480,17 @@ describe('ResourceService', () => {
     expect(vocabulary.byToken('Document').title).toBe('Page');
   });
 
+  it('should get a file upload', fakeAsync(() => {
+    const blob: { [key: string]: any } = new Blob([''], { type: 'text/csv' });
+    blob['name'] = 'filename.csv';
+
+    const fakeF = <File>blob;
+    let namedFile: NamedFileUpload = <NamedFileUpload>{};
+    ResourceService.lightFileRead(fakeF).subscribe((data: NamedFileUpload) => {
+      namedFile = data;
+      expect(namedFile.filename).toBe('filename.csv');
+      expect(namedFile['content-type']).toBe('text/csv');
+    });
+    tick();
+  }));
 });
