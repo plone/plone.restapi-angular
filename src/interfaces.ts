@@ -60,6 +60,7 @@ export interface TextValue {
 }
 
 export interface CommentItem {
+  '@id': string;
   author_name: string;
   author_username: string;
   comment_id: string;
