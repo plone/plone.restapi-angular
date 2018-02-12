@@ -1,6 +1,7 @@
 /* tslint:disable:no-unused-variable */
 
 import { TestBed } from '@angular/core/testing';
+import 'rxjs/add/observable/forkJoin';
 
 import {
   HttpTestingController,

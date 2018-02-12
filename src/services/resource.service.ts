@@ -1,6 +1,15 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { NavLink, SearchOptions, SearchResults, WorkflowHistoryItem, WorkflowInformation, WorkflowTransitionOptions } from '../interfaces';
+import { Subscriber } from 'rxjs/Subscriber';
+import {
+  NamedFileUpload,
+  NavLink,
+  SearchOptions,
+  SearchResults,
+  WorkflowHistoryItem,
+  WorkflowInformation,
+  WorkflowTransitionOptions
+} from '../interfaces';
 import { Vocabulary } from '../vocabularies';
 import { APIService } from './api.service';
 import { CacheService } from './cache.service';
@@ -66,6 +75,24 @@ export class ResourceService {
       params.push('fullobjects');
     }
     return params.join('&');
+  }
+
+  public static lightFileRead(file: File): Observable<NamedFileUpload> {
+    return Observable.create(observeFileRead);
+
+    function observeFileRead(observer: Subscriber<NamedFileUpload>) {
+      const reader = new FileReader();
+      reader.readAsBinaryString(file);
+      reader.onloadend = (e: any) => {
+        const fileData = btoa(e.target.result);
+        observer.next({
+          filename: file.name, data: fileData,
+          encoding: 'base64',
+          'content-type': file.type,
+        });
+        observer.complete();
+      };
+    }
   }
 
   constructor(protected api: APIService,

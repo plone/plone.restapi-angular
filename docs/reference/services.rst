@@ -87,8 +87,6 @@ Methods:
 
 `delete(path: string)`: remove the requested resource as an observable. Returns an observable.
 
-`getSearchQueryString`: (static) get a query string from a criterion/value(s) mapping and options object. Used by `find` method.
-
 `find(query: any,  path: string='/', options: SearchOptions={})`: returns the search results as an observable.
 
   See `http://plonerestapi.readthedocs.io/en/latest/searching.html#search <http://plonerestapi.readthedocs.io/en/latest/searching.html#search>`_.
@@ -101,7 +99,11 @@ Methods:
   - sort_order: string, `'reverse'` to get a reversed order,
   - fullobjects: boolean, if `True`, the result will be fully serialized objects, not just metadata.
 
+`getSearchQueryString`: (static) get a query string from a criterion/value(s) mapping and options object. Used by `find` method.
+
 `get(path: string, expand?: string[])`: returns the requested resource as an observable. `expand` allow to specify extra expansion (they will be added to `defaultExpand`).
+
+`lightFileRead(file: File): Observable<NamedFileUpload>`: (static) get a plone file field from a javascript File object. Not suitable for big files.
 
 `move(sourcePath: string, targetPath: string)`: move the resource to another location. Returns an observable.
 
