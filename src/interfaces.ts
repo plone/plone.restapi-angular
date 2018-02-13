@@ -59,7 +59,8 @@ export interface TextValue {
   'mime-type': string;
 }
 
-export interface Comment {
+export interface CommentItem {
+  '@id': string;
   author_name: string;
   author_username: string;
   comment_id: string;

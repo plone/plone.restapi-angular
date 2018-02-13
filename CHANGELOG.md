@@ -45,6 +45,8 @@
 
 - Fixed Date search criteria. [Thomas Desvenain]
 
+- Renamed Comment interface to CommentItem to prevent name collision with component.
+
 ## Refactor
 
 - All services injected are protected to ease overloading [Thomas Desvenain]
