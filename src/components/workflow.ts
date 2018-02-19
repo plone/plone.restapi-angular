@@ -76,7 +76,6 @@ export class Workflow extends TraversingComponent {
         this.workflowStateChanged.emit(historyItem);
         this.loadWorkflowInformation();
       }, (error: Error) => {
-        console.log(error);
         if (error.type === 'WorkflowException' || error.response && error.response.status === 404) {
           this.workflowInformation = null;
         } else {
