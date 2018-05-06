@@ -30,6 +30,7 @@ export interface Error {
  */
 
 export interface NavLink {
+  '@id': string;
   title: string;
   url: string;
   path: string;
