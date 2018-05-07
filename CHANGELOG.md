@@ -15,6 +15,7 @@
 
 - `review_state` is not a possible search *option* anymore. It is now a possible search criterion only.
 
+
 ## New features
 
 - Add plone-workflow component. [Thomas Desvenain]
@@ -34,6 +35,8 @@
 - We can configure request retries and auth token expiration delay. [Thomas Desvenain]
 
 - Add interface and helper for file field value upload. [Thomas Desvenain]
+
+- Compatibility with plone.restapi 1.0b1 and later: url has been renamed to @id on @navigation and @breadcrumb endpoints. Keep the url property on the NavLink interface to be backwards compatible. [Sune Wøller]
 
 ## Bug fixes
 

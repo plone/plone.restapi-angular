@@ -368,11 +368,11 @@ describe('ResourceService', () => {
       'items': [
         {
           'title': 'Home',
-          'url': 'http://fake/Plone'
+          '@id': 'http://fake/Plone'
         },
         {
           'title': 'Welcome to Plone',
-          'url': 'http://fake/Plone/front-page'
+          '@id': 'http://fake/Plone/front-page'
         }
       ]
     };
@@ -401,11 +401,11 @@ describe('ResourceService', () => {
       'items': [
         {
           'title': 'A folder',
-          'url': 'http://fake/Plone/a-folder'
+          '@id': 'http://fake/Plone/a-folder'
         },
         {
           'title': 'test',
-          'url': 'http://fake/Plone/a-folder/test'
+          '@id': 'http://fake/Plone/a-folder/test'
         }
       ]
     };

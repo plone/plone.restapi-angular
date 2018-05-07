@@ -18,7 +18,7 @@ import { ConfigurationService } from './configuration.service';
 
 interface NavigationItem {
   title: string;
-  url: string;
+  '@id': string;
   properties?: any;
 }
 
@@ -218,7 +218,8 @@ export class ResourceService {
   private linkFromItem(item: NavigationItem): NavLink {
     return {
       active: false,
-      path: this.configuration.urlToPath(item.url),
+      url: item['@id'],
+      path: this.configuration.urlToPath(item['@id']),
       ...item
     };
   }
