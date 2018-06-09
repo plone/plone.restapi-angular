@@ -1,5 +1,8 @@
 /* tslint:disable:no-unused-variable */
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import {
+  HttpClientTestingModule,
+  HttpTestingController
+} from '@angular/common/http/testing';
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { NamedFileUpload, NavLink } from '../interfaces';
 import { Vocabulary } from '../vocabularies';
@@ -22,10 +25,11 @@ describe('ResourceService', () => {
         ConfigurationService,
         LoadingService,
         {
-          provide: 'CONFIGURATION', useValue: {
-            BACKEND_URL: 'http://fake/Plone',
+          provide: 'CONFIGURATION',
+          useValue: {
+            BACKEND_URL: 'http://fake/Plone'
           }
-        },
+        }
       ]
     });
   });
@@ -38,35 +42,36 @@ describe('ResourceService', () => {
     const response = {
       '@id': 'http://fake/Plone/',
       '@type': 'Plone Site',
-      'id': 'Plone',
-      'items': [
+      id: 'Plone',
+      items: [
         {
           '@id': 'http://fake/Plone/front-page',
           '@type': 'Document',
-          'description': 'Congratulations! You have successfully installed Plone.',
-          'title': 'Welcome to Plone'
+          description:
+            'Congratulations! You have successfully installed Plone.',
+          title: 'Welcome to Plone'
         },
         {
           '@id': 'http://fake/Plone/news',
           '@type': 'Folder',
-          'description': 'Site News',
-          'title': 'News'
+          description: 'Site News',
+          title: 'News'
         },
         {
           '@id': 'http://fake/Plone/events',
           '@type': 'Folder',
-          'description': 'Site Events',
-          'title': 'Events'
+          description: 'Site Events',
+          title: 'Events'
         },
         {
           '@id': 'http://fake/Plone/Members',
           '@type': 'Folder',
-          'description': 'Site Users',
-          'title': 'Users'
+          description: 'Site Users',
+          title: 'Users'
         }
       ],
-      'items_total': 5,
-      'parent': {}
+      items_total: 5,
+      parent: {}
     };
 
     service.get('/').subscribe((content: any) => {
@@ -84,49 +89,69 @@ describe('ResourceService', () => {
     let id = '';
     const response = {
       '@id': 'http://fake/Plone/@search',
-      'items': [
+      items: [
         {
           '@id': 'http://fake/Plone/folder1/page1',
           '@type': 'Document',
-          'description': 'Congratulations! You have successfully installed Plone.',
-          'review_state': 'private',
-          'title': 'Welcome to Plone'
+          description:
+            'Congratulations! You have successfully installed Plone.',
+          review_state: 'private',
+          title: 'Welcome to Plone'
         }
       ],
-      'items_total': 1
+      items_total: 1
     };
 
-    service.find({ SearchableText: 'John', path: { query: '/folder1', depth: 2 } })
+    service
+      .find({ SearchableText: 'John', path: { query: '/folder1', depth: 2 } })
       .subscribe((content: any) => {
         id = content.items[0]['@id'];
       });
 
-    http.expectOne('http://fake/Plone/@search?SearchableText=John&path.query=%2Ffolder1&path.depth=2').flush(response);
+    http
+      .expectOne(
+        'http://fake/Plone/@search?SearchableText=John&path.query=%2Ffolder1&path.depth=2'
+      )
+      .flush(response);
 
     expect(id).toBe('http://fake/Plone/folder1/page1');
   });
   it('should generate search query string contents', () => {
-    expect(ResourceService.getSearchQueryString({ portal_type: 'News Item', Subject: 'biology' }))
-      .toBe('portal_type=News%20Item&Subject=biology');
+    expect(
+      ResourceService.getSearchQueryString({
+        portal_type: 'News Item',
+        Subject: 'biology'
+      })
+    ).toBe('portal_type=News%20Item&Subject=biology');
 
-    expect(ResourceService.getSearchQueryString({ portal_type: ['Page', 'News Item'] }))
-      .toBe('portal_type=Page&portal_type=News%20Item');
+    expect(
+      ResourceService.getSearchQueryString({
+        portal_type: ['Page', 'News Item']
+      })
+    ).toBe('portal_type=Page&portal_type=News%20Item');
 
-    expect(ResourceService.getSearchQueryString({ portal_type: ['Page', 'News Item'] },
-      { sort_on: 'sortable_title', sort_order: 'desc' }))
-      .toBe('portal_type=Page&portal_type=News%20Item&sort_on=sortable_title&sort_order=desc');
+    expect(
+      ResourceService.getSearchQueryString(
+        { portal_type: ['Page', 'News Item'] },
+        { sort_on: 'sortable_title', sort_order: 'desc' }
+      )
+    ).toBe(
+      'portal_type=Page&portal_type=News%20Item&sort_on=sortable_title&sort_order=desc'
+    );
 
-    expect(ResourceService.getSearchQueryString({ is_folderish: true }))
-      .toBe('is_folderish=1');
+    expect(ResourceService.getSearchQueryString({ is_folderish: true })).toBe(
+      'is_folderish=1'
+    );
 
-    expect(ResourceService.getSearchQueryString({ is_folderish: false }))
-      .toBe('is_folderish=0');
+    expect(ResourceService.getSearchQueryString({ is_folderish: false })).toBe(
+      'is_folderish=0'
+    );
 
-    expect(ResourceService.getSearchQueryString({
-      created: new Date(Date.UTC(2018, 12-1, 29, 0, 0, 0))
-    }))
-      .toBe('created=2018-12-29T00%3A00%3A00.000Z');
-
+    expect(
+      ResourceService.getSearchQueryString({
+        created: new Date(Date.UTC(2018, 12 - 1, 29, 0, 0, 0))
+      })
+    ).toBe('created=2018-12-29T00%3A00%3A00.000Z');
   });
   it('should search contents in context', () => {
     const service = TestBed.get(ResourceService);
@@ -134,23 +159,28 @@ describe('ResourceService', () => {
     let id = '';
     const response = {
       '@id': 'http://fake/Plone/folder1/@search',
-      'items': [
+      items: [
         {
           '@id': 'http://fake/Plone/folder1/page1',
           '@type': 'Document',
-          'description': 'Congratulations! You have successfully installed Plone.',
-          'review_state': 'private',
-          'title': 'Welcome to Plone'
+          description:
+            'Congratulations! You have successfully installed Plone.',
+          review_state: 'private',
+          title: 'Welcome to Plone'
         }
       ],
-      'items_total': 1
+      items_total: 1
     };
 
-    service.find({ SearchableText: 'John' }, '/folder1').subscribe((content: any) => {
-      id = content.items[0]['@id'];
-    });
+    service
+      .find({ SearchableText: 'John' }, '/folder1')
+      .subscribe((content: any) => {
+        id = content.items[0]['@id'];
+      });
 
-    http.expectOne('http://fake/Plone/folder1/@search?SearchableText=John').flush(response);
+    http
+      .expectOne('http://fake/Plone/folder1/@search?SearchableText=John')
+      .flush(response);
 
     expect(id).toBe('http://fake/Plone/folder1/page1');
   });
@@ -161,22 +191,29 @@ describe('ResourceService', () => {
     let id = '';
     const response = {
       '@id': 'http://fake/Plone/@search',
-      'items': [
+      items: [
         {
           '@id': 'http://fake/Plone/folder1/page1',
           '@type': 'Document',
-          'description': 'Congratulations! You have successfully installed Plone.',
-          'review_state': 'private',
-          'title': 'Welcome to Plone'
+          description:
+            'Congratulations! You have successfully installed Plone.',
+          review_state: 'private',
+          title: 'Welcome to Plone'
         }
       ],
-      'items_total': 1
+      items_total: 1
     };
-    service.find({ SearchableText: 'John' }, '', { sort_on: 'created' }).subscribe((content: any) => {
-      id = content.items[0]['@id'];
-    });
+    service
+      .find({ SearchableText: 'John' }, '', { sort_on: 'created' })
+      .subscribe((content: any) => {
+        id = content.items[0]['@id'];
+      });
 
-    http.expectOne('http://fake/Plone/@search?SearchableText=John&sort_on=created').flush(response);
+    http
+      .expectOne(
+        'http://fake/Plone/@search?SearchableText=John&sort_on=created'
+      )
+      .flush(response);
 
     expect(id).toBe('http://fake/Plone/folder1/page1');
   });
@@ -187,22 +224,29 @@ describe('ResourceService', () => {
     let id = '';
     const response = {
       '@id': 'http://fake/Plone/@search',
-      'items': [
+      items: [
         {
           '@id': 'http://fake/Plone/folder1/page1',
           '@type': 'Document',
-          'description': 'Congratulations! You have successfully installed Plone.',
-          'review_state': 'private',
-          'title': 'Welcome to Plone'
+          description:
+            'Congratulations! You have successfully installed Plone.',
+          review_state: 'private',
+          title: 'Welcome to Plone'
         }
       ],
-      'items_total': 1
+      items_total: 1
     };
-    service.find({ SearchableText: 'John', review_state: 'private' }, '').subscribe((content: any) => {
-      id = content.items[0]['@id'];
-    });
+    service
+      .find({ SearchableText: 'John', review_state: 'private' }, '')
+      .subscribe((content: any) => {
+        id = content.items[0]['@id'];
+      });
 
-    http.expectOne('http://fake/Plone/@search?SearchableText=John&review_state=private').flush(response);
+    http
+      .expectOne(
+        'http://fake/Plone/@search?SearchableText=John&review_state=private'
+      )
+      .flush(response);
 
     expect(id).toBe('http://fake/Plone/folder1/page1');
   });
@@ -213,23 +257,30 @@ describe('ResourceService', () => {
     let id = '';
     const response = {
       '@id': 'http://fake/Plone/@search',
-      'items': [
+      items: [
         {
           '@id': 'http://fake/Plone/folder1/page1',
           '@type': 'Document',
-          'description': 'Congratulations! You have successfully installed Plone.',
-          'review_state': 'private',
-          'title': 'Welcome to Plone'
+          description:
+            'Congratulations! You have successfully installed Plone.',
+          review_state: 'private',
+          title: 'Welcome to Plone'
         }
       ],
-      'items_total': 1
+      items_total: 1
     };
-    service.find({ SearchableText: 'John' }, '', { metadata_fields: ['Creator', 'CreationDate'] })
+    service
+      .find({ SearchableText: 'John' }, '', {
+        metadata_fields: ['Creator', 'CreationDate']
+      })
       .subscribe((content: any) => {
         id = content.items[0]['@id'];
       });
 
-    http.expectOne('http://fake/Plone/@search?SearchableText=John&metadata_fields:list=Creator&metadata_fields:list=CreationDate')
+    http
+      .expectOne(
+        'http://fake/Plone/@search?SearchableText=John&metadata_fields:list=Creator&metadata_fields:list=CreationDate'
+      )
       .flush(response);
 
     id = 'http://fake/Plone/folder1/page1';
@@ -241,17 +292,19 @@ describe('ResourceService', () => {
     let id = '';
     const response = {
       '@type': 'Document',
-      'id': 'my-document',
-      'title': 'My Document',
+      id: 'my-document',
+      title: 'My Document'
     };
 
-    service.create('/folder1', {
-      '@type': 'Document',
-      'id': 'my-document',
-      'title': 'My Document',
-    }).subscribe((content: any) => {
-      id = content.id;
-    });
+    service
+      .create('/folder1', {
+        '@type': 'Document',
+        id: 'my-document',
+        title: 'My Document'
+      })
+      .subscribe((content: any) => {
+        id = content.id;
+      });
 
     http.expectOne('http://fake/Plone/folder1').flush(response);
 
@@ -279,17 +332,20 @@ describe('ResourceService', () => {
     let received_content = 'invalid';
     const response = [
       {
-        'new': 'http://fake/Plone/copy_of_front-page',
-        'old': 'http://fake/Plone/front-page'
+        new: 'http://fake/Plone/copy_of_front-page',
+        old: 'http://fake/Plone/front-page'
       }
     ];
 
-    service.copy('/front-page', '/copy_of_front-page')
+    service
+      .copy('/front-page', '/copy_of_front-page')
       .subscribe((content: any) => {
         received_content = content[0].new;
       });
 
-    http.expectOne('http://fake/Plone/copy_of_front-page/@copy').flush(response);
+    http
+      .expectOne('http://fake/Plone/copy_of_front-page/@copy')
+      .flush(response);
 
     expect(received_content).toBe('http://fake/Plone/copy_of_front-page');
   });
@@ -300,17 +356,20 @@ describe('ResourceService', () => {
     let received_content = 'invalid';
     const response = [
       {
-        'new': 'http://fake/Plone/copy_of_front-page',
-        'old': 'http://fake/Plone/front-page'
+        new: 'http://fake/Plone/copy_of_front-page',
+        old: 'http://fake/Plone/front-page'
       }
     ];
 
-    service.move('/front-page', '/copy_of_front-page')
+    service
+      .move('/front-page', '/copy_of_front-page')
       .subscribe((content: any) => {
         received_content = content[0].new;
       });
 
-    http.expectOne('http://fake/Plone/copy_of_front-page/@move').flush(response);
+    http
+      .expectOne('http://fake/Plone/copy_of_front-page/@move')
+      .flush(response);
 
     expect(received_content).toBe('http://fake/Plone/copy_of_front-page');
   });
@@ -320,19 +379,20 @@ describe('ResourceService', () => {
     const http = TestBed.get(HttpTestingController);
     let state = 'invalid';
     const response = {
-      'action': 'publish',
-      'actor': 'admin',
-      'comments': '',
-      'review_state': 'published',
-      'time': '2016-10-21T19:05:00+00:00'
+      action: 'publish',
+      actor: 'admin',
+      comments: '',
+      review_state: 'published',
+      time: '2016-10-21T19:05:00+00:00'
     };
 
-    service.transition('/somepage', 'publish')
-      .subscribe((content: any) => {
-        state = content.review_state;
-      });
+    service.transition('/somepage', 'publish').subscribe((content: any) => {
+      state = content.review_state;
+    });
 
-    http.expectOne('http://fake/Plone/somepage/@workflow/publish').flush(response);
+    http
+      .expectOne('http://fake/Plone/somepage/@workflow/publish')
+      .flush(response);
 
     expect(state).toBe('published');
     // TODO:  check verb and status code
@@ -344,7 +404,8 @@ describe('ResourceService', () => {
     let received_content = 'invalid';
     const response = 'passed';
 
-    service.update('/somepage', { 'title': 'New title' })
+    service
+      .update('/somepage', { title: 'New title' })
       .subscribe((content: any) => {
         received_content = content;
       });
@@ -365,13 +426,13 @@ describe('ResourceService', () => {
 
     const response = {
       '@id': 'http://fake/Plone/front-page/@navigation',
-      'items': [
+      items: [
         {
-          'title': 'Home',
+          title: 'Home',
           '@id': 'http://fake/Plone'
         },
         {
-          'title': 'Welcome to Plone',
+          title: 'Welcome to Plone',
           '@id': 'http://fake/Plone/front-page'
         }
       ]
@@ -398,24 +459,25 @@ describe('ResourceService', () => {
     let title = 'invalid';
     const response = {
       '@id': 'http://fake/Plone/a-folder/test/@breadcrumbs',
-      'items': [
+      items: [
         {
-          'title': 'A folder',
+          title: 'A folder',
           '@id': 'http://fake/Plone/a-folder'
         },
         {
-          'title': 'test',
+          title: 'test',
           '@id': 'http://fake/Plone/a-folder/test'
         }
       ]
     };
 
-
     service.breadcrumbs('/a-folder/test').subscribe((items: NavLink[]) => {
       title = items[0].title;
     });
 
-    http.expectOne('http://fake/Plone/a-folder/test/@breadcrumbs').flush(response);
+    http
+      .expectOne('http://fake/Plone/a-folder/test/@breadcrumbs')
+      .flush(response);
 
     expect(title).toBe('A folder');
   });
@@ -425,77 +487,98 @@ describe('ResourceService', () => {
     const http = TestBed.get(HttpTestingController);
     let vocabulary: Vocabulary<string> = new Vocabulary([]);
     const response = {
-      '@id': 'http://fake/Plone/@vocabularies/plone.app.vocabularies.ReallyUserFriendlyTypes',
-      'terms': [
+      '@id':
+        'http://fake/Plone/@vocabularies/plone.app.vocabularies.ReallyUserFriendlyTypes',
+      terms: [
         {
-          '@id': 'http://fake/Plone/@vocabularies/plone.app.vocabularies.ReallyUserFriendlyTypes/Collection',
-          'title': 'Collection',
-          'token': 'Collection'
+          '@id':
+            'http://fake/Plone/@vocabularies/plone.app.vocabularies.ReallyUserFriendlyTypes/Collection',
+          title: 'Collection',
+          token: 'Collection'
         },
         {
-          '@id': 'http://fake/Plone/@vocabularies/plone.app.vocabularies.ReallyUserFriendlyTypes/Discussion Item',
-          'title': 'Comment',
-          'token': 'Discussion Item'
+          '@id':
+            'http://fake/Plone/@vocabularies/plone.app.vocabularies.ReallyUserFriendlyTypes/Discussion Item',
+          title: 'Comment',
+          token: 'Discussion Item'
         },
         {
-          '@id': 'http://fake/Plone/@vocabularies/plone.app.vocabularies.ReallyUserFriendlyTypes/Event',
-          'title': 'Event',
-          'token': 'Event'
+          '@id':
+            'http://fake/Plone/@vocabularies/plone.app.vocabularies.ReallyUserFriendlyTypes/Event',
+          title: 'Event',
+          token: 'Event'
         },
         {
-          '@id': 'http://fake/Plone/@vocabularies/plone.app.vocabularies.ReallyUserFriendlyTypes/File',
-          'title': 'File',
-          'token': 'File'
+          '@id':
+            'http://fake/Plone/@vocabularies/plone.app.vocabularies.ReallyUserFriendlyTypes/File',
+          title: 'File',
+          token: 'File'
         },
         {
-          '@id': 'http://fake/Plone/@vocabularies/plone.app.vocabularies.ReallyUserFriendlyTypes/Folder',
-          'title': 'Folder',
-          'token': 'Folder'
+          '@id':
+            'http://fake/Plone/@vocabularies/plone.app.vocabularies.ReallyUserFriendlyTypes/Folder',
+          title: 'Folder',
+          token: 'Folder'
         },
         {
-          '@id': 'http://fake/Plone/@vocabularies/plone.app.vocabularies.ReallyUserFriendlyTypes/Image',
-          'title': 'Image',
-          'token': 'Image'
+          '@id':
+            'http://fake/Plone/@vocabularies/plone.app.vocabularies.ReallyUserFriendlyTypes/Image',
+          title: 'Image',
+          token: 'Image'
         },
         {
-          '@id': 'http://fake/Plone/@vocabularies/plone.app.vocabularies.ReallyUserFriendlyTypes/Link',
-          'title': 'Link',
-          'token': 'Link'
+          '@id':
+            'http://fake/Plone/@vocabularies/plone.app.vocabularies.ReallyUserFriendlyTypes/Link',
+          title: 'Link',
+          token: 'Link'
         },
         {
-          '@id': 'http://fake/Plone/@vocabularies/plone.app.vocabularies.ReallyUserFriendlyTypes/News Item',
-          'title': 'News Item',
-          'token': 'News Item'
+          '@id':
+            'http://fake/Plone/@vocabularies/plone.app.vocabularies.ReallyUserFriendlyTypes/News Item',
+          title: 'News Item',
+          token: 'News Item'
         },
         {
-          '@id': 'http://fake/Plone/@vocabularies/plone.app.vocabularies.ReallyUserFriendlyTypes/Document',
-          'title': 'Page',
-          'token': 'Document'
+          '@id':
+            'http://fake/Plone/@vocabularies/plone.app.vocabularies.ReallyUserFriendlyTypes/Document',
+          title: 'Page',
+          token: 'Document'
         }
       ]
     };
 
-    service.vocabulary('plone.app.vocabularies.ReallyUserFriendlyTypes').subscribe((ruftVocabulary: Vocabulary<string>) => {
-      vocabulary = ruftVocabulary;
-    });
+    service
+      .vocabulary('plone.app.vocabularies.ReallyUserFriendlyTypes')
+      .subscribe((ruftVocabulary: Vocabulary<string>) => {
+        vocabulary = ruftVocabulary;
+      });
 
-    http.expectOne('http://fake/Plone/@vocabularies/plone.app.vocabularies.ReallyUserFriendlyTypes').flush(response);
+    http
+      .expectOne(
+        'http://fake/Plone/@vocabularies/plone.app.vocabularies.ReallyUserFriendlyTypes'
+      )
+      .flush(response);
 
     expect(vocabulary.terms().length).toBe(9);
     expect(vocabulary.byToken('Document').title).toBe('Page');
   });
 
-  it('should get a file upload', fakeAsync(() => {
-    const blob: { [key: string]: any } = new Blob([''], { type: 'text/csv' });
-    blob['name'] = 'filename.csv';
+  it(
+    'should get a file upload',
+    fakeAsync(() => {
+      const blob: { [key: string]: any } = new Blob([''], { type: 'text/csv' });
+      blob['name'] = 'filename.csv';
 
-    const fakeF = <File>blob;
-    let namedFile: NamedFileUpload = <NamedFileUpload>{};
-    ResourceService.lightFileRead(fakeF).subscribe((data: NamedFileUpload) => {
-      namedFile = data;
-      expect(namedFile.filename).toBe('filename.csv');
-      expect(namedFile['content-type']).toBe('text/csv');
-    });
-    tick();
-  }));
+      const fakeF = <File>blob;
+      let namedFile: NamedFileUpload = <NamedFileUpload>{};
+      ResourceService.lightFileRead(fakeF).subscribe(
+        (data: NamedFileUpload) => {
+          namedFile = data;
+          expect(namedFile.filename).toBe('filename.csv');
+          expect(namedFile['content-type']).toBe('text/csv');
+        }
+      );
+      tick();
+    })
+  );
 });
