@@ -116,42 +116,65 @@ describe('ResourceService', () => {
 
     expect(id).toBe('http://fake/Plone/folder1/page1');
   });
-  it('should generate search query string contents', () => {
-    expect(
-      ResourceService.getSearchQueryString({
-        portal_type: 'News Item',
-        Subject: 'biology'
-      })
-    ).toBe('portal_type=News%20Item&Subject=biology');
 
-    expect(
-      ResourceService.getSearchQueryString({
-        portal_type: ['Page', 'News Item']
-      })
-    ).toBe('portal_type=Page&portal_type=News%20Item');
+  describe('ResourceService.getSearchQueryString', () => {
+    const searchQueryTests = [
+      {
+        testDescription: 'it should create a query string',
+        query: {
+          portal_type: 'News Item',
+          Subject: 'biology'
+        },
+        searchOptions: {},
+        queryString: 'portal_type=News%20Item&Subject=biology'
+      },
+      {
+        testDescription: 'it should handle lists',
+        query: {
+          portal_type: ['Page', 'News Item']
+        },
+        searchOptions: {},
+        queryString: 'portal_type=Page&portal_type=News%20Item'
+      },
+      {
+        testDescription: 'it should handle SearchOptions',
+        query: {
+          portal_type: ['Page', 'News Item']
+        },
+        searchOptions: { sort_on: 'sortable_title', sort_order: 'desc' },
+        queryString:
+          'portal_type=Page&portal_type=News%20Item&sort_on=sortable_title&sort_order=desc'
+      },
+      {
+        testDescription: 'it should handle boolean true values',
+        query: { is_folderish: true },
+        searchOptions: {},
+        queryString: 'is_folderish=1'
+      },
+      {
+        testDescription: 'it should handle boolean false values',
+        query: { is_folderish: false },
+        searchOptions: {},
+        queryString: 'is_folderish=0'
+      },
+      {
+        testDescription: 'it should handle dates',
+        query: { created: new Date(Date.UTC(2018, 12 - 1, 29, 0, 0, 0)) },
+        searchOptions: {},
+        queryString: 'created=2018-12-29T00%3A00%3A00.000Z'
+      }
+    ];
 
-    expect(
-      ResourceService.getSearchQueryString(
-        { portal_type: ['Page', 'News Item'] },
-        { sort_on: 'sortable_title', sort_order: 'desc' }
-      )
-    ).toBe(
-      'portal_type=Page&portal_type=News%20Item&sort_on=sortable_title&sort_order=desc'
-    );
-
-    expect(ResourceService.getSearchQueryString({ is_folderish: true })).toBe(
-      'is_folderish=1'
-    );
-
-    expect(ResourceService.getSearchQueryString({ is_folderish: false })).toBe(
-      'is_folderish=0'
-    );
-
-    expect(
-      ResourceService.getSearchQueryString({
-        created: new Date(Date.UTC(2018, 12 - 1, 29, 0, 0, 0))
-      })
-    ).toBe('created=2018-12-29T00%3A00%3A00.000Z');
+    searchQueryTests.forEach(testSpec => {
+      it(testSpec.testDescription, () => {
+        expect(
+          ResourceService.getSearchQueryString(
+            testSpec.query,
+            testSpec.searchOptions
+          )
+        ).toBe(testSpec.queryString);
+      });
+    });
   });
   it('should search contents in context', () => {
     const service = TestBed.get(ResourceService);
