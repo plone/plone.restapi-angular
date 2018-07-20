@@ -26,7 +26,7 @@ export interface UserInfoTokenParts {
 @Injectable()
 export class AuthenticationService {
     isAuthenticated: BehaviorSubject<AuthenticatedStatus> = new BehaviorSubject(
-        { state: false, username: null },
+        { state: false, pending: false, username: null },
     );
     basicCredentials: string[]|null;
 
@@ -50,6 +50,7 @@ export class AuthenticationService {
             if (token) {
                 this.isAuthenticated.next({
                     state: true,
+                    pending: false,
                     username: this.getUsername(),
                 });
             }
@@ -82,7 +83,8 @@ export class AuthenticationService {
     setBasicCredentials(login: string, password: string) {
         this.basicCredentials = [login, password];
         this.isAuthenticated.next({
-            state: true,
+            state: false,
+            pending: true,
             username: login,
         });
     }
@@ -91,6 +93,7 @@ export class AuthenticationService {
         this.basicCredentials = null;
         this.isAuthenticated.next({
             state: false,
+            pending: false,
             username: null,
         });
     }
@@ -115,6 +118,7 @@ export class AuthenticationService {
                         );
                         this.isAuthenticated.next({
                             state: true,
+                            pending: false,
                             username: this.getUsername(),
                         });
                     } else {
@@ -122,6 +126,7 @@ export class AuthenticationService {
                         localStorage.removeItem('auth_time');
                         this.isAuthenticated.next({
                             state: false,
+                            pending: false,
                             username: null,
                         });
                     }
@@ -132,6 +137,7 @@ export class AuthenticationService {
                     const error = getError(errorResponse);
                     this.isAuthenticated.next({
                         state: false,
+                        pending: false,
                         username: null,
                         error: error.message,
                     });
@@ -146,7 +152,7 @@ export class AuthenticationService {
         if (isPlatformBrowser(this.platformId)) {
             localStorage.removeItem('auth');
             localStorage.removeItem('auth_time');
-            this.isAuthenticated.next({ state: false, username: null });
+            this.isAuthenticated.next({ state: false, pending: false, username: null });
         }
     }
 
@@ -191,6 +197,10 @@ export class AuthenticationService {
             }
         }
         return headers;
+    }
+
+    setAuthenticated(isAuthenticated: boolean) {
+        this.isAuthenticated.next({state: isAuthenticated, pending: false, username: this.getUsername()});
     }
 
     protected error(errorResponse: HttpErrorResponse): Observable<Error> {

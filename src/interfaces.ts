@@ -110,6 +110,7 @@ export interface SearchResults {
 /* Authentication status */
 export interface AuthenticatedStatus {
   state: boolean;
+  pending: boolean;
   username: string | null;
   error?: string;
 }
