@@ -43,7 +43,12 @@ export class RESTAPIResolver extends Resolver {
       path = !path.endsWith('/') ? path + '/' : path;
       return this.api.get(path + '@search?' + queryString);
     } else {
-      return this.resource.get(path);
+      return this.resource.get(path).catch(err => {
+        if (err.response.status === 401) {
+          this.resource.traversingUnauthorized.emit(path);
+        }
+        throw err;
+      });
     }
   }
 }
