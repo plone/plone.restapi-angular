@@ -95,15 +95,15 @@ export class AuthenticationService {
         });
     }
 
-    login(login: string, password: string): Observable<any> {
+    login(login: string, password: string, path?: string): Observable<any> {
         if (isPlatformBrowser(this.platformId)) {
             const headers = this.getHeaders();
             const body = JSON.stringify({
-                login: login,
+                username: login,
                 password: password,
             });
             return this.http
-                .post(this.config.get('BACKEND_URL') + '/@login', body, {
+                .post(this.config.get('BACKEND_URL') + (path || '') + '/@login', body, {
                     headers: headers,
                 })
                 .do((data: LoginToken) => {
