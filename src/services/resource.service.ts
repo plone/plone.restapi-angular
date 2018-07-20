@@ -14,6 +14,7 @@ import { Vocabulary } from '../vocabularies';
 import { APIService } from './api.service';
 import { CacheService } from './cache.service';
 import { ConfigurationService } from './configuration.service';
+import { concatMap } from 'rxjs/operators';
 
 interface NavigationItem {
     title: string;
@@ -29,10 +30,11 @@ interface NavigationItems {
 @Injectable()
 export class ResourceService {
     defaultExpand: any = {};
-    public resourceModified: EventEmitter<{
+    resourceModified: EventEmitter<{
         id: string;
         context: any;
     } | null> = new EventEmitter();
+    traversingUnauthorized: EventEmitter<string> = new EventEmitter();
 
     public static getSearchQueryString(
         query: { [key: string]: any },
@@ -56,11 +58,7 @@ export class ResourceService {
             } else {
                 Object.keys(criteria).map(key => {
                     params.push(
-                        index +
-                            '.' +
-                            key +
-                            '=' +
-                            encodeURIComponent(criteria[key]),
+                        `${index}.${key}=${encodeURIComponent(criteria[key])}`,
                     );
                 });
             }
@@ -151,7 +149,7 @@ export class ResourceService {
         return this.cache.get(path + '@search' + '?' + queryString);
     }
 
-    get(path: string, expand?: string[]) {
+    get(path: string, expand?: string[]): Observable<any> {
         expand = Object.keys(this.defaultExpand).concat(expand || []);
         if (expand.length > 0) {
             path = path + '?expand=' + expand.join(',');
@@ -228,6 +226,29 @@ export class ResourceService {
                 (jsonObject: any): Vocabulary<string | number> =>
                     new Vocabulary(jsonObject.terms),
             );
+    }
+
+    getBehaviors(path: string): Observable<string[]> {
+        return this.cache.get<any>(path + '/@behaviors').map(res => res['static'].concat(res['dynamic']));
+    }
+
+    availableBehaviors(path: string): Observable<string[]> {
+        return this.cache.get<any>(path + '/@behaviors').map(res => res['available']);
+    }
+
+    addBehavior(path: string, behavior: string): Observable<any> {
+        return this.emittingModified(this.api.patch(path + '/@behaviors', {behavior: behavior}), path);
+    }
+
+    deleteBehavior(path: string, behavior: string): Observable<any> {
+        // TODO use DELETE on @behaviors endpoint once fixed in Guillotina
+        const operation = this.get(path).pipe(
+            concatMap(model => {
+                delete model[behavior];
+                return this.api.post(path, model);
+            })
+        );
+        return this.emittingModified(operation, path);
     }
 
     /*
