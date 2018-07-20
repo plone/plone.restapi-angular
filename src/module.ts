@@ -20,8 +20,6 @@ import {
   TraversalModule,
   Resolver,
   Marker,
-  TraverserOutlet,
-  TraverserLink,
   Normalizer,
 } from 'angular-traversal';
 
@@ -125,8 +123,6 @@ import { Workflow } from './components/workflow';
     GlobalNavigation,
     Navigation,
     NavigationLevel,
-    TraverserOutlet,
-    TraverserLink,
     Workflow,
   ]
 })
