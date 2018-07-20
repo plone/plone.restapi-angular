@@ -149,6 +149,7 @@ export class AuthenticationService {
     }
 
     logout() {
+        this.cleanBasicCredentials();
         if (isPlatformBrowser(this.platformId)) {
             localStorage.removeItem('auth');
             localStorage.removeItem('auth_time');
