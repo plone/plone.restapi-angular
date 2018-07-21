@@ -22,8 +22,6 @@ import { takeUntil } from 'rxjs/operators';
 </form>`
 })
 export class AddView extends TraversingComponent implements OnInit {
-
-  path: string;
   type: string;
   // TODO: addable types should be provided by the backend
   types: string[] = [
@@ -55,12 +53,12 @@ export class AddView extends TraversingComponent implements OnInit {
 
   onSave(model: any) {
     model['@type'] = this.type;
-    this.services.resource.create(this.path, model).subscribe((res: any) => {
+    this.services.resource.create(this.context['@id'], model).subscribe((res: any) => {
       this.services.traverser.traverse(res['@id']);
     });
   }
 
   onCancel() {
-    this.services.traverser.traverse(this.path);
+    this.services.traverser.traverse(this.context['@id']);
   }
 }
