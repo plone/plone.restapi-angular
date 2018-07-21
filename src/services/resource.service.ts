@@ -259,6 +259,10 @@ export class ResourceService {
         return this.api.get(path + '/@sharing');
     }
 
+    updateSharing(path: string, sharing: any): Observable<string[]> {
+        return this.emittingModified(this.api.post(path + '/@sharing', sharing), path);
+    }
+
     /*
    Make the observable emit resourceModified event when it emits
    */
