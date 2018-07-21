@@ -251,6 +251,14 @@ export class ResourceService {
         return this.emittingModified(operation, path);
     }
 
+    addableTypes(path: string): Observable<string[]> {
+        return this.api.get(path + '/@addable-types');
+    }
+
+    sharing(path: string): Observable<string[]> {
+        return this.api.get(path + '/@sharing');
+    }
+
     /*
    Make the observable emit resourceModified event when it emits
    */

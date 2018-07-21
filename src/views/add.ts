@@ -43,11 +43,7 @@ export class AddView extends TraversingComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.services.traverser.target
-      .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe((target: Target) => {
-        this.path = target.contextPath;
-      });
+    super.ngOnInit();
     if (isPlatformBrowser(this.platformId)) {
       const params = new URLSearchParams(window.location.search.slice(1));
       let param = params.paramsMap.get('type');
