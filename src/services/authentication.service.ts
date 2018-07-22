@@ -80,11 +80,11 @@ export class AuthenticationService {
         }
     }
 
-    setBasicCredentials(login: string, password: string) {
+    setBasicCredentials(login: string, password: string, temporary = false) {
         this.basicCredentials = [login, password];
         this.isAuthenticated.next({
-            state: false,
-            pending: true,
+            state: !temporary,
+            pending: temporary,
             username: login,
         });
     }
@@ -132,15 +132,21 @@ export class AuthenticationService {
                     }
                 })
                 .catch((errorResponse: HttpErrorResponse) => {
-                    localStorage.removeItem('auth');
-                    localStorage.removeItem('auth_time');
                     const error = getError(errorResponse);
-                    this.isAuthenticated.next({
-                        state: false,
-                        pending: false,
-                        username: null,
-                        error: error.message,
-                    });
+                    if (errorResponse.status === 404) {
+                        // @login endpoint does not exist on this backend
+                        // we keep with basic auth
+                        this.setBasicCredentials(login, password, false);
+                    } else {
+                        localStorage.removeItem('auth');
+                        localStorage.removeItem('auth_time');
+                        this.isAuthenticated.next({
+                            state: false,
+                            pending: false,
+                            username: null,
+                            error: error.message,
+                        });
+                    }
                     return Observable.throw(error);
                 });
         } else {
