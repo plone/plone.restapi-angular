@@ -16,53 +16,52 @@ import { ViewView } from './views/view';
 
 @Injectable()
 export class InterfaceMarker extends Marker {
-  mark(context: any): string[] {
-    return context.interfaces;
-  }
+    mark(context: any): string[] {
+        return context.interfaces;
+    }
 }
 
 @Injectable()
 export class TypeMarker extends Marker {
-  mark(context: any): string {
-    return context['@type'];
-  }
+    mark(context: any): string {
+        return context['@type'];
+    }
 }
 
 @Injectable()
 export class RESTAPIResolver extends Resolver {
-
-  constructor(
-    private api: APIService,
-    private resource: ResourceService
-  ) {
-    super();
-  }
-
-  resolve(path: string, view: string, queryString: string): Observable<any> {
-    if (view === 'search') {
-      path = !path.endsWith('/') ? path + '/' : path;
-      return this.api.get(path + '@search?' + queryString);
-    } else {
-      return this.resource.get(path).catch(err => {
-        if (err.response.status === 401) {
-          this.resource.traversingUnauthorized.emit(path);
-        }
-        throw err;
-      });
+    constructor(private api: APIService, private resource: ResourceService) {
+        super();
     }
-  }
+
+    resolve(path: string, view: string, queryString: string): Observable<any> {
+        if (view === 'search') {
+            path = !path.endsWith('/') ? path + '/' : path;
+            return this.api.get(path + '@search?' + queryString);
+        } else {
+            return this.resource.get(path).catch(err => {
+                if (err.response.status === 401) {
+                    this.resource.traversingUnauthorized.emit(path);
+                }
+                throw err;
+            });
+        }
+    }
 }
 
 @Injectable()
 export class PloneViews {
-
     constructor(private traverser: Traverser) {}
 
     initialize() {
         this.traverser.addView('add', '*', AddView);
         this.traverser.addView('edit', '*', EditView);
         this.traverser.addView('login', '*', LoginView);
-        this.traverser.addView('request-password-reset', '*', RequestPasswordResetView);
+        this.traverser.addView(
+            'request-password-reset',
+            '*',
+            RequestPasswordResetView,
+        );
         this.traverser.addView('password-reset', '*', PasswordResetView);
         this.traverser.addView('search', '*', SearchView);
         this.traverser.addView('sitemap', '*', SitemapView);
@@ -72,20 +71,20 @@ export class PloneViews {
 
 @Injectable()
 export class FullPathNormalizer extends Normalizer {
-
-  constructor(private config: ConfigurationService) {
-    super();
-  }
-
-  normalize(path: string): string {
-    if (path == null) {
-      return path;
+    constructor(private config: ConfigurationService) {
+        super();
     }
-    const base = this.config.get('BACKEND_URL');
-    if (path.startsWith(base)) {
-      return path.split(base)[1];
-    } else {
-      return path;
+
+    normalize(path: string): string {
+        if (path) {
+            const base = this.config.get('BACKEND_URL');
+            if (base.startsWith('/') && path.startsWith('http')) {
+                path = '/' + path.split('/').slice(3).join('/');
+            }
+            if (path.startsWith(base)) {
+                path = path.substring(base.length);
+            }
+        }
+        return path;
     }
-  }
 }
