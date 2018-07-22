@@ -240,6 +240,10 @@ export class ResourceService {
         return this.emittingModified(this.api.post(path + '/@addons', {id: addon}), path);
     }
 
+    deleteAddon(path: string, addon: string): Observable<any> {
+        return this.emittingModified(this.api.delete(path + '/@addons/' + addon), path);
+    }
+
     getBehaviors(path: string): Observable<string[]> {
         return this.cache.get<any>(path + '/@behaviors').map(res => res['static'].concat(res['dynamic']));
     }
@@ -253,14 +257,7 @@ export class ResourceService {
     }
 
     deleteBehavior(path: string, behavior: string): Observable<any> {
-        // TODO use DELETE on @behaviors endpoint once fixed in Guillotina
-        const operation = this.get(path).pipe(
-            concatMap(model => {
-                delete model[behavior];
-                return this.api.post(path, model);
-            })
-        );
-        return this.emittingModified(operation, path);
+        return this.emittingModified(this.api.delete(path + '/@behaviors/' + behavior), path);
     }
 
     addableTypes(path: string): Observable<string[]> {
