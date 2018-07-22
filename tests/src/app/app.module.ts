@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { RESTAPIModule } from '@plone/restapi-angular';
+import { TraversalModule } from 'angular-traversal';
 import { DefaultWidgetRegistry, SchemaFormModule, WidgetRegistry } from 'ngx-schema-form';
 
 import { environment } from '../environments/environment';
@@ -25,6 +26,7 @@ import { CustomBreadcrumbs, CustomGlobalNavigation, CustomSfEditView, CustomView
   imports: [
     BrowserModule,
     FormsModule,
+    TraversalModule,
     SchemaFormModule.forRoot(),
     RESTAPIModule,
   ],
