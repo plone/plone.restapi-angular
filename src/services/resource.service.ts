@@ -272,6 +272,22 @@ export class ResourceService {
         return this.emittingModified(this.api.post(path + '/@sharing', sharing), path);
     }
 
+    registry(path: string): Observable<any> {
+        return this.api.get(path + '/@registry');
+    }
+
+    declareRegistry(path: string, key: string): Observable<any> {
+        return this.api.post(path + '/@registry', {interface: key});
+    }
+
+    getRegistryEntry(path: string, key: string): Observable<any> {
+        return this.api.get(path + '/@registry/' + key);
+    }
+
+    setRegistryEntry(path: string, key: string, value: any): Observable<any> {
+        return this.api.patch(path + '/@registry/' + key, {value: value});
+    }
+
     /*
    Make the observable emit resourceModified event when it emits
    */
