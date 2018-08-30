@@ -186,6 +186,10 @@ export class ResourceService {
         return this.emittingModified(this.api.patch(path, model), path);
     }
 
+    save(path: string, model: any): Observable<any> {
+        return this.emittingModified(this.api.put(path, model), path);
+    }
+
     navigation(): Observable<NavLink[]> {
         return this.cache.get('/@navigation').map((data: NavigationItems) => {
             if (data) {
