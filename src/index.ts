@@ -15,6 +15,8 @@ export { EditView } from './views/edit';
 export { LoginView } from './views/login';
 export { SearchView } from './views/search';
 export { SitemapView } from './views/sitemap';
+export { PasswordResetView } from './views/password-reset';
+export { RequestPasswordResetView } from './views/request-password-reset';
 export { ViewView } from './views/view';
 export { Breadcrumbs } from './components/breadcrumbs';
 export { Comments, Comment, CommentAdd } from './components/comments';

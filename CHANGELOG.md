@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 2.1.0 (Unreleased)
 
 ## New features
@@ -18,6 +19,7 @@
 - default to basic auth if no JWT [Eric Brehault]
 - clean basic auth on logout [Eric Brehault]
 - emit when not authorized [Eric Brehault]
+- export password views [Thomas Desvenain]
 
 # 2.0.0 (2018-05-07)
 
