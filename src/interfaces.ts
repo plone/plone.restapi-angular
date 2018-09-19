@@ -10,9 +10,17 @@ export interface LoadingStatus {
 }
 
 export interface Error {
-  type: string;
+  type: string;  // mostly, Python exception class
   message: string;
-  traceback?: string[];
+  traceback?: string[];  // Plone traceback
+
+  errors?: {  // mostly, dexterity fields validation errors
+    field?: string;
+    message?: string;
+    error?: string;
+    [x: string]: any;
+  }[];
+
   response?: HttpErrorResponse;
 
   [x: string]: any;

@@ -5,11 +5,10 @@ import {
     HttpHeaders,
 } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-
-import { ConfigurationService } from './configuration.service';
+import { Observable } from 'rxjs/Observable';
 import { AuthenticatedStatus, Error, PasswordResetInfo } from '../interfaces';
+import { ConfigurationService } from './configuration.service';
 
 interface LoginToken {
     token: string;
@@ -225,7 +224,7 @@ export function getError(errorResponse: HttpErrorResponse): Error {
             errorResponseError = JSON.parse(errorResponseError);
             if (errorResponseError.error && errorResponseError.error.message) {
                 // two levels of error properties
-                error = errorResponseError.error;
+                error = Object.assign({}, errorResponseError.error);
             } else {
                 error = errorResponseError;
             }
@@ -238,7 +237,7 @@ export function getError(errorResponse: HttpErrorResponse): Error {
                 errorResponseError.error.type
             ) {
                 // object plone error with two levels of error properties
-                error = errorResponseError.error;
+                error = Object.assign({}, errorResponseError.error);
             } else {
                 // not a plone error
                 error = {
@@ -254,6 +253,16 @@ export function getError(errorResponse: HttpErrorResponse): Error {
             message: errorResponse.message,
             traceback: [],
         };
+    }
+    // check if message is a jsonified list
+    try {
+        const parsedMessage = JSON.parse(error.message);
+        if (Array.isArray(parsedMessage)) { // a list of errors - dexterity validation error for instance
+            error.errors = parsedMessage;
+            error.message = errorResponse.message;
+        }
+    } catch (SyntaxError) {
+        //
     }
     error.response = errorResponse;
     return error;

@@ -1,3 +1,8 @@
+# Unreleased
+
+- Json deserialize dexterity validation errors. [Thomas Desvenain]
+
+
 # 2.0.0 (2018-05-07)
 
 ## BREAKING CHANGES

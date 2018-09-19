@@ -1,14 +1,10 @@
-import { TestBed } from '@angular/core/testing';
-import {
-  HttpTestingController,
-  HttpClientTestingModule
-} from '@angular/common/http/testing';
-
-import { ConfigurationService } from './configuration.service';
-import { AuthenticationService, getError } from './authentication.service';
-import { AuthenticatedStatus, PasswordResetInfo, Error } from '../interfaces';
-import { LoadingService } from './loading.service';
 import { HttpErrorResponse, HttpEventType, HttpHeaders } from '@angular/common/http';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { TestBed } from '@angular/core/testing';
+import { AuthenticatedStatus, Error, PasswordResetInfo } from '../interfaces';
+import { AuthenticationService, getError } from './authentication.service';
+import { ConfigurationService } from './configuration.service';
+import { LoadingService } from './loading.service';
 
 describe('AuthenticationService', () => {
   beforeEach(() => {
@@ -161,6 +157,33 @@ describe('AuthenticationService', () => {
     const error: Error = getError(errorResponse);
     expect(error.message).toBe('Wrong login and/or password.');
     expect(error.type).toBe('Invalid credentials');
+    expect(error.response).toBe(errorResponse);
+  });
+
+  it('should get error when message is an unserialized json list of objects', () => {
+    const errorResponse: HttpErrorResponse = {
+      'headers': new HttpHeaders(),
+      'status': 400,
+      'statusText': 'Bad Request',
+      'url': 'http://localhost:4200/Plone/contents/content-1',
+      'ok': false,
+      'name': 'HttpErrorResponse',
+      'message': 'Http failure response for http://localhost:4200/Plone/contents/content-1: 400 Bad Request',
+      'error': {
+        message: `[{"field": "identifier", "message": "The identifier should not contain special characters", "error": "InvalidIdentifier"}]`,
+        type: 'BadRequest'
+      },
+      type: HttpEventType.Response
+    };
+    const error: Error = getError(errorResponse);
+    expect(error.message).toBe('Http failure response for http://localhost:4200/Plone/contents/content-1: 400 Bad Request');
+    expect(error.type).toBe('BadRequest');
+    expect(error.errors).toBeDefined();
+    if (error.errors !== undefined) {
+      expect(error.errors[0].field).toBe('identifier');
+      expect(error.errors[0].message).toBe('The identifier should not contain special characters');
+      expect(error.errors[0].error).toBe('InvalidIdentifier');
+    }
     expect(error.response).toBe(errorResponse);
   });
 
