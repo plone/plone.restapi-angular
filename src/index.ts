@@ -6,7 +6,7 @@ export { ConfigurationService } from './services/configuration.service';
 export { CommentsService } from './services/comments.service';
 export { LoadingService } from './services/loading.service';
 export { ResourceService } from './services/resource.service';
-export { Services } from './services';
+export { Services } from './services/services';
 export { RESTAPIModule } from './module';
 export { PloneViews, InterfaceMarker, TypeMarker } from './traversal';
 export { TraversingComponent } from './traversing';

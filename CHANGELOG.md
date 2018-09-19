@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # 2.1.0 (Unreleased)
 
 ## New features
@@ -20,6 +19,8 @@
 - clean basic auth on logout [Eric Brehault]
 - emit when not authorized [Eric Brehault]
 - export password views [Thomas Desvenain]
+- export Services object from root. [Thomas Desvenain]
+
 
 # 2.0.0 (2018-05-07)
 
