@@ -73,7 +73,7 @@ describe('LoginView', () => {
 
   it('should authenticate on submit', () => {
     const http = TestBed.get(HttpTestingController);
-    let authenticatedStatus: AuthenticatedStatus = { state: false, username: null };
+    let authenticatedStatus: AuthenticatedStatus = { state: false, username: null, pending: false };
     const response_home = {
       '@id': 'Plone'
     };

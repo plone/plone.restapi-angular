@@ -39,6 +39,12 @@ export class APIService {
     return this.wrapRequest(this.http.post(url, data, { headers: headers }));
   }
 
+  put(path: string, data: Object): Observable<any> {
+    const url = this.getFullPath(path);
+    const headers = this.authentication.getHeaders();
+    return this.wrapRequest(this.http.put(url, data, { headers: headers }));
+  }
+
   patch(path: string, data: Object): Observable<any> {
     const url = this.getFullPath(path);
     let headers = this.authentication.getHeaders();

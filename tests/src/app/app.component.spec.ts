@@ -7,6 +7,7 @@ import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/t
 import { APP_BASE_HREF } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RESTAPIModule } from '@plone/restapi-angular';
+import { TraversalModule } from 'angular-traversal';
 import { SchemaFormModule } from 'angular2-schema-form';
 
 import { AppComponent } from './app.component';
@@ -34,6 +35,7 @@ describe('AppComponent', () => {
       ],
       imports: [
         HttpClientTestingModule,
+        TraversalModule,
         RESTAPIModule,
         SchemaFormModule.forRoot(),
         FormsModule,

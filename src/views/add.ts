@@ -5,8 +5,6 @@ import 'rxjs/add/operator/takeUntil';
 
 import { TraversingComponent } from '../traversing';
 import { Services } from '../services';
-import { Target } from 'angular-traversal';
-import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'plone-add',
@@ -22,8 +20,6 @@ import { takeUntil } from 'rxjs/operators';
 </form>`
 })
 export class AddView extends TraversingComponent implements OnInit {
-
-  path: string;
   type: string;
   // TODO: addable types should be provided by the backend
   types: string[] = [
@@ -43,11 +39,7 @@ export class AddView extends TraversingComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.services.traverser.target
-      .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe((target: Target) => {
-        this.path = target.contextPath;
-      });
+    super.ngOnInit();
     if (isPlatformBrowser(this.platformId)) {
       const params = new URLSearchParams(window.location.search.slice(1));
       let param = params.paramsMap.get('type');
@@ -59,12 +51,12 @@ export class AddView extends TraversingComponent implements OnInit {
 
   onSave(model: any) {
     model['@type'] = this.type;
-    this.services.resource.create(this.path, model).subscribe((res: any) => {
+    this.services.resource.create(this.context['@id'], model).subscribe((res: any) => {
       this.services.traverser.traverse(res['@id']);
     });
   }
 
   onCancel() {
-    this.services.traverser.traverse(this.path);
+    this.services.traverser.traverse(this.context['@id']);
   }
 }

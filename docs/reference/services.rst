@@ -113,7 +113,9 @@ Methods:
 
 `workflow(path: string)`: get the workflow history and the available transitions on the content. Returns an observable.
 
-`update(path: string, model: any)`: update the resource. Returns an observable.
+`update(path: string, model: any)`: update the resource by storing the provided model content (existing attibutes are not overidden). Returns an observable.
+
+`save(path: string, model: any)`: update the resource by replacing its model with the provided model content. Returns an observable.
 
 `type(typeId)`: return the JSON schema of the specified resource type.
 
