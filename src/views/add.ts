@@ -5,8 +5,6 @@ import 'rxjs/add/operator/takeUntil';
 
 import { TraversingComponent } from '../traversing';
 import { Services } from '../services';
-import { Target } from 'angular-traversal';
-import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'plone-add',

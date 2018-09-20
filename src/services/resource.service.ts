@@ -14,7 +14,6 @@ import { Vocabulary } from '../vocabularies';
 import { APIService } from './api.service';
 import { CacheService } from './cache.service';
 import { ConfigurationService } from './configuration.service';
-import { concatMap } from 'rxjs/operators';
 
 interface NavigationItem {
     title: string;
