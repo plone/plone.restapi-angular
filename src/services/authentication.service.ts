@@ -101,7 +101,7 @@ export class AuthenticationService {
         if (isPlatformBrowser(this.platformId)) {
             const headers = this.getHeaders();
             const body = JSON.stringify({
-                username: login,
+                login: login,  // on plone.restapi login endpoint, username key is login
                 password: password,
             });
             return this.http
