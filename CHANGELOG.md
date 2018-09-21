@@ -20,6 +20,7 @@
 - emit when not authorized [Eric Brehault]
 - export password views [Thomas Desvenain]
 - export Services object from root. [Thomas Desvenain]
+- angular-traversal is a peer dependency [Thomas Desvenain]
 
 
 # 2.0.0 (2018-05-07)
