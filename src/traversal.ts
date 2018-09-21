@@ -13,6 +13,7 @@ import { RequestPasswordResetView } from './views/request-password-reset';
 import { SearchView } from './views/search';
 import { SitemapView } from './views/sitemap';
 import { ViewView } from './views/view';
+import { Error } from './interfaces';
 
 @Injectable()
 export class InterfaceMarker extends Marker {
@@ -39,8 +40,8 @@ export class RESTAPIResolver extends Resolver {
             path = !path.endsWith('/') ? path + '/' : path;
             return this.api.get(path + '@search?' + queryString);
         } else {
-            return this.resource.get(path).catch(err => {
-                if (err.response.status === 401) {
+            return this.resource.get(path).catch((err: Error) => {
+                if (!!err.response && err.response.status === 401) {
                     this.resource.traversingUnauthorized.emit(path);
                 }
                 throw err;
