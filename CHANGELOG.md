@@ -12,6 +12,10 @@
 - support Guillotina behaviors [Eric Brehault]
 - support basic authentication [Eric Brehault]
 
+## API
+
+- works with Angular 6 and RxJS 6 + rxjs-compat [Thomas Desvenain]
+
 ## Bug fixes
 
 - support backend running on same domain [Eric Brehault]

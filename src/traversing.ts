@@ -1,7 +1,6 @@
 import { OnInit, OnDestroy } from '@angular/core';
 import { Target } from 'angular-traversal';
 import { Services } from './services';
-import 'rxjs/add/operator/takeUntil';
 import { Subject } from 'rxjs/Subject';
 
 export abstract class TraversingComponent implements OnInit, OnDestroy {
