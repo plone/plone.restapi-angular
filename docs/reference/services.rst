@@ -159,6 +159,8 @@ It also exposes a `status` observable which returns an object containing:
 - `loading`, boolean, true if call is pending, false if finished
 - `error`, the HTTP error if any.
 
+It exposes a `backendAvailable` observable that emits `false` when backend server can't be reached or consistently responds 502, 503 or 504.
+
 
 Cache service
 -------------
