@@ -218,8 +218,8 @@ export class ResourceService {
             });
     }
 
-    type(typeId: string): Observable<any> {
-        return this.cache.get('/@types/' + typeId);
+    type(typeId: string, containerPath = ''): Observable<any> {
+        return this.cache.get(`${containerPath}/@types/${typeId}`);
     }
 
     vocabulary(vocabularyId: string): Observable<Vocabulary<string | number>> {
