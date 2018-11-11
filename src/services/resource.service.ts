@@ -14,6 +14,7 @@ import { Vocabulary } from '../vocabularies';
 import { APIService } from './api.service';
 import { CacheService } from './cache.service';
 import { ConfigurationService } from './configuration.service';
+import { ReplaySubject } from 'rxjs';
 
 interface NavigationItem {
     title: string;
@@ -34,6 +35,8 @@ export class ResourceService {
         context: any;
     } | null> = new EventEmitter();
     traversingUnauthorized: EventEmitter<string> = new EventEmitter();
+
+    copySource: ReplaySubject<string> = new ReplaySubject<string>(1);
 
     public static getSearchQueryString(
         query: { [key: string]: any },
@@ -114,14 +117,46 @@ export class ResourceService {
         });
     }
 
+    /**
+     * Copy a resource (Plone REST API)
+     * @param sourcePath
+     * @param targetPath
+     */
     copy(sourcePath: string, targetPath: string) {
-        const path = targetPath + '/@copy';
         return this.emittingModified(
             this.api.post(targetPath + '/@copy', {
                 source: this.api.getFullPath(sourcePath),
             }),
-            path,
+            targetPath,
         );
+    }
+
+    /**
+     * Copy a resource (same as copy, but in Guillotina)
+     * @param sourcePath
+     * @param targetPath
+     */
+    duplicate(sourcePath: string, targetPath: string): Observable<any> {
+        const url = sourcePath + '/@duplicate';
+        const containerInPath: string = this.getContainerInPath(targetPath);
+        const newId: string = sourcePath.split('/').pop() || '';
+        return this.emittingModified(
+            this.api.post(url, {
+                destination: containerInPath,
+                new_id: newId,
+            }),
+            targetPath,
+        );
+    }
+
+    private getContainerInPath(targetPath: string): string {
+        if (targetPath.indexOf('http') === 0) {
+            const startPosition: number = targetPath.indexOf('https') === 0 ? 8 : 7;
+            const startIndex: number = targetPath.indexOf('/', startPosition);
+            targetPath = targetPath.substring(startIndex);
+        }
+
+        return '/' + targetPath.split('/').slice(3).join('/');
     }
 
     create(path: string, model: any) {
