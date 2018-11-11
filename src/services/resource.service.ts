@@ -191,6 +191,10 @@ export class ResourceService {
         return this.cache.get(path);
     }
 
+    items(path: string, page = 1): Observable<any> {
+        return this.cache.get(`${path}/@items?page=${page}`);
+    }
+
     move(sourcePath: string, targetPath: string) {
         const path = targetPath + '/@move';
         return this.emittingModified(
