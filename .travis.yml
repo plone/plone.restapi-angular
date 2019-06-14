@@ -5,8 +5,15 @@ cache:
   directories:
     - node_modules
 dist: trusty
+addons:
+  apt:
+    sources:
+        - ubuntu-toolchain-r-test
+    packages:
+        - libstdc++-4.9-dev
 install:
   - npm install
+  - npm install nodegit --build-from-source
   - ./node_modules/.bin/mrdeveloper
 script:
   - npm run test
