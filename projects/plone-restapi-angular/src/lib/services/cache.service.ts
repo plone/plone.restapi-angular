@@ -1,10 +1,11 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import 'rxjs/add/observable/of';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { APIService } from './api.service';
 import { AuthenticationService } from './authentication.service';
 
 import { ConfigurationService } from './configuration.service';
+import {map, publishReplay, refCount, take} from 'rxjs/operators';
 
 
 @Injectable()
@@ -51,24 +52,25 @@ export class CacheService {
         // TODO: do not revoke everything
         this.revoke.emit();
       }
-      service.cache[url] = service.api.get(url)
-        // set hits to 0 each time request is actually sent
-        .map((observable: Observable<T>) => {
-          service.hits[url] = 0;
-          return observable;
-        })
-        // create a ReplaySubject that stores and emit last response during delay
-        .publishReplay(1, service.refreshDelay)
-        // broadcast ReplaySubject
-        .refCount()
-        // complete each observer after response has been emitted
-        .take(1)
-        // increment hits each time request is subscribed
-        .map((observable: Observable<T>) => {
-          const hits = this.hits[url];
-          service.hits[url] = hits ? hits + 1 : 1;
-          return observable;
-        });
+      service.cache[url] = service.api.get(url).pipe(
+          // set hits to 0 each time request is actually sent
+          map((observable: Observable<T>) => {
+              service.hits[url] = 0;
+              return observable;
+          }),
+          // create a ReplaySubject that stores and emit last response during delay
+          publishReplay(1, service.refreshDelay),
+          // broadcast ReplaySubject
+          refCount(),
+          // complete each observer after response has been emitted
+          take(1),
+          // increment hits each time request is subscribed
+          map((observable: Observable<T>) => {
+              const hits = this.hits[url];
+              service.hits[url] = hits ? hits + 1 : 1;
+              return observable;
+          })
+      );
     }
     return service.cache[url];
   }
@@ -78,10 +80,12 @@ export class CacheService {
    */
   public revoking<T>(observable: Observable<T>, revoked?: string | null): Observable<T> {
     const service = this;
-    return observable.map((val: T): T => {
-      service.revoke.emit(revoked);
-      return val;
-    });
+    return observable.pipe(
+        map((val: T): T => {
+            service.revoke.emit(revoked);
+            return val;
+        })
+    );
   }
 
 }

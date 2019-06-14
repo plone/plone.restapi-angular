@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject, Observable, timer, throwError } from 'rxjs';
+import { catchError, map, retryWhen, tap, timeout, delayWhen } from 'rxjs/operators';
 
 import { AuthenticationService } from './authentication.service';
 import { ConfigurationService } from './configuration.service';
@@ -66,9 +66,11 @@ export class APIService {
     return this.wrapRequest(this.http.get(url, {
         responseType: 'blob',
         headers: headers
-      }).map((blob: Blob) => {
-        return blob;
-      })
+      }).pipe(
+        map((blob: Blob) => {
+            return blob;
+        })
+      )
     );
   }
 
@@ -84,27 +86,28 @@ export class APIService {
   }
 
   private wrapRequest<T>(request: Observable<T>): Observable<T> {
-    const timeout = this.config.get('CLIENT_TIMEOUT', 15000);
+    const clientTimeout = this.config.get('CLIENT_TIMEOUT', 15000);
     let attempts = 0;
-    return request
-      .timeout(timeout)
-      .retryWhen((errors: Observable<Response>) => {
-        /* retry when backend unavailable errors */
-        return errors.delayWhen((response: Response) => {
-          if ([0, 502, 503, 504].indexOf(response.status) >= 0) {
-            if (attempts < this.config.get('RETRY_REQUEST_ATTEMPTS', 3)) {
-              attempts += 1;
-              return Observable.timer(this.config.get('RETRY_REQUEST_DELAY', 2000));
-            }
-            this.setBackendAvailability(false);
-          }
-          return Observable.throw(response);
-        });
-      })
-      .do(() => this.setBackendAvailability(true))
-      .catch((errorResponse: HttpErrorResponse) => {
-        return Observable.throw(getError(errorResponse));
-      });
+    return request.pipe(
+        timeout(clientTimeout),
+        retryWhen((errors: Observable<Response>) => {
+            /* retry when backend unavailable errors */
+            return errors.pipe(delayWhen((response: Response) => {
+                if ([0, 502, 503, 504].indexOf(response.status) >= 0) {
+                    if (attempts < this.config.get('RETRY_REQUEST_ATTEMPTS', 3)) {
+                        attempts += 1;
+                        return timer(this.config.get('RETRY_REQUEST_DELAY', 2000));
+                    }
+                    this.setBackendAvailability(false);
+                }
+                return throwError(response);
+            }));
+        }),
+        tap(() => this.setBackendAvailability(true)),
+        catchError((errorResponse: HttpErrorResponse) => {
+            return throwError(getError(errorResponse));
+        })
+    );
   }
 
   /* Emits only if it has changed */

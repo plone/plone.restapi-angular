@@ -1,6 +1,5 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { Subscriber } from 'rxjs/Subscriber';
+import { Observable, Subscriber } from 'rxjs';
 import {
     NamedFileUpload,
     NavLink,
@@ -15,6 +14,7 @@ import { APIService } from './api.service';
 import { CacheService } from './cache.service';
 import { ConfigurationService } from './configuration.service';
 import { ReplaySubject } from 'rxjs';
+import {map} from 'rxjs/operators';
 
 interface NavigationItem {
     title: string;
@@ -229,32 +229,33 @@ export class ResourceService {
     }
 
     navigation(): Observable<NavLink[]> {
-        return this.cache.get('/@navigation').map((data: NavigationItems) => {
-            if (data) {
-                return data.items
-                    .filter((item: NavigationItem) => {
-                        return (
-                            !item.properties ||
-                            !item.properties.exclude_from_nav
-                        );
-                    })
-                    .map(this.linkFromItem.bind(this));
-            } else {
-                return [];
-            }
-        });
+        return this.cache.get('/@navigation').pipe(
+            map((data: NavigationItems) => {
+                if (data) {
+                    return data.items
+                        .filter((item: NavigationItem) => {
+                            return (
+                                !item.properties ||
+                                !item.properties.exclude_from_nav
+                            );
+                        })
+                        .map(this.linkFromItem.bind(this));
+                } else {
+                    return [];
+                }
+            })
+        );
     }
 
     breadcrumbs(path: string): Observable<NavLink[]> {
-        return this.cache
-            .get(path + '/@breadcrumbs')
-            .map((data: NavigationItems) => {
+        return this.cache.get(path + '/@breadcrumbs')
+            .pipe(map((data: NavigationItems) => {
                 if (data) {
                     return data.items.map(this.linkFromItem.bind(this));
                 } else {
                     return [];
                 }
-            });
+            }));
     }
 
     type(typeId: string, containerPath = ''): Observable<any> {
@@ -264,18 +265,18 @@ export class ResourceService {
     vocabulary(vocabularyId: string): Observable<Vocabulary<string | number>> {
         return this.cache
             .get('/@vocabularies/' + vocabularyId)
-            .map(
+            .pipe(map(
                 (jsonObject: any): Vocabulary<string | number> =>
                     new Vocabulary(jsonObject.terms),
-            );
+            ));
     }
 
     getAddons(path: string): Observable<string[]> {
-        return this.cache.get<any>(path + '/@addons').map(res => res['installed']);
+        return this.cache.get<any>(path + '/@addons').pipe(map(res => res['installed']));
     }
 
     availableAddons(path: string): Observable<{id: string, title: string}[]> {
-        return this.cache.get<any>(path + '/@addons').map(res => res['available']);
+        return this.cache.get<any>(path + '/@addons').pipe(map(res => res['available']));
     }
 
     addAddon(path: string, addon: string): Observable<any> {
@@ -287,11 +288,11 @@ export class ResourceService {
     }
 
     getBehaviors(path: string): Observable<string[]> {
-        return this.cache.get<any>(path + '/@behaviors').map(res => res['static'].concat(res['dynamic']));
+        return this.cache.get<any>(path + '/@behaviors').pipe(map(res => res['static'].concat(res['dynamic'])));
     }
 
     availableBehaviors(path: string): Observable<string[]> {
-        return this.cache.get<any>(path + '/@behaviors').map(res => res['available']);
+        return this.cache.get<any>(path + '/@behaviors').pipe(map(res => res['available']));
     }
 
     addBehavior(path: string, behavior: string): Observable<any> {
@@ -338,12 +339,12 @@ export class ResourceService {
         path: string,
     ): Observable<T> {
         const service = this;
-        return observable.map(
+        return observable.pipe(map(
             (val: T): T => {
                 service.resourceModified.emit({ id: path, context: val });
                 return val;
             },
-        );
+        ));
     }
 
     private linkFromItem(item: NavigationItem): NavLink {

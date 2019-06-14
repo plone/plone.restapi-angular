@@ -8,6 +8,7 @@ import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { AuthenticatedStatus, Error, PasswordResetInfo } from '../interfaces';
 import { ConfigurationService } from './configuration.service';
+import {tap, catchError} from 'rxjs/operators';
 
 interface LoginToken {
     token: string;
@@ -106,47 +107,48 @@ export class AuthenticationService {
             return this.http
                 .post(this.config.get('BACKEND_URL') + (path || '') + '/@login', body, {
                     headers: headers,
-                })
-                .do((data: LoginToken) => {
-                    if (data.token) {
-                        localStorage.setItem('auth', data['token']);
-                        localStorage.setItem(
-                            'auth_time',
-                            new Date().toISOString(),
-                        );
-                        this.isAuthenticated.next({
-                            state: true,
-                            pending: false,
-                            username: this.getUsername(),
-                        });
-                    } else {
-                        localStorage.removeItem('auth');
-                        localStorage.removeItem('auth_time');
-                        this.isAuthenticated.next({
-                            state: false,
-                            pending: false,
-                            username: null,
-                        });
-                    }
-                })
-                .catch((errorResponse: HttpErrorResponse) => {
-                    const error = getError(errorResponse);
-                    if (errorResponse.status === 404) {
-                        // @login endpoint does not exist on this backend
-                        // we keep with basic auth
-                        this.setBasicCredentials(login, password, false);
-                    } else {
-                        localStorage.removeItem('auth');
-                        localStorage.removeItem('auth_time');
-                        this.isAuthenticated.next({
-                            state: false,
-                            pending: false,
-                            username: null,
-                            error: error.message,
-                        });
-                    }
-                    return Observable.throw(error);
-                });
+                }).pipe(
+                    tap((data: LoginToken) => {
+                        if (data.token) {
+                            localStorage.setItem('auth', data['token']);
+                            localStorage.setItem(
+                                'auth_time',
+                                new Date().toISOString(),
+                            );
+                            this.isAuthenticated.next({
+                                state: true,
+                                pending: false,
+                                username: this.getUsername(),
+                            });
+                        } else {
+                            localStorage.removeItem('auth');
+                            localStorage.removeItem('auth_time');
+                            this.isAuthenticated.next({
+                                state: false,
+                                pending: false,
+                                username: null,
+                            });
+                        }
+                    }),
+                    catchError((errorResponse: HttpErrorResponse) => {
+                        const error = getError(errorResponse);
+                        if (errorResponse.status === 404) {
+                            // @login endpoint does not exist on this backend
+                            // we keep with basic auth
+                            this.setBasicCredentials(login, password, false);
+                        } else {
+                            localStorage.removeItem('auth');
+                            localStorage.removeItem('auth_time');
+                            this.isAuthenticated.next({
+                                state: false,
+                                pending: false,
+                                username: null,
+                                error: error.message,
+                            });
+                        }
+                        return Observable.throw(error);
+                    })
+                );
         } else {
             return of({});
         }
@@ -167,7 +169,9 @@ export class AuthenticationService {
             this.config.get('BACKEND_URL') + `/@users/${login}/reset-password`;
         return this.http
             .post(url, {}, { headers: headers })
-            .catch(this.error.bind(this));
+            .pipe(
+                catchError(this.error.bind(this))
+            );
     }
 
     passwordReset(resetInfo: PasswordResetInfo): Observable<any> {
@@ -186,7 +190,9 @@ export class AuthenticationService {
             `/@users/${resetInfo.login}/reset-password`;
         return this.http
             .post(url, data, { headers: headers })
-            .catch(this.error.bind(this));
+            .pipe(
+                catchError(this.error.bind(this))
+            );
     }
 
     getHeaders(): HttpHeaders {

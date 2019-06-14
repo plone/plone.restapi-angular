@@ -1,11 +1,11 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import 'rxjs/add/observable/of';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { ConfigurationService } from './configuration.service';
 import { NavTree } from '../interfaces';
 
 import { ResourceService } from './resource.service';
 import { AuthenticationService } from './authentication.service';
+import {merge} from 'rxjs/operators';
 
 interface UnorderedContentTree {
   children: { [key: string]: UnorderedContentTree };
@@ -20,9 +20,9 @@ export class NavigationService {
   constructor(auth: AuthenticationService,
               protected resource: ResourceService,
               protected config: ConfigurationService) {
-    resource.resourceModified
-      .merge(auth.isAuthenticated)
-      .subscribe(() => {
+    resource.resourceModified.pipe(
+        merge(auth.isAuthenticated)
+    ).subscribe(() => {
         this.refreshNavigation.emit();
       });
   }

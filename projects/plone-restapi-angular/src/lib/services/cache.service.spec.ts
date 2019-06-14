@@ -1,7 +1,6 @@
 /* tslint:disable:no-unused-variable */
 
 import { TestBed } from '@angular/core/testing';
-import 'rxjs/add/observable/forkJoin';
 
 import {
   HttpTestingController,
@@ -12,7 +11,7 @@ import { APIService } from './api.service';
 import { ConfigurationService } from './configuration.service';
 import { AuthenticationService } from './authentication.service';
 import { CacheService } from './cache.service';
-import { Observable } from 'rxjs';
+import { Observable, forkJoin, timer } from 'rxjs';
 import { LoadingService } from './loading.service';
 
 const front_page_response = {
@@ -109,7 +108,7 @@ describe('CacheService', () => {
     const http = TestBed.get(HttpTestingController);
     const response1 = front_page_response;
     const response2 = events_page_response;
-    Observable.forkJoin(
+    forkJoin(
       cache.get('http://fake/Plone/'),
       cache.get('http://fake/Plone/events')
     ).subscribe(() => {});
@@ -173,7 +172,7 @@ describe('CacheService', () => {
     cache.get('http://fake/Plone/').subscribe(() => {});
     http.expectNone('http://fake/Plone/');
 
-    Observable.timer(5).subscribe(() => {
+    timer(5).subscribe(() => {
       cache.get('http://fake/Plone/').subscribe(() => {});
       http.expectOne('http://fake/Plone/').flush(response);
       expect(cache.hits['http://fake/Plone/']).toBe(1);
