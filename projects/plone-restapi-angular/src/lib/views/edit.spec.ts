@@ -19,7 +19,7 @@ import { TypeMarker, RESTAPIResolver, PloneViews, FullPathNormalizer } from '../
 import { EditView } from './edit';
 import { CacheService } from '../services/cache.service';
 import { LoadingService } from '../services/loading.service';
-import {filter} from 'rxjs/operators';
+import { filter } from 'rxjs/operators';
 
 describe('EditView', () => {
   let component: EditView;
