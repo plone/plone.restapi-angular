@@ -13,7 +13,7 @@ import { AppComponent } from './app.component';
 import { Search } from './components/search';
 import { CustomSfEditView, CustomViewView } from './custom';
 import { CustomGlobalNavigation } from './custom';
-import { SchemaFormModule } from 'ngx-schema-form';
+import { SchemaFormModule } from '../develop/ngx-schema-form/projects/schema-form/src/public_api';
 
 @Component({
   selector: 'custom-breadcrumbs',

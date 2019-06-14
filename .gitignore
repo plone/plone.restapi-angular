@@ -33,21 +33,9 @@ e2e/*.map
 .DS_Store
 Thumbs.db
 
-# test subproject and demo
+# test sub-projects and demo
 /demo
-/tests/dist
-/tests/src/lib/
-/tests/tmp
-/tests/node_modules
-/tests/.idea
-/tests/.vscode
-/tests/.sass-cache
-/tests/connect.lock
-/tests/coverage/*
-/tests/libpeerconnection.log
-/tests/typings
-/tests/e2e/*.js
-/tests/e2e/*.map
+/src/develop
 
 /venv
 /docs/_build
