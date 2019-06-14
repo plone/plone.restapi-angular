@@ -93,6 +93,7 @@ describe('GlobalNavigation', () => {
     fixture = TestBed.createComponent(GlobalNavigation);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    component.services.resource.resourceModified.emit();
   });
 
   it('should create', () => {

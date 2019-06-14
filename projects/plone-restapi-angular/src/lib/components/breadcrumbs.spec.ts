@@ -83,6 +83,7 @@ describe('Breadcrumbs', () => {
     fixture = TestBed.createComponent(Breadcrumbs);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    component.services.resource.resourceModified.emit();
   });
 
   it('should create', () => {
@@ -99,6 +100,6 @@ describe('Breadcrumbs', () => {
     component.onTraverse(<Target>{ contextPath: '/a-folder/test', path: '/a-folder/test', context: {} });
     fixture.detectChanges();
     activeLink = fixture.debugElement.query(By.css('.active')).nativeElement;
-    expect(activeLink.innerText).toEqual('test');
+    expect(activeLink.innerHTML).toContain('test');
   });
 });
