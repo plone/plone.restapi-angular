@@ -5,8 +5,7 @@ import {
     HttpHeaders,
 } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { AuthenticatedStatus, Error, PasswordResetInfo } from '../interfaces';
 import { ConfigurationService } from './configuration.service';
 
@@ -149,7 +148,7 @@ export class AuthenticationService {
                     return Observable.throw(error);
                 });
         } else {
-            return Observable.of({});
+            return of({});
         }
     }
 

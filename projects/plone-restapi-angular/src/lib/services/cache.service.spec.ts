@@ -12,7 +12,7 @@ import { APIService } from './api.service';
 import { ConfigurationService } from './configuration.service';
 import { AuthenticationService } from './authentication.service';
 import { CacheService } from './cache.service';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { LoadingService } from './loading.service';
 
 const front_page_response = {
