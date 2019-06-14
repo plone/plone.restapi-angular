@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Services, Vocabulary } from '@plone/restapi-angular';
+import { Services, Vocabulary } from '../../../projects/plone-restapi-angular/src/public-api';
 
 @Component({
   selector: 'app-search',

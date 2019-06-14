@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { PasswordResetInfo, Error } from '../interfaces';
 import { Services } from '../services';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'plone-password-reset',
@@ -37,9 +37,9 @@ export class PasswordResetView implements OnInit, OnDestroy {
           this.login = authenticatedStatus.username;
         }
       });
-    // TODO: get queryString on traverse
-    const params = new URLSearchParams(window.location.href.split('?')[1] || '');
-    this.token = params.get('token') || null;
+      // TODO: get queryString on traverse
+      const httpParams = new HttpParams({fromString: window.location.href.split('?')[1] || ''});
+      this.token = httpParams.get('token') || null;
   }
 
   onSubmit(formInfo: any) {

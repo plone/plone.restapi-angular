@@ -91,7 +91,7 @@ describe('Breadcrumbs', () => {
 
   it('should provide links', () => {
     component.onTraverse(<Target>{ contextPath: '/', context: {} });
-    expect(component.links.length).toBeTruthy(2);
+    expect(component.links.length).toBe(2);
   });
 
   it('should have active class on last link', () => {

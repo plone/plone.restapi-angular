@@ -19,6 +19,7 @@ import { TypeMarker, RESTAPIResolver, PloneViews, FullPathNormalizer } from '../
 import { EditView } from './edit';
 import { CacheService } from '../services/cache.service';
 import { LoadingService } from '../services/loading.service';
+import {filter} from 'rxjs/operators';
 
 describe('EditView', () => {
   let component: EditView;
@@ -84,9 +85,9 @@ describe('EditView', () => {
     component.services.traverser.traverse('/somepage/@@edit');
     const req_document = http.expectOne('http://fake/Plone/somepage');
     req_document.flush(response_document);
-    component.services.traverser.target.filter(target => {
+    component.services.traverser.target.pipe(filter(target => {
       return Object.keys(target.context).length > 0;
-    })
+    }))
       .subscribe(target => {
         expect(component.model.title).toBe('Welcome to Plone');
       });

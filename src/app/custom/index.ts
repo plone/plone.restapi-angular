@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Breadcrumbs, EditView, GlobalNavigation, Services, ViewView } from '@plone/restapi-angular';
+import { Breadcrumbs, EditView, GlobalNavigation, Services, ViewView } from '../../../projects/plone-restapi-angular/src/public-api';
 import { Target } from 'angular-traversal';
 
 @Component({

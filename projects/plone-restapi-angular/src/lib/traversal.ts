@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Marker, Normalizer, Resolver, Traverser } from 'angular-traversal';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { APIService } from './services/api.service';
 import { ConfigurationService } from './services/configuration.service';
 
@@ -14,6 +14,7 @@ import { SearchView } from './views/search';
 import { SitemapView } from './views/sitemap';
 import { ViewView } from './views/view';
 import { Error } from './interfaces';
+import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class InterfaceMarker extends Marker {
@@ -40,12 +41,12 @@ export class RESTAPIResolver extends Resolver {
             path = !path.endsWith('/') ? path + '/' : path;
             return this.api.get(path + '@search?' + queryString);
         } else {
-            return this.resource.get(path).catch((err: Error) => {
+            return this.resource.get(path).pipe(catchError((err: Error) => {
                 if (!!err.response && err.response.status === 401) {
                     this.resource.traversingUnauthorized.emit(path);
                 }
                 throw err;
-            });
+            }));
         }
     }
 }

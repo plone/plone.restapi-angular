@@ -1,10 +1,9 @@
 import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { URLSearchParams } from '@angular/http';
-import 'rxjs/add/operator/takeUntil';
 
 import { TraversingComponent } from '../traversing';
 import { Services } from '../services';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'plone-add',
@@ -41,8 +40,8 @@ export class AddView extends TraversingComponent implements OnInit {
   ngOnInit() {
     super.ngOnInit();
     if (isPlatformBrowser(this.platformId)) {
-      const params = new URLSearchParams(window.location.search.slice(1));
-      let param = params.paramsMap.get('type');
+      const httpParams = new HttpParams({fromString: window.location.href.split('?')[1] || ''});
+      let param = httpParams.get('type');
       if (param && param.length > 0) {
         this.type = param[0];
       }

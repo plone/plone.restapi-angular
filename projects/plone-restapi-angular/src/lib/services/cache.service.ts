@@ -1,11 +1,10 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import 'rxjs/add/observable/of';
 import { Observable } from 'rxjs';
 import { APIService } from './api.service';
 import { AuthenticationService } from './authentication.service';
 
 import { ConfigurationService } from './configuration.service';
-import {map, publishReplay, refCount, take} from 'rxjs/operators';
+import { map, publishReplay, refCount, take } from 'rxjs/operators';
 
 
 @Injectable()

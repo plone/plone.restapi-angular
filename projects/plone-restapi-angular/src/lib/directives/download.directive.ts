@@ -46,7 +46,7 @@ export class DownloadDirective {
   private static saveDownloaded(namedFile: NamedFile, blob: Blob) {
     const a = window.document.createElement('a');
     a.href = window.URL.createObjectURL(
-      blob, <ObjectURLOptions>{ type: namedFile['mime-type'] }
+        new Blob([blob], { type: namedFile['mime-type'] })
     );
     a.download = namedFile.filename;
     document.body.appendChild(a);

@@ -5,7 +5,7 @@ import { NavTree } from '../interfaces';
 
 import { ResourceService } from './resource.service';
 import { AuthenticationService } from './authentication.service';
-import {merge} from 'rxjs/operators';
+import {merge, filter, map} from 'rxjs/operators';
 
 interface UnorderedContentTree {
   children: { [key: string]: UnorderedContentTree };
@@ -39,48 +39,51 @@ export class NavigationService {
         metadata_fields: ['exclude_from_nav', 'getObjPositionInParent'],
         size: 1000
       }
-    ).map((res: any) => {
-      const tree: UnorderedContentTree = { children: {} };
-      res.items
-        .sort((item: any) => item.getObjPositionInParent)
-        .map((item: any) => {
-          const localpath: string = this.config.urlToPath(item['@id']);
-          const path: string[] = localpath.slice(
-            localpath.indexOf(rootPath) + rootPath.length).split('/');
-          if (path[0] === '') {
-            path.shift();
-            if (!path.length) {
-              return;
+    ).pipe(
+        map((res: any) => {
+            const tree: UnorderedContentTree = { children: {} };
+            res.items
+                .sort((item: any) => item.getObjPositionInParent)
+                .map((item: any) => {
+                    const localpath: string = this.config.urlToPath(item['@id']);
+                    const path: string[] = localpath.slice(
+                        localpath.indexOf(rootPath) + rootPath.length).split('/');
+                    if (path[0] === '') {
+                        path.shift();
+                        if (!path.length) {
+                            return;
+                        }
+                    }
+                    const id = path.pop() || '';
+                    let current: UnorderedContentTree = tree;
+                    path.map((folder: string) => {
+                        if (!current.children[folder]) {
+                            current.children[folder] = { children: {} };
+                        }
+                        current = current.children[folder];
+                        if (!current.children) {
+                            current.children = {};
+                        }
+                    });
+                    if (!current.children[id]) {
+                        current.children[id] = {
+                            children: {},
+                            properties: null
+                        };
+                    }
+                    current.children[id].properties = item;
+                });
+            const orderedTree = { children: this.getOrderedChildren(tree.children), properties: tree.properties };
+            if (currentPath) {
+                return this.markActive(currentPath, orderedTree);
+            } else {
+                return orderedTree;
             }
-          }
-          const id = path.pop() || '';
-          let current: UnorderedContentTree = tree;
-          path.map((folder: string) => {
-            if (!current.children[folder]) {
-              current.children[folder] = { children: {} };
-            }
-            current = current.children[folder];
-            if (!current.children) {
-              current.children = {};
-            }
-          });
-          if (!current.children[id]) {
-            current.children[id] = {
-              children: {},
-              properties: null
-            };
-          }
-          current.children[id].properties = item;
-        });
-      const orderedTree = { children: this.getOrderedChildren(tree.children), properties: tree.properties };
-      if (currentPath) {
-        return this.markActive(currentPath, orderedTree);
-      } else {
-        return orderedTree;
-      }
-    }).filter((item: NavTree) => {
-      return !item.properties || !item.properties.exclude_from_nav;
-    });
+        }),
+        filter((item: NavTree) => {
+            return !item.properties || !item.properties.exclude_from_nav;
+        })
+    );
   }
 
   private getOrderedChildren(children: { [key: string]: UnorderedContentTree }): NavTree[] {
