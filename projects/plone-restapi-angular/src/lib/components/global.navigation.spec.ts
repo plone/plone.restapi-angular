@@ -3,7 +3,6 @@ import {
   HttpClientTestingModule
 } from '@angular/common/http/testing';
 import { Injectable, EventEmitter } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
 import { APP_BASE_HREF } from '@angular/common';
 import { Traverser, TraversalModule, Resolver, Marker, Normalizer, Target } from 'angular-traversal';
 import {
@@ -23,13 +22,14 @@ import { Services } from '../services';
 import { GlobalNavigation } from './global.navigation';
 import { CacheService } from '../services/cache.service';
 import { LoadingService } from '../services/loading.service';
+import { of } from 'rxjs';
 
 @Injectable()
 class MockResourceService {
 
   resourceModified = new EventEmitter();
   navigation() {
-    return Observable.of(
+    return of(
     [
       {
         "title": "A folder",

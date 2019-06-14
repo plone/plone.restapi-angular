@@ -3,8 +3,7 @@ import { By } from '@angular/platform-browser';
 import {
   HttpClientTestingModule
 } from '@angular/common/http/testing';
-import { Injectable, Directive, Input, EventEmitter } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Injectable, EventEmitter } from '@angular/core';
 import { APP_BASE_HREF } from '@angular/common';
 import { Traverser, TraversalModule, Resolver, Marker, Normalizer, Target } from 'angular-traversal';
 import {
@@ -24,13 +23,14 @@ import { Services } from '../services';
 import { Breadcrumbs } from './breadcrumbs';
 import { LoadingService } from '../services/loading.service';
 import { CacheService } from '../services/cache.service';
+import { of } from 'rxjs';
 
 @Injectable()
 class MockResourceService {
 
   resourceModified = new EventEmitter();
   breadcrumbs(path: string) {
-    return Observable.of([
+    return of([
       {
         "title": "A folder",
         "url": "http://fake/Plone/a-folder"

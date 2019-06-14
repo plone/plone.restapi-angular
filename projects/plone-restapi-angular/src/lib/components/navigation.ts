@@ -3,8 +3,8 @@ import { Services } from '../services';
 import { TraversingComponent } from '../traversing';
 import { NavTree } from '../interfaces';
 import { Target } from 'angular-traversal';
-import { Subscription } from 'rxjs/Subscription';
-import { Observable } from 'rxjs/Observable';
+import { Subscription, of } from 'rxjs';
+import { mergeMap } from 'rxjs/operators';
 
 @Component({
   selector: 'plone-navigation',
@@ -14,8 +14,8 @@ import { Observable } from 'rxjs/Observable';
 })
 export class Navigation extends TraversingComponent implements OnDestroy {
 
-  @Input() root: string = '/';
-  @Input() depth: number = -1;
+  @Input() root = '/';
+  @Input() depth = -1;
   links: NavTree[];
   refreshNavigation: Subscription;
 
@@ -27,12 +27,11 @@ export class Navigation extends TraversingComponent implements OnDestroy {
     const component = this;
     const navigation = component.services.navigation;
     component.removeSubscriptions();
-    this.refreshNavigation = Observable.of(null)
-      .merge(navigation.refreshNavigation)
-      .mergeMap(() => navigation.getNavigationFor(target.context['@id'], component.root, component.depth))
-      .subscribe((tree: NavTree) => {
-        component.links = tree.children;
-      });
+    this.refreshNavigation = navigation.refreshNavigation.pipe(
+      mergeMap(() => navigation.getNavigationFor(target.context['@id'], component.root, component.depth))
+    ).subscribe((tree: NavTree) => {
+      component.links = tree.children;
+    });
   }
 
   ngOnDestroy() {

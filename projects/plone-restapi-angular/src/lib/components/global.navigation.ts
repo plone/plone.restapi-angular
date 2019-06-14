@@ -3,8 +3,8 @@ import { Services } from '../services';
 import { TraversingComponent } from '../traversing';
 import { NavLink } from '../interfaces';
 import { Target } from 'angular-traversal';
-import { Subscription } from 'rxjs/Subscription';
-import { Observable } from 'rxjs/Observable';
+import { Subscription, of } from 'rxjs';
+import { merge, mergeMap } from 'rxjs/operators';
 
 
 @Component({
@@ -30,12 +30,11 @@ export class GlobalNavigation extends TraversingComponent implements OnInit, OnD
     super.ngOnInit();
     const component = this;
 
-    component.refreshNavigation = Observable.of(null)
-      .merge(component.services.navigation.refreshNavigation)
-      .mergeMap(() => component.services.resource.navigation())
-      .subscribe((links: NavLink[]) => {
-        this.setLinks(links);
-      });
+    component.refreshNavigation = component.services.navigation.refreshNavigation.pipe(
+      mergeMap(() => component.services.resource.navigation())
+    ).subscribe((links: NavLink[]) => {
+      this.setLinks(links);
+    });
   }
 
   protected setLinks(links: NavLink[]) {
@@ -60,8 +59,8 @@ export class GlobalNavigation extends TraversingComponent implements OnInit, OnD
       if (!contextPath || contextPath === '/') {
         link.active = (!link.path || link.path === '/');
       } else {
-        let targetList: Array<String> = contextPath.split('/');
-        let linkList: Array<String> = link.path.split('/');
+        const targetList: string[] = contextPath.split('/');
+        let linkList: string[] = link.path.split('/');
         let isSubpath = true;   // you could just use link.active
         for (const {item, index} of linkList.map((item, index) => ({ item, index }))) {
           if (item !== targetList[index]) {
