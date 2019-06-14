@@ -5,23 +5,12 @@ cache:
   directories:
     - node_modules
 dist: trusty
-addons:
-  apt:
-    sources:
-      - google-chrome
-    packages:
-      - google-chrome-stable
-before_install:
-  - wget "http://chromedriver.storage.googleapis.com/2.24/chromedriver_linux64.zip"
-  - unzip chromedriver_linux64.zip
-  - sudo mv chromedriver /usr/local/bin
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
 install:
   - npm install
+  - ./node_modules/.bin/mrdeveloper
 script:
   - npm run test
   - npm run build
 notifications:
   email:
-  - tisto@plone.org, ebrehault@gmail.com, ramon.nb@gmail.com, sneridagh@gmail.com, thomas.desvenain@gmail.com
+  - ebrehault@gmail.com, ramon.nb@gmail.com, thomas.desvenain@gmail.com
