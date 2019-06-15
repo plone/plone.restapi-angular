@@ -5,18 +5,9 @@ cache:
   directories:
     - node_modules
 dist: trusty
-sudo: required
-addons:
-  apt:
-    sources:
-        - ubuntu-toolchain-r-test
-    packages:
-        - libstdc++-4.9-dev
-        - g++-4.9
-env: CC=clang-4.9 && CXX=clang-4.9 && LINK=gcc-4.9 && LINKXX=g++-4.9
 install:
   - npm install
-  - npm install nodegit --build-from-source
+  - BUILD_ONLY=true npm install nodegit
   - ./node_modules/.bin/mrdeveloper
 script:
   - npm run test
