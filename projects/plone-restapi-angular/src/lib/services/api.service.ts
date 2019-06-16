@@ -85,6 +85,16 @@ export class APIService {
     }
   }
 
+  getPath(path: string): string {
+    const base: string = this.config.get('BACKEND_URL');
+    // if path is prefixed by base, remove it
+    if (path.startsWith(base)) {
+      return path.substring(base.length);
+    } else {
+      return path;
+    }
+  }
+
   private wrapRequest<T>(request: Observable<T>): Observable<T> {
     const clientTimeout = this.config.get('CLIENT_TIMEOUT', 15000);
     let attempts = 0;
