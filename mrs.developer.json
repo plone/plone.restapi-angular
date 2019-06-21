@@ -2,6 +2,7 @@
     "ngx-schema-form": {
         "path": "/projects/schema-form/src/lib",
         "url": "git@github.com:guillotinaweb/ngx-schema-form.git",
+        "https": "https://github.com/guillotinaweb/ngx-schema-form.git",
         "branch": "angular7-2"
     }
 }
