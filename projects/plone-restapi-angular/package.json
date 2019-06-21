@@ -1,0 +1,19 @@
+{
+    "name": "@plone/restapi-angular",
+    "version": "2.2.0",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/plone/plone.restapi-angular.git"
+    },
+    "author": "Plone Community",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/plone/plone.restapi-angular/issues"
+    },
+    "homepage": "https://github.com/plone/plone.restapi-angular#readme",
+    "peerDependencies": {
+        "@angular/common": "^7.2.0",
+        "@angular/core": "^7.2.0",
+        "angular-traversal": "^1.1.0"
+    }
+}

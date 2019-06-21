@@ -1,3 +1,9 @@
+# 2.2.0 (Unreleased)
+
+- Change project structure to use ng cli [Mathilde Pellerin]
+- Remove rxjs-compat [Mathilde Pellerin]
+- Upgrade to angular 7.2 [Mathilde Pellerin and Eric Brehault]
+
 # 2.1.0 (Unreleased)
 
 ## New features
