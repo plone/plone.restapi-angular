@@ -192,7 +192,8 @@ export class ResourceService {
     }
 
     items(path: string, page = 1): Observable<any> {
-        return this.cache.get(`${path}/@items?page=${page}`);
+        const start = (page - 1) * 20;
+        return this.api.post(`${path}/@search`, {_from: start});
     }
 
     move(sourcePath: string, targetPath: string) {
