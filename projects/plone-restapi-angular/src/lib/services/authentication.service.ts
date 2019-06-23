@@ -5,7 +5,7 @@ import {
     HttpHeaders,
 } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { AuthenticatedStatus, Error, PasswordResetInfo } from '../interfaces';
 import { ConfigurationService } from './configuration.service';
 import {tap, catchError} from 'rxjs/operators';
@@ -105,21 +105,10 @@ export class AuthenticationService {
                 password: password,
             });
             return this.http
-                .post(this.config.get('BACKEND_URL') + (path || '') + '/@login', body, {
-                    headers: headers,
-                }).pipe(
+                .post(this.config.get('BACKEND_URL') + (path || '') + '/@login', body, { headers }).pipe(
                     tap((data: LoginToken) => {
                         if (data.token) {
-                            localStorage.setItem('auth', data['token']);
-                            localStorage.setItem(
-                                'auth_time',
-                                new Date().toISOString(),
-                            );
-                            this.isAuthenticated.next({
-                                state: true,
-                                pending: false,
-                                username: this.getUsername(),
-                            });
+                            this.setAuthToken(data.token);
                         } else {
                             localStorage.removeItem('auth');
                             localStorage.removeItem('auth_time');
@@ -146,12 +135,25 @@ export class AuthenticationService {
                                 error: error.message,
                             });
                         }
-                        return Observable.throw(error);
+                        return throwError(error);
                     })
                 );
         } else {
             return of({});
         }
+    }
+
+    setAuthToken(token: string) {
+        localStorage.setItem('auth', token);
+        localStorage.setItem(
+            'auth_time',
+            new Date().toISOString(),
+        );
+        this.isAuthenticated.next({
+            state: true,
+            pending: false,
+            username: this.getUsername(),
+        });
     }
 
     logout() {
