@@ -3,7 +3,7 @@ import { Services } from '../services';
 import { TraversingComponent } from '../traversing';
 import { NavTree } from '../interfaces';
 import { Target } from 'angular-traversal';
-import { Subscription, of } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 
 @Component({
