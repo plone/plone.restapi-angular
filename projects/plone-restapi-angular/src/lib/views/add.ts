@@ -19,7 +19,7 @@ import { HttpParams } from '@angular/common/http';
 </form>`
 })
 export class AddView extends TraversingComponent implements OnInit {
-  type: string;
+  type: string | null;
   // TODO: addable types should be provided by the backend
   types: string[] = [
     'Document',
