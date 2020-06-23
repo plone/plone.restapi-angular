@@ -5,10 +5,10 @@ import {
     HttpHeaders,
 } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { AuthenticatedStatus, Error, PasswordResetInfo } from '../interfaces';
 import { ConfigurationService } from './configuration.service';
-import {tap, catchError} from 'rxjs/operators';
+import { tap, catchError } from 'rxjs/operators';
 
 interface LoginToken {
     token: string;
@@ -146,7 +146,7 @@ export class AuthenticationService {
                                 error: error.message,
                             });
                         }
-                        return Observable.throw(error);
+                        return throwError(error);
                     })
                 );
         } else {
@@ -216,7 +216,7 @@ export class AuthenticationService {
 
     protected error(errorResponse: HttpErrorResponse): Observable<Error> {
         const error: Error = getError(errorResponse);
-        return Observable.throw(error);
+        return throwError(error);
     }
 }
 
