@@ -11,8 +11,8 @@ This package aims to provide the services and components needed to build an Angu
 Plone is a flexible and powerful backend, it provides:
 
 - hierachical storage
-- customizable content types
-- granular access control
+- customizable contents types
+- granular access controls
 - workflows
 - a rich management interface
 
